@@ -82,9 +82,15 @@ video {
  	background-image: -o-linear-gradient(top, #E6E6E6, #CCCCCC);
  	background-image: linear-gradient(to bottom, #E6E6E6, #CCCCCC);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E6E6E6, endColorstr=#CCCCCC);
 }
-.btn:hover {
+.btn:hover:enabled {
+	cursor: pointer;
+}
+.btn:disabled {
+	color: #8a8a8a;
+}
+.btn:hover, .btn:disabled {
 	border:1px solid #ADADAD;
- 	background-color: #cdcdcd; 
+ 	background-color: #cdcdcd;
  	background-image: -webkit-gradient(linear, left top, left bottom, from(#cdcdcd), to(#b3b3b3));
 	background-image: -webkit-linear-gradient(top, #cdcdcd, #b3b3b3);
 	background-image: -moz-linear-gradient(top, #cdcdcd, #b3b3b3);
