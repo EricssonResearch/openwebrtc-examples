@@ -54,20 +54,30 @@ input {
 }
 input[type="text"] {
 	width: 200px;
+	position: relative;
+	top: 3px;
 }
 video {
-	width: 160px;
-	height: 120px;
 	border: 0;
 	vertical-align: top;
+	visibility: hidden;
+}
+.shadow {
+	-webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
+	-moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
+	box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
 }
 #video-container {
 	text-align: center;
 }
+#self_view {
+	width: 160px;
+	height: 120px;
+	margin-right: 2em;
+}
 #remote_view {
 	width: 640px;
 	height: 480px;
-	margin-left: 2em;
 }
 #heading {
 	float: left;
@@ -80,8 +90,12 @@ video {
 	height: 50px;
 	width: 79px;
 }
+#settings-container {
+	float: left;
+}
 #btn-container {
-	margin: 10px 0px;
+	margin: 10px 10px;
+	padding-left: 10px;
 }
 .btn {
 	border:1px solid #CCCCCC;

@@ -37,6 +37,7 @@ window.onload = function () {
             localStream = stream;
 
             joinButton.disabled = true;
+            selfView.style.visibility = "visible";
 
             var sessionId = document.getElementById("session_txt").value;
             signalingChannel = new SignalingChannel(sessionId);
@@ -54,6 +55,7 @@ window.onload = function () {
 
                 peer.ondisconnect = function () {
                     callButton.disabled = true;
+                    remoteView.style.visibility = "visible";
                     if (pc)
                         pc.close();
                     pc = null;
@@ -101,6 +103,7 @@ function start(isInitiator) {
     // once the remote stream arrives, show it in the remote video element
     pc.onaddstream = function (evt) {
         remoteView.src = URL.createObjectURL(evt.stream);
+        remoteView.style.visibility = "visible";
     };
 
     pc.addStream(localStream);

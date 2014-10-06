@@ -14,16 +14,16 @@
             <div id="owr-logo"></div>
         </header>
         <section id="main-section">
-            Session id: <input type="text" id="session_txt" value="test" size="10"><br>
-            <input type="checkbox" id="audio_cb">Audio<br>
-            <input type="checkbox" id="video_cb" checked>Video<br>
-            <div id="btn-container">
+            <div id="settings-container">
+                Session id <input type="text" id="session_txt" value="test" size="10">
                 <input class="btn" type="button" id="join_but" value="Join" disabled>
-                <input class="btn" type="button" id="call_but" value="Initiate Call" disabled>
+                <input class="btn" type="button" id="call_but" value="Initiate Call" disabled><br>
+                <input type="checkbox" id="audio_cb">Audio<br>
+                <input type="checkbox" id="video_cb" checked>Video<br>
             </div>
             <div id="video-container">
-                <video id="self_view" autoplay muted></video>
-                <video id="remote_view" autoplay></video>
+                <video id="self_view" class="shadow" autoplay muted></video>
+                <video id="remote_view" class="shadow" autoplay></video>
             </div>
             <div id="log_div"></div>    
         </section>
