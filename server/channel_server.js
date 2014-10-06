@@ -10,7 +10,8 @@ var clientDir = path.join(serverDir, "client/");
 
 var contentTypeMap = {
     ".html": "text/html;charset=utf-8",
-    ".js": "text/javascript"
+    ".js": "text/javascript",
+    ".css": "text/css"
 };
 
 var server = http.createServer(function (request, response) {
