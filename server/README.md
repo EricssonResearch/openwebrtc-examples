@@ -6,4 +6,4 @@ node channel_server.js
 The default port is 8080. If you want to change that you will have to modify `channel_server.js`.
 
 ## Local testing
-More info and screenshot here.
+The simple WebRTC app is now running at [http://localhost:8080/](http://localhost:8080/).
