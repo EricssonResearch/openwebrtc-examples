@@ -1,4 +1,4 @@
 openwebrtc-examples
 ===================
 
-Examples apps showing how to use OpenWebRTC
+Example apps showing how to use OpenWebRTC
