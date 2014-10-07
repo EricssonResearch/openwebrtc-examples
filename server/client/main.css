@@ -67,6 +67,10 @@ video {
 	-moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
 	box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
 }
+#share-container {
+	visibility: hidden;
+	padding-top: 5px;
+}
 #video-container {
 	text-align: center;
 }
@@ -119,7 +123,6 @@ video {
 	background-image: -moz-linear-gradient(top, #E6E6E6, #CCCCCC);
 	background-image: -ms-linear-gradient(top, #E6E6E6, #CCCCCC);
 	background-image: -o-linear-gradient(top, #E6E6E6, #CCCCCC);
-	background-image: linear-gradient(to bottom, #E6E6E6, #CCCCCC);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E6E6E6, endColorstr=#CCCCCC);
 }
 .btn:hover:enabled {
 	cursor: pointer;
@@ -135,5 +138,4 @@ video {
 	background-image: -moz-linear-gradient(top, #cdcdcd, #b3b3b3);
 	background-image: -ms-linear-gradient(top, #cdcdcd, #b3b3b3);
 	background-image: -o-linear-gradient(top, #cdcdcd, #b3b3b3);
-	background-image: linear-gradient(to bottom, #cdcdcd, #b3b3b3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#cdcdcd, endColorstr=#b3b3b3);
 }

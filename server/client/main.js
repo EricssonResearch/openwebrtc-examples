@@ -24,10 +24,12 @@ window.onload = function () {
     var joinButton = document.getElementById("join_but");
     var audioCheckBox = document.getElementById("audio_cb");
     var videoCheckBox = document.getElementById("video_cb");
+    var shareView = document.getElementById("share-container");
 
     joinButton.disabled = !navigator.webkitGetUserMedia;
     joinButton.onclick = function (evt) {
-        audioCheckBox.disabled = videoCheckBox.disabled = true;
+        audioCheckBox.disabled = videoCheckBox.disabled = joinButton.disabled = true;
+
         // get a local stream
         navigator.webkitGetUserMedia({ "audio": audioCheckBox.checked,
             "video": videoCheckBox.checked }, function (stream) {
@@ -42,6 +44,13 @@ window.onload = function () {
             var sessionId = document.getElementById("session_txt").value;
             signalingChannel = new SignalingChannel(sessionId);
 
+            // show and update share link
+            var link = document.getElementById("share_link");
+            var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
+            link.href = link.text = window.location.href + maybeAddHash;
+            window.location.hash = sessionId;
+            shareView.style.visibility = "visible";
+
             callButton.onclick = function () {
                 start(true);
             };
@@ -49,13 +58,14 @@ window.onload = function () {
             // another peer has joined our session
             signalingChannel.onpeer = function (evt) {
                 callButton.disabled = false;
+                shareView.style.visibility = "hidden";
 
                 peer = evt.peer;
                 peer.onmessage = handleMessage;
 
                 peer.ondisconnect = function () {
                     callButton.disabled = true;
-                    remoteView.style.visibility = "visible";
+                    remoteView.style.visibility = "hidden";
                     if (pc)
                         pc.close();
                     pc = null;
@@ -63,6 +73,16 @@ window.onload = function () {
             };
         }, logError);
     };
+
+    var hash = location.hash.substr(1);
+    if (hash) {
+        document.getElementById("session_txt").value = hash;
+        log("Auto-joining session: " + hash);
+        joinButton.click();
+    } else {
+        // set a random session id
+        document.getElementById("session_txt").value = Math.random().toString(16).substr(4);
+    }
 }
 
 // handle signaling messages received from the other peer
