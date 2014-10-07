@@ -4,6 +4,7 @@ var path = require("path");
 
 var sessions = {};
 var usersInSessionLimit = 2;
+var port = process.env.PORT || 38080;
 
 var serverDir = path.dirname(__filename)
 var clientDir = path.join(serverDir, "client/");
@@ -140,4 +141,4 @@ var server = http.createServer(function (request, response) {
         readStream.pipe(response);
     });
 });
-server.listen(8080);
+server.listen(port);
