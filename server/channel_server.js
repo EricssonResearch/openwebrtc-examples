@@ -4,7 +4,11 @@ var path = require("path");
 
 var sessions = {};
 var usersInSessionLimit = 2;
-var port = process.env.PORT || 38080;
+
+var port = process.env.PORT || 8080;
+if ( process.argv.length == 3 ) {
+    port = process.argv[2];
+}
 
 var serverDir = path.dirname(__filename)
 var clientDir = path.join(serverDir, "client/");
@@ -141,4 +145,6 @@ var server = http.createServer(function (request, response) {
         readStream.pipe(response);
     });
 });
+
+console.log('The server is listening on port ' + port);
 server.listen(port);
