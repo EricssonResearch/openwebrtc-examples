@@ -4,10 +4,10 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-   	font-weight: 300;
+	font-weight: 300;
 	background: url(background.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
- 	-moz-background-size: cover;
+	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 	min-height: 100%;
@@ -42,8 +42,8 @@ footer {
 	font-size: 14px;
 	color: #AAA;
 	clear: both;
-    margin-top: 3em;
-    width: 100%;
+	margin-top: 3em;
+	width: 100%;
 	height: 30px;
 	position: absolute;
 	bottom: 0;
@@ -66,6 +66,10 @@ video {
 	-webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
 	-moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
 	box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
+}
+#share-container {
+	visibility: hidden;
+	padding-top: 5px;
 }
 #video-container {
 	text-align: center;
@@ -113,13 +117,12 @@ video {
 	text-shadow: 0px 1px 0 rgba(255,255,255,1);
 	font-weight:bold; 
 	color: #4A4A4A;
- 	background-color: #E6E6E6; 
- 	background-image: -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#CCCCCC));
- 	background-image: -webkit-linear-gradient(top, #E6E6E6, #CCCCCC);
- 	background-image: -moz-linear-gradient(top, #E6E6E6, #CCCCCC);
- 	background-image: -ms-linear-gradient(top, #E6E6E6, #CCCCCC);
- 	background-image: -o-linear-gradient(top, #E6E6E6, #CCCCCC);
- 	background-image: linear-gradient(to bottom, #E6E6E6, #CCCCCC);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#E6E6E6, endColorstr=#CCCCCC);
+	background-color: #E6E6E6; 
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#E6E6E6), to(#CCCCCC));
+	background-image: -webkit-linear-gradient(top, #E6E6E6, #CCCCCC);
+	background-image: -moz-linear-gradient(top, #E6E6E6, #CCCCCC);
+	background-image: -ms-linear-gradient(top, #E6E6E6, #CCCCCC);
+	background-image: -o-linear-gradient(top, #E6E6E6, #CCCCCC);
 }
 .btn:hover:enabled {
 	cursor: pointer;
@@ -129,11 +132,10 @@ video {
 }
 .btn:hover, .btn:disabled {
 	border:1px solid #ADADAD;
- 	background-color: #cdcdcd;
- 	background-image: -webkit-gradient(linear, left top, left bottom, from(#cdcdcd), to(#b3b3b3));
+	background-color: #cdcdcd;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#cdcdcd), to(#b3b3b3));
 	background-image: -webkit-linear-gradient(top, #cdcdcd, #b3b3b3);
 	background-image: -moz-linear-gradient(top, #cdcdcd, #b3b3b3);
 	background-image: -ms-linear-gradient(top, #cdcdcd, #b3b3b3);
 	background-image: -o-linear-gradient(top, #cdcdcd, #b3b3b3);
-	background-image: linear-gradient(to bottom, #cdcdcd, #b3b3b3);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#cdcdcd, endColorstr=#b3b3b3);
 }
