@@ -15,7 +15,7 @@ var peer;
 var localStream;
 
 // must use 'url' here since Firefox doesn't understand 'urls'
-var configuration = { "iceServers": [{ "url": "stun:132.177.123.6" }] };
+var configuration = { "iceServers": [{ "url": "stun:stun.l.google.com:19302" }] };
 
 window.onload = function () {
     remoteView = document.getElementById("remote_view");
