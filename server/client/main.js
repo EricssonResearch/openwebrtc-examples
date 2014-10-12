@@ -74,6 +74,10 @@ window.onload = function () {
         }, logError);
     };
 
+    document.getElementById("owr-logo").onclick = function() {
+        window.location.assign("http://www.openwebrtc.io");
+    };
+
     var hash = location.hash.substr(1);
     if (hash) {
         document.getElementById("session_txt").value = hash;

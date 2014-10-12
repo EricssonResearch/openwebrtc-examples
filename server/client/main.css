@@ -20,6 +20,7 @@ h2 {
 	margin-top: 0.1em;
 	font-size: 1.8em;
 }
+
 header {
 	background-color:rgba(255,255,255,0.5);
 	padding-top: 5px;
@@ -45,9 +46,6 @@ footer {
 	margin-top: 3em;
 	width: 100%;
 	height: 30px;
-	position: absolute;
-	bottom: 0;
-	left: 0;
 }
 input {
 	font-size: 1.3em;
@@ -93,6 +91,7 @@ video {
 	background-size: 100%;
 	height: 50px;
 	width: 79px;
+	cursor: pointer;
 }
 #settings-container {
 	float: left;
@@ -138,4 +137,88 @@ video {
 	background-image: -moz-linear-gradient(top, #cdcdcd, #b3b3b3);
 	background-image: -ms-linear-gradient(top, #cdcdcd, #b3b3b3);
 	background-image: -o-linear-gradient(top, #cdcdcd, #b3b3b3);
+}
+
+/* iPad */
+@media screen and (max-width : 768px) {
+	h2 {
+		margin-top: 0.3em;
+		font-size: 1.8em;
+		width: 400px;
+	}
+	#self_view {
+		margin-bottom: 0.8em;
+		margin: 0.4em 0em;
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+    	transform: rotate(90deg);
+	}
+}
+/* iPhone 6 Plus */
+@media screen and (max-width : 414px) {
+	h2 {
+		margin-top: 0.3em;
+		font-size: 1.2em;
+		width: 260px;
+	}
+
+	input[type="text"] {
+		width: 120px;
+	}
+
+	section {
+		margin: 0em;
+		padding: 0em;
+		min-height: 500px;
+		height: 100%;
+	}
+
+	#self_view {
+		margin-bottom: 0.8em;
+		margin: 0.4em 0em;
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+    	transform: rotate(90deg);
+	}
+
+	#remote_view {
+		width: 320px;
+		height: 280px;
+	}
+}
+/* iPhone =< 5s */
+@media screen and (max-width : 320px) {
+	h2 {
+		margin-top: -0.3em;
+		font-size: 1.1em;
+		width: 200px;
+	}
+
+	input[type="text"] {
+		width: 100px;
+	}
+
+	section {
+		margin: 0em;
+		padding: 0em;
+		min-height: 600px;
+		height: 100%;
+	}
+
+	#self_view {
+		width: 160px;
+		height: 120px;
+		margin: 0.4em 0em;
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+    	transform: rotate(90deg);
+	}
+	#remote_view {
+		width: 320px;
+		height: 280px;
+	}
+
+	#share-container {
+		display: none;
+	}
 }
