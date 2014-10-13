@@ -8,6 +8,9 @@ if (window.mozRTCPeerConnection) {
 
 var remoteView;
 var callButton;
+var audioCheckBox;
+var videoCheckBox;
+var audioOnlyView;
 
 var signalingChannel;
 var pc;
@@ -22,12 +25,20 @@ window.onload = function () {
     callButton = document.getElementById("call_but");
     var selfView = document.getElementById("self_view");
     var joinButton = document.getElementById("join_but");
-    var audioCheckBox = document.getElementById("audio_cb");
-    var videoCheckBox = document.getElementById("video_cb");
+    audioCheckBox = document.getElementById("audio_cb");
+    videoCheckBox = document.getElementById("video_cb");
+    audioOnlyView = document.getElementById("audio-only-container");
     var shareView = document.getElementById("share-container");
+
+    updateMediaPrefs();
 
     joinButton.disabled = !navigator.webkitGetUserMedia;
     joinButton.onclick = function (evt) {
+        if (!saveMediaPrefs()) {
+            alert("Choose at least audio or video");
+            return;
+        }
+
         audioCheckBox.disabled = videoCheckBox.disabled = joinButton.disabled = true;
 
         // get a local stream
@@ -39,7 +50,10 @@ window.onload = function () {
             localStream = stream;
 
             joinButton.disabled = true;
-            selfView.style.visibility = "visible";
+            if (videoCheckBox.checked)
+                selfView.style.visibility = "visible";
+            else
+                audioOnlyView.style.visibility = "visible";
 
             var sessionId = document.getElementById("session_txt").value;
             signalingChannel = new SignalingChannel(sessionId);
@@ -48,7 +62,6 @@ window.onload = function () {
             var link = document.getElementById("share_link");
             var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
             link.href = link.text = window.location.href + maybeAddHash;
-            window.location.hash = sessionId;
             shareView.style.visibility = "visible";
 
             callButton.onclick = function () {
@@ -86,6 +99,39 @@ window.onload = function () {
     } else {
         // set a random session id
         document.getElementById("session_txt").value = Math.random().toString(16).substr(4);
+    }
+}
+
+function saveMediaPrefs() {
+    var prefs;
+    if (audioCheckBox.checked && videoCheckBox.checked)
+        prefs = "both";
+    else if (audioCheckBox.checked)
+        prefs = "audio";
+    else if (videoCheckBox.checked)
+        prefs = "video";
+    else
+        return false;
+    localStorage.setItem("media-prefs", prefs);
+    return true;
+}
+
+function updateMediaPrefs() {
+    var mediaPrefs = localStorage.getItem("media-prefs");
+    switch (mediaPrefs) {
+        case "audio":
+            audioCheckBox.checked = true;
+            videoCheckBox.checked = false;
+            break;
+        case "video":
+            audioCheckBox.checked = false;
+            videoCheckBox.checked = true;
+            break;
+        case "both":
+            audioCheckBox.checked = videoCheckBox.checked = true;
+            break;
+        default:
+            break;
     }
 }
 
@@ -127,7 +173,10 @@ function start(isInitiator) {
     // once the remote stream arrives, show it in the remote video element
     pc.onaddstream = function (evt) {
         remoteView.src = URL.createObjectURL(evt.stream);
-        remoteView.style.visibility = "visible";
+        if (videoCheckBox.checked)
+            remoteView.style.visibility = "visible";
+        else
+            audioOnlyView.style.visibility = "visible";
     };
 
     pc.addStream(localStream);
