@@ -65,6 +65,10 @@ video {
 	-moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
 	box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
 }
+#audio-only-container {
+	visibility: hidden;
+	color: red;
+}
 #share-container {
 	visibility: hidden;
 	padding-top: 5px;
