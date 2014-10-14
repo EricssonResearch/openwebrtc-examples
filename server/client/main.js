@@ -1,4 +1,5 @@
-if (window.mozRTCPeerConnection) {
+var isMozilla = window.mozRTCPeerConnection && !window.webkitRTCPeerConnection;
+if (isMozilla) {
     window.webkitURL = window.URL;
     navigator.webkitGetUserMedia = navigator.mozGetUserMedia;
     window.webkitRTCPeerConnection = window.mozRTCPeerConnection;
@@ -18,7 +19,7 @@ var peer;
 var localStream;
 
 // must use 'url' here since Firefox doesn't understand 'urls'
-var configuration = { "iceServers": [{ "url": "stun:stun.l.google.com:19302" }] };
+var configuration = { "iceServers": [{ "url": "stun:stun.services.mozilla.com" }] };
 
 window.onload = function () {
     remoteView = document.getElementById("remote_view");
@@ -61,7 +62,7 @@ window.onload = function () {
             // show and update share link
             var link = document.getElementById("share_link");
             var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
-            link.href = link.text = window.location.href + maybeAddHash;
+            link.href = link.textContent = window.location.href + maybeAddHash;
             shareView.style.visibility = "visible";
 
             callButton.onclick = function () {
@@ -182,7 +183,7 @@ function start(isInitiator) {
     pc.addStream(localStream);
 
     // the negotiationneeded event is not supported in Firefox
-    if (window.mozRTCPeerConnection && isInitiator)
+    if (isMozilla && isInitiator)
         pc.onnegotiationneeded();
 }
 
