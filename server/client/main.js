@@ -31,11 +31,20 @@ window.onload = function () {
     audioOnlyView = document.getElementById("audio-only-container");
     var shareView = document.getElementById("share-container");
 
-    updateMediaPrefs();
+    // Store media preferences
+    audioCheckBox.onclick = videoCheckBox.onclick = function(evt) {
+        localStorage.setItem(this.id, this.checked);
+    }
+    audioCheckBox.checked = localStorage.getItem("audio_cb") == "true";
+    videoCheckBox.checked = localStorage.getItem("video_cb") == "true";
+
+    // Check video box if no preferences exist
+    if (!localStorage.getItem("video_cb"))
+        videoCheckBox.checked = true;
 
     joinButton.disabled = !navigator.webkitGetUserMedia;
     joinButton.onclick = function (evt) {
-        if (!saveMediaPrefs()) {
+        if (!(audioCheckBox.checked || videoCheckBox.checked)) {
             alert("Choose at least audio or video");
             return;
         }
@@ -100,39 +109,6 @@ window.onload = function () {
     } else {
         // set a random session id
         document.getElementById("session_txt").value = Math.random().toString(16).substr(4);
-    }
-}
-
-function saveMediaPrefs() {
-    var prefs;
-    if (audioCheckBox.checked && videoCheckBox.checked)
-        prefs = "both";
-    else if (audioCheckBox.checked)
-        prefs = "audio";
-    else if (videoCheckBox.checked)
-        prefs = "video";
-    else
-        return false;
-    localStorage.setItem("media-prefs", prefs);
-    return true;
-}
-
-function updateMediaPrefs() {
-    var mediaPrefs = localStorage.getItem("media-prefs");
-    switch (mediaPrefs) {
-        case "audio":
-            audioCheckBox.checked = true;
-            videoCheckBox.checked = false;
-            break;
-        case "video":
-            audioCheckBox.checked = false;
-            videoCheckBox.checked = true;
-            break;
-        case "both":
-            audioCheckBox.checked = videoCheckBox.checked = true;
-            break;
-        default:
-            break;
     }
 }
 
