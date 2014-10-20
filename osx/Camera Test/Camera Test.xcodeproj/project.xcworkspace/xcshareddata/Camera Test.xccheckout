@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2926F92F-9F81-4831-9C55-C263E86FC0F4</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Camera Test</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>491B8B6CF6B731F7AD11E8B49B59BE536E603468</key>
+		<string>https://github.com/EricssonResearch/openwebrtc-examples.git</string>
+		<key>8700B771B68BFE3D622EDEE2EF612F550AE65F42</key>
+		<string>https://github.com/EricssonResearch/openwebrtc.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>osx/Camera Test/Camera Test.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>491B8B6CF6B731F7AD11E8B49B59BE536E603468</key>
+		<string>../../../..</string>
+		<key>8700B771B68BFE3D622EDEE2EF612F550AE65F42</key>
+		<string>../../../../../openwebrtc</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/EricssonResearch/openwebrtc-examples.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>491B8B6CF6B731F7AD11E8B49B59BE536E603468</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8700B771B68BFE3D622EDEE2EF612F550AE65F42</string>
+			<key>IDESourceControlWCCName</key>
+			<string>openwebrtc</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>491B8B6CF6B731F7AD11E8B49B59BE536E603468</string>
+			<key>IDESourceControlWCCName</key>
+			<string>openwebrtc-examples</string>
+		</dict>
+	</array>
+</dict>
+</plist>
