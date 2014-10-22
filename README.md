@@ -1,6 +1,15 @@
-Example apps showing how to use OpenWebRTC
-==========================================
+OpenWebRTC example apps
+=======================
 
-This repo contains a simple node.js-based WebRTC app that you can use for testing. We are also working on native client examples and hope to have them available shortly.
+This repo contains client examples showing how to use OpenWebRTC as well as simple WebRTC web app that can be used for testing.
 
-![Demo app](https://github.com/EricssonResearch/openwebrtc-browser-extensions/blob/master/imgs/demoapp.png)
+**Contents**
+
+iOS
+* Selfie - Uses the C API to show a self-view video. Video is rendered using OpenGL.
+
+OS X
+* Camera Test - Uses the C API to show a self-view video. Video is rendered using OpenGL.
+
+web
+* `channel_server.js` - Node.js based server and web application used for [http://demo.openwebrtc.io](http://demo.openwebrtc.io)
