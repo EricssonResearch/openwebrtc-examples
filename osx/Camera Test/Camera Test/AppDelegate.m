@@ -53,14 +53,14 @@ static void got_sources(GList *sources, gpointer user_data)
     while(sources) {
         OwrMediaSource *source = NULL;
         OwrMediaType media_type;
-        gchar *name = "";
+        OwrSourceType source_type;
 
         source = sources->data;
         g_assert(OWR_IS_MEDIA_SOURCE(source));
 
-        g_object_get(source, "name", &name, "media-type", &media_type, NULL);
+        g_object_get(source, "type", &source_type, "media-type", &media_type, NULL);
 
-        if (media_type == OWR_MEDIA_TYPE_VIDEO && strcasestr(name, "capture")) {
+        if (media_type == OWR_MEDIA_TYPE_VIDEO && source_type == OWR_SOURCE_TYPE_CAPTURE) {
             renderer = owr_video_renderer_new(SELF_VIEW_TAG);
             g_assert(renderer);
 
