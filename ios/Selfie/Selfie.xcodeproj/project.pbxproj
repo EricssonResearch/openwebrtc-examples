@@ -222,57 +222,15 @@
 		F8E999BF19F4DEC10009F66F /* my_environ.o in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9985E19F4DEBF0009F66F /* my_environ.o */; };
 		F8E999C019F4DEC10009F66F /* my_stat.o in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9985F19F4DEBF0009F66F /* my_stat.o */; };
 		F8E999C119F4DEC10009F66F /* libseed_sandbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9986119F4DEBF0009F66F /* libseed_sandbox.a */; };
-		F8E999C219F4DEC10009F66F /* daemon in Resources */ = {isa = PBXBuildFile; fileRef = F8E9988F19F4DEBF0009F66F /* daemon */; };
 		F8E999C319F4DEC10009F66F /* libopenwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E998A719F4DEBF0009F66F /* libopenwebrtc.a */; };
 		F8E999C419F4DEC10009F66F /* libopenwebrtc.la in Resources */ = {isa = PBXBuildFile; fileRef = F8E998A819F4DEBF0009F66F /* libopenwebrtc.la */; };
 		F8E999C519F4DEC10009F66F /* libopenwebrtc_bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E998A919F4DEBF0009F66F /* libopenwebrtc_bridge.a */; };
 		F8E999C619F4DEC10009F66F /* libopenwebrtc_bridge.la in Resources */ = {isa = PBXBuildFile; fileRef = F8E998AA19F4DEBF0009F66F /* libopenwebrtc_bridge.la */; };
 		F8E999C719F4DEC10009F66F /* openwebrtc-0.1.pc in Resources */ = {isa = PBXBuildFile; fileRef = F8E998AC19F4DEBF0009F66F /* openwebrtc-0.1.pc */; };
 		F8E999C819F4DEC10009F66F /* openwebrtc-bridge-0.1.pc in Resources */ = {isa = PBXBuildFile; fileRef = F8E998AD19F4DEBF0009F66F /* openwebrtc-bridge-0.1.pc */; };
-		F8E999C919F4DEC10009F66F /* ChangeLog in Resources */ = {isa = PBXBuildFile; fileRef = F8E998B119F4DEBF0009F66F /* ChangeLog */; };
-		F8E999CA19F4DEC10009F66F /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = F8E998B219F4DEBF0009F66F /* COPYING */; };
-		F8E999CB19F4DEC10009F66F /* daemon in Resources */ = {isa = PBXBuildFile; fileRef = F8E998B519F4DEBF0009F66F /* daemon */; };
-		F8E999CC19F4DEC10009F66F /* Owr-0.1.typelib in Resources */ = {isa = PBXBuildFile; fileRef = F8E998CE19F4DEBF0009F66F /* Owr-0.1.typelib */; };
 		F8E999CD19F4DEC10009F66F /* libopenwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E998CF19F4DEBF0009F66F /* libopenwebrtc.a */; };
 		F8E999CE19F4DEC20009F66F /* libopenwebrtc.la in Resources */ = {isa = PBXBuildFile; fileRef = F8E998D019F4DEBF0009F66F /* libopenwebrtc.la */; };
 		F8E999CF19F4DEC20009F66F /* libopenwebrtc_bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E998D119F4DEBF0009F66F /* libopenwebrtc_bridge.a */; };
-		F8E999D019F4DEC20009F66F /* libopenwebrtc_bridge.la in Resources */ = {isa = PBXBuildFile; fileRef = F8E998D219F4DEBF0009F66F /* libopenwebrtc_bridge.la */; };
-		F8E999D119F4DEC20009F66F /* openwebrtc-0.1.pc in Resources */ = {isa = PBXBuildFile; fileRef = F8E998D419F4DEBF0009F66F /* openwebrtc-0.1.pc */; };
-		F8E999D219F4DEC20009F66F /* openwebrtc-bridge-0.1.pc in Resources */ = {isa = PBXBuildFile; fileRef = F8E998D519F4DEBF0009F66F /* openwebrtc-bridge-0.1.pc */; };
-		F8E999D319F4DEC20009F66F /* ChangeLog in Resources */ = {isa = PBXBuildFile; fileRef = F8E998D919F4DEBF0009F66F /* ChangeLog */; };
-		F8E999D419F4DEC20009F66F /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = F8E998DA19F4DEBF0009F66F /* COPYING */; };
-		F8E999D519F4DEC20009F66F /* Owr-0.1.gir in Resources */ = {isa = PBXBuildFile; fileRef = F8E998DC19F4DEBF0009F66F /* Owr-0.1.gir */; };
-		F8E999D619F4DEC20009F66F /* annotation-glossary.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E019F4DEBF0009F66F /* annotation-glossary.html */; };
-		F8E999D719F4DEC20009F66F /* api-index-full.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E119F4DEBF0009F66F /* api-index-full.html */; };
-		F8E999D819F4DEC20009F66F /* ch01.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E219F4DEBF0009F66F /* ch01.html */; };
-		F8E999D919F4DEC20009F66F /* deprecated-api-index.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E319F4DEBF0009F66F /* deprecated-api-index.html */; };
-		F8E999DA19F4DEC20009F66F /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E419F4DEBF0009F66F /* home.png */; };
-		F8E999DB19F4DEC20009F66F /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E519F4DEBF0009F66F /* index.html */; };
-		F8E999DC19F4DEC20009F66F /* index.sgml in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E619F4DEBF0009F66F /* index.sgml */; };
-		F8E999DD19F4DEC20009F66F /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E719F4DEBF0009F66F /* left.png */; };
-		F8E999DE19F4DEC20009F66F /* object-tree.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E819F4DEBF0009F66F /* object-tree.html */; };
-		F8E999DF19F4DEC20009F66F /* openwebrtc-0.1.devhelp2 in Resources */ = {isa = PBXBuildFile; fileRef = F8E998E919F4DEBF0009F66F /* openwebrtc-0.1.devhelp2 */; };
-		F8E999E019F4DEC20009F66F /* openwebrtc-owr-local.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998EA19F4DEBF0009F66F /* openwebrtc-owr-local.html */; };
-		F8E999E119F4DEC20009F66F /* openwebrtc-owr-types.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998EB19F4DEBF0009F66F /* openwebrtc-owr-types.html */; };
-		F8E999E219F4DEC20009F66F /* openwebrtc-owr.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998EC19F4DEBF0009F66F /* openwebrtc-owr.html */; };
-		F8E999E319F4DEC20009F66F /* OwrAudioPayload.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998ED19F4DEBF0009F66F /* OwrAudioPayload.html */; };
-		F8E999E419F4DEC20009F66F /* OwrAudioRenderer.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998EE19F4DEBF0009F66F /* OwrAudioRenderer.html */; };
-		F8E999E519F4DEC20009F66F /* OwrCandidate.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998EF19F4DEBF0009F66F /* OwrCandidate.html */; };
-		F8E999E619F4DEC20009F66F /* OwrImageRenderer.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F019F4DEBF0009F66F /* OwrImageRenderer.html */; };
-		F8E999E719F4DEC20009F66F /* OwrImageServer.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F119F4DEBF0009F66F /* OwrImageServer.html */; };
-		F8E999E819F4DEC20009F66F /* OwrLocalMediaSource.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F219F4DEBF0009F66F /* OwrLocalMediaSource.html */; };
-		F8E999E919F4DEC20009F66F /* OwrMediaRenderer.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F319F4DEBF0009F66F /* OwrMediaRenderer.html */; };
-		F8E999EA19F4DEC20009F66F /* OwrMediaSession.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F419F4DEBF0009F66F /* OwrMediaSession.html */; };
-		F8E999EB19F4DEC20009F66F /* OwrMediaSource.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F519F4DEBF0009F66F /* OwrMediaSource.html */; };
-		F8E999EC19F4DEC20009F66F /* OwrPayload.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F619F4DEBF0009F66F /* OwrPayload.html */; };
-		F8E999ED19F4DEC20009F66F /* OwrRemoteMediaSource.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F719F4DEBF0009F66F /* OwrRemoteMediaSource.html */; };
-		F8E999EE19F4DEC20009F66F /* OwrSession.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F819F4DEBF0009F66F /* OwrSession.html */; };
-		F8E999EF19F4DEC20009F66F /* OwrTransportAgent.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998F919F4DEBF0009F66F /* OwrTransportAgent.html */; };
-		F8E999F019F4DEC20009F66F /* OwrVideoPayload.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998FA19F4DEBF0009F66F /* OwrVideoPayload.html */; };
-		F8E999F119F4DEC20009F66F /* OwrVideoRenderer.html in Resources */ = {isa = PBXBuildFile; fileRef = F8E998FB19F4DEBF0009F66F /* OwrVideoRenderer.html */; };
-		F8E999F219F4DEC20009F66F /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = F8E998FC19F4DEBF0009F66F /* right.png */; };
-		F8E999F319F4DEC20009F66F /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = F8E998FD19F4DEC00009F66F /* style.css */; };
-		F8E999F419F4DEC20009F66F /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = F8E998FE19F4DEC00009F66F /* up.png */; };
 		F8E999F619F4FDA50009F66F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E999F519F4FDA50009F66F /* GLKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -3910,56 +3868,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8E999F419F4DEC20009F66F /* up.png in Resources */,
-				F8E999E919F4DEC20009F66F /* OwrMediaRenderer.html in Resources */,
-				F8E999D419F4DEC20009F66F /* COPYING in Resources */,
 				F8E999C819F4DEC10009F66F /* openwebrtc-bridge-0.1.pc in Resources */,
-				F8E999DD19F4DEC20009F66F /* left.png in Resources */,
-				F8E999E819F4DEC20009F66F /* OwrLocalMediaSource.html in Resources */,
 				F8E999C619F4DEC10009F66F /* libopenwebrtc_bridge.la in Resources */,
-				F8E999EE19F4DEC20009F66F /* OwrSession.html in Resources */,
-				F8E999D719F4DEC20009F66F /* api-index-full.html in Resources */,
-				F8E999D819F4DEC20009F66F /* ch01.html in Resources */,
-				F8E999D019F4DEC20009F66F /* libopenwebrtc_bridge.la in Resources */,
-				F8E999F019F4DEC20009F66F /* OwrVideoPayload.html in Resources */,
 				F8E98D7619F264B20009F66F /* Main.storyboard in Resources */,
 				F8E98D7B19F264B20009F66F /* LaunchScreen.xib in Resources */,
-				F8E999D919F4DEC20009F66F /* deprecated-api-index.html in Resources */,
-				F8E999E619F4DEC20009F66F /* OwrImageRenderer.html in Resources */,
-				F8E999EB19F4DEC20009F66F /* OwrMediaSource.html in Resources */,
-				F8E999EC19F4DEC20009F66F /* OwrPayload.html in Resources */,
-				F8E999E719F4DEC20009F66F /* OwrImageServer.html in Resources */,
-				F8E999D119F4DEC20009F66F /* openwebrtc-0.1.pc in Resources */,
-				F8E999DB19F4DEC20009F66F /* index.html in Resources */,
-				F8E999D619F4DEC20009F66F /* annotation-glossary.html in Resources */,
 				F8E999C419F4DEC10009F66F /* libopenwebrtc.la in Resources */,
-				F8E999C219F4DEC10009F66F /* daemon in Resources */,
-				F8E999DE19F4DEC20009F66F /* object-tree.html in Resources */,
-				F8E999E019F4DEC20009F66F /* openwebrtc-owr-local.html in Resources */,
-				F8E999D519F4DEC20009F66F /* Owr-0.1.gir in Resources */,
-				F8E999EF19F4DEC20009F66F /* OwrTransportAgent.html in Resources */,
-				F8E999D219F4DEC20009F66F /* openwebrtc-bridge-0.1.pc in Resources */,
 				F8E98D7819F264B20009F66F /* Images.xcassets in Resources */,
-				F8E999E319F4DEC20009F66F /* OwrAudioPayload.html in Resources */,
-				F8E999E219F4DEC20009F66F /* openwebrtc-owr.html in Resources */,
-				F8E999E119F4DEC20009F66F /* openwebrtc-owr-types.html in Resources */,
-				F8E999CB19F4DEC10009F66F /* daemon in Resources */,
-				F8E999E519F4DEC20009F66F /* OwrCandidate.html in Resources */,
-				F8E999ED19F4DEC20009F66F /* OwrRemoteMediaSource.html in Resources */,
-				F8E999DF19F4DEC20009F66F /* openwebrtc-0.1.devhelp2 in Resources */,
-				F8E999F119F4DEC20009F66F /* OwrVideoRenderer.html in Resources */,
-				F8E999C919F4DEC10009F66F /* ChangeLog in Resources */,
-				F8E999CA19F4DEC10009F66F /* COPYING in Resources */,
 				F8E999CE19F4DEC20009F66F /* libopenwebrtc.la in Resources */,
-				F8E999DA19F4DEC20009F66F /* home.png in Resources */,
-				F8E999D319F4DEC20009F66F /* ChangeLog in Resources */,
-				F8E999F219F4DEC20009F66F /* right.png in Resources */,
-				F8E999EA19F4DEC20009F66F /* OwrMediaSession.html in Resources */,
-				F8E999F319F4DEC20009F66F /* style.css in Resources */,
-				F8E999CC19F4DEC10009F66F /* Owr-0.1.typelib in Resources */,
 				F8E999C719F4DEC10009F66F /* openwebrtc-0.1.pc in Resources */,
-				F8E999DC19F4DEC20009F66F /* index.sgml in Resources */,
-				F8E999E419F4DEC20009F66F /* OwrAudioRenderer.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4161,6 +4077,7 @@
 				F8E98D8C19F264B20009F66F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,0 +1,6 @@
+Intermediates
+Products
+DerivedData
+xcuserdata
+*.pbxuser
+.DS_Store
