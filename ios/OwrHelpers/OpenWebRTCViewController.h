@@ -31,14 +31,14 @@
 
 #import "OpenWebRTCWebView.h"
 
-@interface OpenWebRTCViewController : UIViewController <UIWebViewDelegate, OpenWebRTCWebViewDelegate>
+@interface OpenWebRTCViewController : UIViewController <WKNavigationDelegate, OpenWebRTCWebViewDelegate>
 {
     NSTimer *pageNavigationTimer;
 }
 
 @property (nonatomic, strong) IBOutlet GLKView *selfView;
 @property (nonatomic, strong) IBOutlet GLKView *remoteView;
-@property (weak, nonatomic) IBOutlet OpenWebRTCWebView *browserView;
+@property (strong, nonatomic) IBOutlet OpenWebRTCWebView *browserView;
 @property (nonatomic, strong) NSString *javascriptCode;
 
 + (void)initOpenWebRTC;

@@ -28,15 +28,6 @@
 
 #import "OpenWebRTCWebView.h"
 
-@interface UIWebView ()
-
-- (id)webView:(id)view identifierForInitialRequest:(id)initialRequest fromDataSource:(id)dataSource;
-- (void)webView:(id)view resource:(id)resource didFinishLoadingFromDataSource:(id)dataSource;
-- (void)webView:(id)view resource:(id)resource didFailLoadingWithError:(id)error fromDataSource:(id)dataSource;
-- (void)webView:(UIWebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(id)frame;
-
-@end
-
 @implementation OpenWebRTCWebView
 
 - (id)initWithFrame:(CGRect)frame
@@ -48,71 +39,6 @@
         resourceCompletedCount = 0;
     }
     return self;
-}
-
-- (BOOL)isOnPageWithURL: (NSString*) urlString
-{
-    return ([[self stringByEvaluatingJavaScriptFromString:@"window.location.href"] rangeOfString:urlString].location != NSNotFound);
-}
-
-- (NSString *)getCurrentHost
-{
-    return [self stringByEvaluatingJavaScriptFromString:@"window.location.host"];
-}
-
-- (id)webView:(id)view identifierForInitialRequest:(id)initialRequest fromDataSource:(id)dataSource
-{
-    resourceCount++;
-    return [super webView:view identifierForInitialRequest:initialRequest fromDataSource:dataSource];
-}
-
-- (void)webView:(id)view resource:(id)resource didFailLoadingWithError:(id)error fromDataSource:(id)dataSource 
-{
-    [super webView:view resource:resource didFailLoadingWithError:error fromDataSource:dataSource];
-    resourceCompletedCount++;
-/*    NSLog(@"completed fail: %d, total: %d", resourceCompletedCount, resourceCount);*/
-    [self setProgress:resourceCompletedCount ofTotal:resourceCount];
-}
-
-- (void)webView:(id)view resource:(id)resource didFinishLoadingFromDataSource:(id)dataSource
-{
-    [super webView:view resource:resource didFinishLoadingFromDataSource:dataSource];
-
-    resourceCompletedCount++;
-    [self setProgress:resourceCompletedCount ofTotal:resourceCount];
-}
-
-- (void)setProgress:(int)done ofTotal:(int) total
-{
-    float progress = 0;
-
-    if (resourceCompletedCount >= resourceCount) {
-        resourceCount = 0;
-        resourceCompletedCount = 0;
-    } else {
-        progress = ((float)done)/((float)total);
-    }
-    if ([self.delegate respondsToSelector:@selector(webviewProgress:)]) {
-        [self.owrDelegate webviewProgress:progress];
-    }
-}
-
-- (void)webView:(UIWebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(id)frame
-{
-    NSLog(@"now we can handle the alert message: %@", message);
-    if ([message rangeOfString:@"owr-message:video-rect"].location == 0) {
-        NSLog(@"got new info about video elems");
-        CGFloat sf = 1.0/([UIScreen mainScreen].scale);
-        NSArray *messageComps = [message componentsSeparatedByString:@","];
-        CGFloat x = [[messageComps objectAtIndex:2] floatValue];
-        CGFloat y = [[messageComps objectAtIndex:3] floatValue];
-        CGFloat width = [[messageComps objectAtIndex:4] floatValue] - x;
-        CGFloat height = [[messageComps objectAtIndex:5] floatValue] - y;
-        CGRect newRect = CGRectMake(x * sf, y * sf, width * sf, height * sf);
-        [self.owrDelegate newVideoRect:newRect forSelfView:[[messageComps objectAtIndex:1] boolValue]];
-    } else {
-        [super webView:sender runJavaScriptAlertPanelWithMessage:message initiatedByFrame:frame];
-    }
 }
 
 @end

@@ -71,30 +71,22 @@
 
     self.javascriptCode = @
         "(function () {"
-        "    if (window.RTCPeerConnection)"
-        "        return \"\";"
         "    var xhr = new XMLHttpRequest();"
         "    xhr.open(\"GET\", \"" kBridgeLocalURL "\", false);"
         "    xhr.send();"
         "    eval(xhr.responseText);"
-        "    return \"ok\";"
         "})()";
 
+    self.browserView = [[OpenWebRTCWebView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:self.browserView];
+
     self.browserView.owrDelegate = self;
+    self.browserView.navigationDelegate = self;
 
-    // Setup native video rendering.
-    /*
-    owr_window_registry_register(owr_window_registry_get(),
-                                 kSelfViewTag,
-                                 (__bridge gpointer)(self.selfView));
-    owr_window_registry_register(owr_window_registry_get(),
-                                 kRemoteViewTag,
-                                 (__bridge gpointer)(self.remoteView));
-
-    renderer = owr_video_renderer_new(kSelfViewTag);
-    g_assert(renderer);
-    g_object_set(renderer, "width", 1280, "height", 720, "max-framerate", 60.0, NULL);
-    */
+    WKUserScript *userScript = [[WKUserScript alloc] initWithSource:self.javascriptCode
+                                                      injectionTime:WKUserScriptInjectionTimeAtDocumentStart
+                                                   forMainFrameOnly:YES];
+    [self.browserView.configuration.userContentController addUserScript:userScript];
 }
 
 - (void)loadRequestWithURL:(NSString *)url
@@ -104,83 +96,6 @@
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
                                          timeoutInterval:10];
     [self.browserView loadRequest:request];
-}
-
-- (void)insertJavascript:(NSTimer*)theTimer
-{
-    if ([self.browserView isOnPageWithURL:_URL]) {
-        NSLog(@"injecting bootstrap script");
-        if ([self.browserView stringByEvaluatingJavaScriptFromString:self.javascriptCode].length > 0) {
-            NSLog(@"stopping timer");
-            [theTimer invalidate];
-        }
-    }
-}
-
-#pragma mark webview delegate stuff
-
-- (void)webViewDidStartLoad:(OpenWebRTCWebView *)webView
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    NSLog(@"webViewDidStartLoading...");
-
-    if (pageNavigationTimer.isValid)
-        [pageNavigationTimer invalidate];
-
-    NSLog(@"creating timer");
-    pageNavigationTimer = [NSTimer scheduledTimerWithTimeInterval:0
-                                                           target:self
-                                                         selector:@selector(insertJavascript:)
-                                                         userInfo:nil
-                                                          repeats:YES];
-    [self newVideoRect:CGRectZero forSelfView:YES];
-    [self newVideoRect:CGRectZero forSelfView:NO];
-}
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    return YES;
-}
-
-- (void)newVideoRect:(CGRect)rect forSelfView:(BOOL)rectIsSelfView
-{
-    if (rectIsSelfView) {
-        self.selfView.frame = rect;
-    } else {
-        self.remoteView.frame = rect;
-    }
-}
-
-- (void)webviewProgress:(float)progress
-{
-
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    NSURL *currentURL = webView.request.URL;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-    NSLog(@"webViewDidFinishLoading... %@", currentURL.absoluteString);
-
-    if (pageNavigationTimer.isValid)
-        [pageNavigationTimer invalidate];
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    [pageNavigationTimer invalidate];
-    NSLog(@"WEBVIEW LOADING ERROR ---- %@", [error description]);
-    if (error.code == -999) {
-        NSLog(@"Error: %@", error.localizedDescription);
-        return;
-    }
-    [[[UIAlertView alloc] initWithTitle:@"Could not load webpage"
-                                message:error.localizedDescription
-                               delegate:nil
-                      cancelButtonTitle:@"Close"
-                      otherButtonTitles: nil] show];
 }
 
 @end

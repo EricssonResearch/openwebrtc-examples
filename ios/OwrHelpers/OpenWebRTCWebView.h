@@ -27,6 +27,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 @protocol OpenWebRTCWebViewDelegate <NSObject>
 
@@ -36,7 +37,7 @@
 - (void)newVideoRect:(CGRect)rect forSelfView:(BOOL)rectIsSelfView;
 @end
 
-@interface OpenWebRTCWebView : UIWebView
+@interface OpenWebRTCWebView : WKWebView
 {
     int resourceCount;
     int resourceCompletedCount;
@@ -44,8 +45,5 @@
 
 @property (assign) id<OpenWebRTCWebViewDelegate> owrDelegate;
 @property (nonatomic) BOOL webGLEnabled;
-
-- (BOOL)isOnPageWithURL:(NSString *)urlString;
-- (NSString *)getCurrentHost;
 
 @end
