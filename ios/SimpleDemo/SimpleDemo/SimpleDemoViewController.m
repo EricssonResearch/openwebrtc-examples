@@ -48,8 +48,7 @@
 
     [self.navigationController setToolbarHidden:NO animated:NO];
 
-    callButton.enabled = NO;
-    hangupButton.enabled = NO;
+    joinButton.enabled = callButton.enabled = hangupButton.enabled = NO;
 
     // TODO: Send selfView and remoteView ref to OpenWebRTC.
     [self loadRequestWithURL:@"http://demo.openwebrtc.io"];
@@ -57,15 +56,8 @@
     self.browserView.hidden = NO;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    [super webViewDidStartLoad:webView];
-    joinButton.enabled = NO;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    [super webViewDidFinishLoad:webView];
     joinButton.enabled = YES;
 }
 
@@ -73,7 +65,7 @@
 {
     int room = [roomSlider value];
     NSString *js = [NSString stringWithFormat:@"document.getElementById('session_txt').value='%d';document.getElementById('join_but').click();", room];
-    [self.browserView stringByEvaluatingJavaScriptFromString:js];
+    [self.browserView evaluateJavaScript:js completionHandler:nil];
 
     joinButton.enabled = NO;
     callButton.enabled = YES;

@@ -4010,17 +4010,11 @@
 					"$(SRCROOT)/../../../openwebrtc/out/arm-apple-darwin10/lib/**",
 					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib/**",
 					"$(inherited)",
-					"/Users/stefan/Developer/github/openwebrtc/openwebrtc-deps-armv7-ios/lib/gio/modules",
-					"/Users/stefan/Developer/github/openwebrtc/openwebrtc-deps-armv7-ios/lib/gstreamer-1.0",
-					"/Users/stefan/Developer/github/openwebrtc/openwebrtc-deps-armv7-ios/lib",
-					"/Users/stefan/Developer/github/openwebrtc/openwebrtc-deps-armv7-ios/lib/seed-gtk3",
-					"/Users/stefan/Developer/github/openwebrtc/out/arm-apple-darwin10/lib",
-					"/Users/stefan/Developer/github/openwebrtc/out/x86_64-apple-darwin/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Selfie/Selfie-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/include/** $(SRCROOT)/../../../openwebrtc/out/arm-apple-darwin10/include/**";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = armv7;
 			};
 			name = Debug;
@@ -4043,17 +4037,11 @@
 					"$(SRCROOT)/../../../openwebrtc/out/arm-apple-darwin10/lib/**",
 					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib/**",
 					"$(inherited)",
-					"/Users/stefan/Developer/github/openwebrtc/openwebrtc-deps-armv7-ios/lib/gio/modules",
-					"/Users/stefan/Developer/github/openwebrtc/openwebrtc-deps-armv7-ios/lib/gstreamer-1.0",
-					"/Users/stefan/Developer/github/openwebrtc/openwebrtc-deps-armv7-ios/lib",
-					"/Users/stefan/Developer/github/openwebrtc/openwebrtc-deps-armv7-ios/lib/seed-gtk3",
-					"/Users/stefan/Developer/github/openwebrtc/out/arm-apple-darwin10/lib",
-					"/Users/stefan/Developer/github/openwebrtc/out/x86_64-apple-darwin/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Selfie/Selfie-Bridging-Header.h";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/include/** $(SRCROOT)/../../../openwebrtc/out/arm-apple-darwin10/include/**";
+				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = armv7;
 			};
 			name = Release;

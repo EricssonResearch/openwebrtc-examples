@@ -56,35 +56,24 @@
                                     <constraint firstAttribute="width" constant="108" id="oNH-MI-iH0"/>
                                 </constraints>
                             </glkView>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHb-dj-eVZ" customClass="OpenWebRTCWebView">
-                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="13c-Cy-sN9"/>
-                                </connections>
-                            </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Kay-Hn-ce7" firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" id="4Qu-PZ-adx"/>
                             <constraint firstAttribute="centerY" secondItem="VcG-7Y-8B7" secondAttribute="centerY" constant="-170.5" id="6M9-vF-wQk"/>
-                            <constraint firstItem="tHb-dj-eVZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="6u2-5R-nip"/>
                             <constraint firstItem="J2l-lT-9r1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Fr4-dt-Ebl"/>
                             <constraint firstItem="Kay-Hn-ce7" firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" id="GZH-oo-e2o"/>
                             <constraint firstItem="J2l-lT-9r1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="17" id="GZM-jZ-N4L"/>
                             <constraint firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" constant="-58" id="JHC-pB-igY"/>
-                            <constraint firstItem="tHb-dj-eVZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="Ja6-5n-wXL"/>
                             <constraint firstItem="VcG-7Y-8B7" firstAttribute="top" secondItem="Kay-Hn-ce7" secondAttribute="bottom" constant="8" id="ROW-y9-cjw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="e9N-Z4-9Q2" secondAttribute="bottom" constant="14" id="TwG-e0-G78"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8nY-QA-fvc" secondAttribute="trailing" constant="460" id="UUW-qL-PGZ"/>
                             <constraint firstItem="J2l-lT-9r1" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="WVq-b4-Z31"/>
                             <constraint firstAttribute="centerY" secondItem="e9N-Z4-9Q2" secondAttribute="centerY" constant="-227" id="c1w-yB-vlC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="tHb-dj-eVZ" secondAttribute="trailing" constant="-16" id="cO8-Re-GPh"/>
                             <constraint firstItem="e9N-Z4-9Q2" firstAttribute="leading" secondItem="8nY-QA-fvc" secondAttribute="trailing" constant="8" id="fd3-im-waX"/>
                             <constraint firstItem="e9N-Z4-9Q2" firstAttribute="top" secondItem="VcG-7Y-8B7" secondAttribute="bottom" constant="8" id="g3e-8c-YBB"/>
                             <constraint firstItem="VcG-7Y-8B7" firstAttribute="top" secondItem="Kay-Hn-ce7" secondAttribute="bottom" constant="8" id="lKt-Q7-CKJ"/>
                             <constraint firstItem="8nY-QA-fvc" firstAttribute="top" secondItem="J2l-lT-9r1" secondAttribute="bottom" constant="15" id="m5H-AJ-k1t"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="tHb-dj-eVZ" secondAttribute="bottom" id="nXD-7T-FLM"/>
                             <constraint firstItem="e9N-Z4-9Q2" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="pzS-3s-nBx"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8nY-QA-fvc" secondAttribute="bottom" constant="14" id="ugF-eg-Oh1"/>
                         </constraints>
@@ -122,7 +111,6 @@
                     <navigationItem key="navigationItem" title="Hybrid OpenWebRTC Demo" id="7r3-5r-MrZ"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="browserView" destination="tHb-dj-eVZ" id="O2p-dc-LaG"/>
                         <outlet property="callButton" destination="meE-Iu-5yq" id="Uch-Wh-swh"/>
                         <outlet property="hangupButton" destination="c6H-Ie-SZy" id="EHq-fY-jU4"/>
                         <outlet property="joinButton" destination="QSc-Lj-Oxp" id="iHl-jf-3ww"/>
