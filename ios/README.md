@@ -1,2 +1,3 @@
 # iOS examples
-Contains a simple self-view application that renders the local video in an OpenGL view. The application uses the OpenWebRTC C API.
+* Selfie - Uses the C API to show a self-view video. Video is rendered using OpenGL.
+* SimpleDemo - Hybrid (native/webview) app that wraps the [http://demo.openwebrtc.io](http://demo.openwebrtc.io).
