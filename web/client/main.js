@@ -7,6 +7,7 @@ if (isMozilla) {
     window.RTCIceCandidate = window.mozRTCIceCandidate;
 }
 
+var selfView;
 var remoteView;
 var callButton;
 var audioCheckBox;
@@ -18,13 +19,16 @@ var pc;
 var peer;
 var localStream;
 
+if (!window.hasOwnProperty("orientation"))
+    window.orientation = -90;
+
 // must use 'url' here since Firefox doesn't understand 'urls'
 var configuration = { "iceServers": [{ "url": "stun:stun.services.mozilla.com" }] };
 
 window.onload = function () {
+    selfView = document.getElementById("self_view");
     remoteView = document.getElementById("remote_view");
     callButton = document.getElementById("call_but");
-    var selfView = document.getElementById("self_view");
     var joinButton = document.getElementById("join_but");
     audioCheckBox = document.getElementById("audio_cb");
     videoCheckBox = document.getElementById("video_cb");
@@ -125,6 +129,9 @@ function handleMessage(evt) {
             if (pc.remoteDescription.type == "offer")
                 pc.createAnswer(localDescCreated, logError);
         }, logError);
+    } else if (!isNaN(message.orientation) && remoteView) {
+        var transform = "rotate(" + message.orientation + "deg)";
+        remoteView.style.transform = remoteView.style.webkitTransform = transform;
     } else
         pc.addIceCandidate(new RTCIceCandidate(message.candidate), function () {}, logError);
 }
@@ -154,6 +161,7 @@ function start(isInitiator) {
             remoteView.style.visibility = "visible";
         else
             audioOnlyView.style.visibility = "visible";
+        sendOrientationUpdate();
     };
 
     pc.addStream(localStream);
@@ -168,6 +176,20 @@ function localDescCreated(desc) {
         peer.send(JSON.stringify({ "sdp": pc.localDescription }));
     }, logError);
 }
+
+function sendOrientationUpdate() {
+    peer.send(JSON.stringify({ "orientation": window.orientation + 90 }));
+}
+
+window.onorientationchange = function () {
+    if (peer)
+        sendOrientationUpdate();
+
+    if (selfView) {
+        var transform = "rotate(" + (window.orientation + 90) + "deg)";
+        selfView.style.transform = selfView.style.webkitTransform = transform;
+    }
+};
 
 function logError(error) {
     if (error) {
