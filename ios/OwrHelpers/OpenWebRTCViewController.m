@@ -67,11 +67,7 @@
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
-    NSDictionary *dict = (NSDictionary *)message;
-
-    NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
-    NSLog(@"%@", [NSString stringWithUTF8String:[jsonData bytes]]);
+    NSLog(@"Placeholder: Received message from JavaScript");
 }
 
 - (void)viewDidLoad
