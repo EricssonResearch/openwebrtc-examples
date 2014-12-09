@@ -30,12 +30,17 @@
 #import <AVFoundation/AVAudioSession.h>
 
 #include <owr_bridge.h>
+#include <owr/owr.h>
+#include <owr/owr_local.h>
+#include <owr/owr_window_registry.h>
 
 #define kBridgeLocalURL @"http://localhost:10717/owr.js"
 
 @interface OpenWebRTCViewController ()
 {
     NSString *_URL;
+
+    NSMutableDictionary *renderers;
 }
 
 @end
@@ -67,12 +72,31 @@
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
-    NSLog(@"Placeholder: Received message from JavaScript");
+    NSDictionary *msg = (NSDictionary *)[message body];
+    NSLog(@"OWR message: %@", msg);
+
+    NSString *tag = msg[@"tag"];
+    if (!tag)
+        return;
+
+    /* Check if renderer has already been set up. */
+    if (![renderers valueForKey:tag]) {
+        id renderView = [@"capture" isEqualToString:msg[@"sourceType"]] ? self.selfView : self.remoteView;
+        owr_window_registry_register(owr_window_registry_get(),
+                                     [tag UTF8String],
+                                     (__bridge gpointer)(renderView));
+
+        [renderers setObject:msg[@"sourceType"] forKey:tag];
+        self.browserView.hidden = YES;
+        self.selfView.hidden = NO;
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    renderers = [NSMutableDictionary dictionary];
 
     self.javascriptCode = @
         "(function () {"
