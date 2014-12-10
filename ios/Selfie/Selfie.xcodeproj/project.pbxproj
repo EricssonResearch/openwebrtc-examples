@@ -156,7 +156,6 @@
 		F8E9997D19F4DEC10009F66F /* libgstvpx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9981819F4DEBF0009F66F /* libgstvpx.a */; };
 		F8E9997E19F4DEC10009F66F /* libgstwavenc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9981919F4DEBF0009F66F /* libgstwavenc.a */; };
 		F8E9997F19F4DEC10009F66F /* libgstwavparse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9981A19F4DEBF0009F66F /* libgstwavparse.a */; };
-		F8E9998019F4DEC10009F66F /* libgstximagesrc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9981B19F4DEBF0009F66F /* libgstximagesrc.a */; };
 		F8E9998119F4DEC10009F66F /* libgsty4mdec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9981C19F4DEBF0009F66F /* libgsty4mdec.a */; };
 		F8E9998219F4DEC10009F66F /* libgsty4menc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9981D19F4DEBF0009F66F /* libgsty4menc.a */; };
 		F8E9998319F4DEC10009F66F /* libasprintf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9981E19F4DEBF0009F66F /* libasprintf.a */; };
@@ -1508,7 +1507,6 @@
 				F8E9993519F4DEC00009F66F /* libgstgio.a in Frameworks */,
 				F8E9998F19F4DEC10009F66F /* libgobject-2.0.a in Frameworks */,
 				F8E9992519F4DEC00009F66F /* libgstdtmf.a in Frameworks */,
-				F8E9998019F4DEC10009F66F /* libgstximagesrc.a in Frameworks */,
 				F8E9997119F4DEC10009F66F /* libgstvideocrop.a in Frameworks */,
 				F8E9998B19F4DEC10009F66F /* libgmodule-2.0.a in Frameworks */,
 				F8E9999F19F4DEC10009F66F /* libgstpbutils-1.0.a in Frameworks */,
