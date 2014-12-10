@@ -37,15 +37,28 @@
 
 #define SELF_VIEW_TAG "self-view"
 
+static SelfViewController *staticSelf;
+
 @interface SelfViewController ()
 
 @property (weak) IBOutlet OpenWebRTCVideoView *selfView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *cameraSelector;
+@property (strong) NSMutableDictionary *segments;
 
 @end
 
 @implementation SelfViewController
 
 OwrVideoRenderer *renderer;
+
+- (IBAction)cameraSelected:(id)sender
+{
+    NSString *key = [[self.segments allKeys] objectAtIndex:self.cameraSelector.selectedSegmentIndex];
+    OwrMediaSource *source = [[self.segments objectForKey:key] pointerValue];
+
+    NSLog(@"Switching to %@ : %p", key, source);
+    owr_media_renderer_set_source(OWR_MEDIA_RENDERER(renderer), source);
+}
 
 - (void)viewDidLoad
 {
@@ -57,15 +70,20 @@ OwrVideoRenderer *renderer;
     NSLog(@"Registering self view %@", self.selfView);
     owr_window_registry_register(owr_window_registry_get(), SELF_VIEW_TAG, (__bridge gpointer)(self.selfView));
 
+    staticSelf = self;
     NSLog(@"Getting capture sources...");
     owr_get_capture_sources(OWR_MEDIA_TYPE_VIDEO, got_sources, NULL);
 }
 
 static void got_sources(GList *sources, gpointer user_data)
 {
+    gboolean have_video = FALSE;
     g_assert(sources);
 
+    staticSelf.segments = [NSMutableDictionary dictionary];
+
     while (sources) {
+        gchar *name;
         OwrMediaSource *source = NULL;
         OwrMediaType media_type;
         OwrMediaType source_type;
@@ -73,19 +91,38 @@ static void got_sources(GList *sources, gpointer user_data)
         source = sources->data;
         g_assert(OWR_IS_MEDIA_SOURCE(source));
 
-        g_object_get(source, "type", &source_type, "media-type", &media_type, NULL);
+        g_object_get(source, "name", &name, "type", &source_type, "media-type", &media_type, NULL);
 
-        if (media_type == OWR_MEDIA_TYPE_VIDEO && source_type == OWR_SOURCE_TYPE_CAPTURE) {
+        /* We ref the sources because we want them to stay around. On iOS they will never be
+         * unplugged, I expect, but it's safer this way. */
+        g_object_ref(source);
+
+        [staticSelf.segments setObject:[NSValue valueWithPointer:source] forKey:[NSString stringWithUTF8String:name]];
+
+        g_print("[%s/%s] %s\n", media_type == OWR_MEDIA_TYPE_AUDIO ? "audio" : "video",
+                source_type == OWR_SOURCE_TYPE_CAPTURE ? "capture" : source_type == OWR_SOURCE_TYPE_TEST ? "test" : "unknown",
+                name);
+
+        if (!have_video && media_type == OWR_MEDIA_TYPE_VIDEO && source_type == OWR_SOURCE_TYPE_CAPTURE) {
             renderer = owr_video_renderer_new(SELF_VIEW_TAG);
             g_assert(renderer);
 
             g_object_set(renderer, "width", 1280, "height", 720, "max-framerate", 60.0, NULL);
 
             owr_media_renderer_set_source(OWR_MEDIA_RENDERER(renderer), source);
-            break;
+            have_video = TRUE;
         }
+
         sources = sources->next;
     }
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [staticSelf.cameraSelector removeAllSegments];
+        for (NSString *item in staticSelf.segments) {
+            [staticSelf.cameraSelector insertSegmentWithTitle:item atIndex:staticSelf.cameraSelector.numberOfSegments animated:NO];
+        }
+        staticSelf.cameraSelector.selectedSegmentIndex = 0;
+    });
 }
 
 @end

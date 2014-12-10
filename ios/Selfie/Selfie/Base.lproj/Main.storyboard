@@ -19,6 +19,18 @@
                         <subviews>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U7U-J1-C9m" customClass="OpenWebRTCVideoView">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6cB-UX-mhq">
+                                        <rect key="frame" x="213" y="24" width="240" height="29"/>
+                                        <segments>
+                                            <segment title="First"/>
+                                            <segment title="Second"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="cameraSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="yqM-AW-zr3"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -32,6 +44,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="cameraSelector" destination="6cB-UX-mhq" id="Wh9-PY-sO4"/>
                         <outlet property="selfView" destination="U7U-J1-C9m" id="wgY-xJ-aap"/>
                     </connections>
                 </viewController>
