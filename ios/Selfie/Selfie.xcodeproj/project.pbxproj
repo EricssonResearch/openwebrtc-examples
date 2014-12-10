@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74DCA1951A38E01A00BF8F41 /* OpenWebRTCVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 74DCA1901A38E01A00BF8F41 /* OpenWebRTCVideoView.m */; };
 		F8E98D7119F264B20009F66F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E98D7019F264B20009F66F /* AppDelegate.swift */; };
 		F8E98D7619F264B20009F66F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8E98D7419F264B20009F66F /* Main.storyboard */; };
 		F8E98D7819F264B20009F66F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8E98D7719F264B20009F66F /* Images.xcassets */; };
@@ -234,6 +235,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		74DCA18F1A38E01A00BF8F41 /* OpenWebRTCVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenWebRTCVideoView.h; sourceTree = "<group>"; };
+		74DCA1901A38E01A00BF8F41 /* OpenWebRTCVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenWebRTCVideoView.m; sourceTree = "<group>"; };
 		F8E98D6B19F264B20009F66F /* Selfie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selfie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8E98D6F19F264B20009F66F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8E98D7019F264B20009F66F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1703,6 +1706,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74DCA18E1A38E01A00BF8F41 /* OwrHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				74DCA18F1A38E01A00BF8F41 /* OpenWebRTCVideoView.h */,
+				74DCA1901A38E01A00BF8F41 /* OpenWebRTCVideoView.m */,
+			);
+			name = OwrHelpers;
+			path = ../../OwrHelpers;
+			sourceTree = "<group>";
+		};
 		F8E98D6219F264B10009F66F = {
 			isa = PBXGroup;
 			children = (
@@ -1723,13 +1736,14 @@
 		F8E98D6D19F264B20009F66F /* Selfie */ = {
 			isa = PBXGroup;
 			children = (
+				74DCA18E1A38E01A00BF8F41 /* OwrHelpers */,
 				F8E98D7019F264B20009F66F /* AppDelegate.swift */,
 				F8E98D7419F264B20009F66F /* Main.storyboard */,
 				F8E98D7719F264B20009F66F /* Images.xcassets */,
 				F8E98D7919F264B20009F66F /* LaunchScreen.xib */,
-				F8E98D6E19F264B20009F66F /* Supporting Files */,
 				F8E993CA19F42A3A0009F66F /* SelfViewController.h */,
 				F8E993CB19F42A3A0009F66F /* SelfViewController.m */,
+				F8E98D6E19F264B20009F66F /* Supporting Files */,
 			);
 			path = Selfie;
 			sourceTree = "<group>";
@@ -3884,6 +3898,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74DCA1951A38E01A00BF8F41 /* OpenWebRTCVideoView.m in Sources */,
 				F8E98D7119F264B20009F66F /* AppDelegate.swift in Sources */,
 				F8E993CC19F42A3A0009F66F /* SelfViewController.m in Sources */,
 			);

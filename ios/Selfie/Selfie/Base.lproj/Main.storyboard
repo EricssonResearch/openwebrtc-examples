@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,22 +17,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" enableSetNeedsDisplay="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0d-y2-FYX">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U7U-J1-C9m" customClass="OpenWebRTCVideoView">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                            </glkView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="f0d-y2-FYX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="F9T-Y7-UKl"/>
-                            <constraint firstItem="f0d-y2-FYX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="KQH-KP-zuG"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="f0d-y2-FYX" secondAttribute="bottom" id="Pkf-ar-G78"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="f0d-y2-FYX" secondAttribute="trailing" constant="-16" id="wfX-nv-mHN"/>
+                            <constraint firstItem="U7U-J1-C9m" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="0J0-3k-k2g"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="U7U-J1-C9m" secondAttribute="trailing" id="JqT-vw-1Dc"/>
+                            <constraint firstItem="U7U-J1-C9m" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="OwO-Lc-Bwf"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="U7U-J1-C9m" secondAttribute="bottom" id="SMT-UU-vik"/>
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="selfView" destination="f0d-y2-FYX" id="Tm0-DB-sOp"/>
+                        <outlet property="selfView" destination="U7U-J1-C9m" id="wgY-xJ-aap"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

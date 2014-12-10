@@ -28,7 +28,7 @@
 //
 
 #import "SelfViewController.h"
-#import <GLKit/GLKit.h>
+#import "OpenWebRTCVideoView.h"
 
 #include <owr/owr.h>
 #include <owr/owr_local.h>
@@ -39,7 +39,7 @@
 
 @interface SelfViewController ()
 
-@property (weak) IBOutlet GLKView *selfView;
+@property (weak) IBOutlet OpenWebRTCVideoView *selfView;
 
 @end
 
