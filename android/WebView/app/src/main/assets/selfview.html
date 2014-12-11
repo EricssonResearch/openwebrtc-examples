@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>OpenWebRTC WebView self-view example</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <style>
+        body {
+            margin: 0;
+            text-align: center;
+            background-color: DarkGray;
+        }
+        #selfView {
+            max-width: 133vh;
+            -webkit-transform: rotate(0deg);
+            height: 100%;
+            width: 100%;
+        }
+
+        @media screen and (orientation:portrait) {
+            #selfView {
+                -webkit-transform: rotate(90deg);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <video id="selfView" autoplay></video>
+    <script type="text/javascript">
+        window.onload = function() {
+            var constraints = {
+                audio: false,
+                video: true
+            };
+
+            navigator.webkitGetUserMedia(constraints,
+                function successCallback(stream) {
+                    selfView.src = window.webkitURL.createObjectURL(stream);
+                },
+                function errorCallback(error) {
+                    console.log("navigator.webkitGetUserMedia error: ", error);
+                }
+            );
+        };
+    </script>
+</body>
+</html>
