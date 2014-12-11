@@ -14,35 +14,40 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U7U-J1-C9m" customClass="OpenWebRTCVideoView">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="U7U-J1-C9m" customClass="OpenWebRTCVideoView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6cB-UX-mhq">
-                                        <rect key="frame" x="213" y="24" width="240" height="29"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6cB-UX-mhq">
+                                        <rect key="frame" x="203" y="24" width="195" height="29"/>
                                         <segments>
-                                            <segment title="First"/>
-                                            <segment title="Second"/>
+                                            <segment title="Back Camera"/>
+                                            <segment title="Front Camera"/>
                                         </segments>
                                         <connections>
                                             <action selector="cameraSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="yqM-AW-zr3"/>
                                         </connections>
                                     </segmentedControl>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="6cB-UX-mhq" firstAttribute="top" secondItem="U7U-J1-C9m" secondAttribute="top" constant="24" id="M5Q-uC-47b"/>
+                                    <constraint firstItem="6cB-UX-mhq" firstAttribute="centerX" secondItem="U7U-J1-C9m" secondAttribute="centerX" id="TXz-aI-mEU"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="U7U-J1-C9m" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="0J0-3k-k2g"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="U7U-J1-C9m" secondAttribute="trailing" id="JqT-vw-1Dc"/>
-                            <constraint firstItem="U7U-J1-C9m" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="OwO-Lc-Bwf"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="U7U-J1-C9m" secondAttribute="bottom" id="5du-FH-JIA"/>
+                            <constraint firstItem="U7U-J1-C9m" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="O3G-HO-gwJ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="U7U-J1-C9m" secondAttribute="bottom" id="SMT-UU-vik"/>
+                            <constraint firstAttribute="trailing" secondItem="U7U-J1-C9m" secondAttribute="trailing" id="Y3Q-fw-mSf"/>
+                            <constraint firstItem="U7U-J1-C9m" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ykN-ej-aqj"/>
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="cameraSelector" destination="6cB-UX-mhq" id="Wh9-PY-sO4"/>
                         <outlet property="selfView" destination="U7U-J1-C9m" id="wgY-xJ-aap"/>
