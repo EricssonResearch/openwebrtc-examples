@@ -1,0 +1,96 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:keepScreenOn="true">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#88ffffff"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:text="Simple WebRTC Example"
+            android:textColor="#333"
+            android:textSize="24sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/session_id"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ems="6"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:hint="Session id"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="lol"
+                android:textColor="#333"/>
+
+            <Button
+                android:id="@+id/join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:fontFamily="sans-serif-light"
+                android:onClick="onJoinClicked"
+                android:text="Join"
+                android:textColor="#333"/>
+
+            <Button
+                android:id="@+id/call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:fontFamily="sans-serif-light"
+                android:onClick="onCallClicked"
+                android:text="Call"
+                android:textColor="#333"/>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Audio"
+            android:textColor="#333"/>
+
+        <CheckBox
+            android:id="@+id/video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:checked="true"
+            android:fontFamily="sans-serif-light"
+            android:text="Video"
+            android:textColor="#333"/>
+    </LinearLayout>
+
+    <include layout="@layout/video_layout"/>
+</FrameLayout>
