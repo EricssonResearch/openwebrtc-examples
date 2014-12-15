@@ -344,7 +344,7 @@ public class PeerHandler implements SignalingChannel.MessageListener {
                     JSONObject json = mMediaDescription.serializeCandidate(candidate);
                     JSONObject message = new JSONObject();
                     message.put("candidate", json);
-                    mPeerChannel.send(json);
+                    mPeerChannel.send(message);
                 } catch (JSONException exception) {
                     Log.w(TAG, "failed to serialize candidate: " + exception);
                 }
