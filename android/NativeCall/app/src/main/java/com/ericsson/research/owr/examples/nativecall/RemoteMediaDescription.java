@@ -88,6 +88,9 @@ class RemoteMediaDescription {
             try {
                 CodecType codecType = CodecType.valueOf(encodingName.toUpperCase());
                 int payloadType = payload.getInt("type");
+                if (payloadType == 126) { // FIXME: tmp fix for firefox, since we don't support packetization-mode=1
+                    continue;
+                }
                 int clockRate = payload.getInt("clockRate");
 
                 if (mMediaType == MediaType.VIDEO) {
