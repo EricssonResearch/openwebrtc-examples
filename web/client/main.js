@@ -118,10 +118,11 @@ window.onload = function () {
 
 // handle signaling messages received from the other peer
 function handleMessage(evt) {
-    if (!pc)
+    var message = JSON.parse(evt.data);
+
+    if (!pc && (message.sdp || message.candidate))
         start(false);
 
-    var message = JSON.parse(evt.data);
     if (message.sdp) {
         var desc = new RTCSessionDescription(message.sdp);
         pc.setRemoteDescription(desc, function () {
