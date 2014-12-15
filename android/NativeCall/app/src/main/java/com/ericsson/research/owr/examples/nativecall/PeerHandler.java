@@ -205,13 +205,6 @@ public class PeerHandler implements SignalingChannel.MessageListener {
             mVideoSession = createMediaSession(isInitiator, mediaDescription);
             mMediaController.setVideoSession(mVideoSession);
         }
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onLocalDescriptionCompleted();
-            }
-        }, 10000);
     }
 
     private MediaSession createMediaSession(boolean isInitiator, LocalMediaDescription mediaDescription) {
@@ -220,29 +213,25 @@ public class PeerHandler implements SignalingChannel.MessageListener {
         for (Payload payload : mediaDescription.getPayloads()) {
             mediaSession.addReceivePayload(clonePayload(payload));
         }
-        mediaSession.addNewCandidateListener(new InternalCandidateListener(mediaDescription));
+        MediaSessionEventListener mediaSessionEventListener = new MediaSessionEventListener(mediaDescription);
+        mediaSession.addNewCandidateListener(mediaSessionEventListener);
+        mediaSession.addDtlsCertificateChangeListener(mediaSessionEventListener);
+        mediaSession.addSendSsrcChangeListener(mediaSessionEventListener);
+        mediaSession.addCnameChangeListener(mediaSessionEventListener);
         mTransportAgent.addSession(mediaSession);
         return mediaSession;
+    }
+
+    private void continueIfLocalDescriptionIsComplete() {
+        if (mLocalDescription.isComplete()) {
+            onLocalDescriptionCompleted();
+        }
     }
 
     private synchronized void onLocalDescriptionCompleted() {
         if (!mState.canSendLocalDescription()) {
             Log.w(TAG, "invalid state when completing local description: " + mState);
             return;
-        }
-
-        LocalMediaDescription videoDescription = mLocalDescription.getMediaDescription(MediaType.VIDEO);
-        if (videoDescription != null) {
-            videoDescription.setCname(mVideoSession.getCname());
-            videoDescription.setDtlsCertificate(mVideoSession.getDtlsCertificate());
-            videoDescription.addSsrc(mVideoSession.getSendSsrc());
-        }
-
-        LocalMediaDescription audioDescription = mLocalDescription.getMediaDescription(MediaType.AUDIO);
-        if (audioDescription != null) {
-            audioDescription.setCname(mAudioSession.getCname());
-            audioDescription.setDtlsCertificate(mAudioSession.getDtlsCertificate());
-            audioDescription.addSsrc(mAudioSession.getSendSsrc());
         }
 
         try {
@@ -337,10 +326,14 @@ public class PeerHandler implements SignalingChannel.MessageListener {
         }
     }
 
-    private class InternalCandidateListener implements Session.NewCandidateListener {
+    private class MediaSessionEventListener implements
+            Session.NewCandidateListener,
+            Session.DtlsCertificateChangeListener,
+            MediaSession.SendSsrcChangeListener,
+            MediaSession.CnameChangeListener {
         private final LocalMediaDescription mMediaDescription;
 
-        public InternalCandidateListener(LocalMediaDescription mediaDescription) {
+        public MediaSessionEventListener(LocalMediaDescription mediaDescription) {
             mMediaDescription = mediaDescription;
         }
 
@@ -356,8 +349,31 @@ public class PeerHandler implements SignalingChannel.MessageListener {
                     Log.w(TAG, "failed to serialize candidate: " + exception);
                 }
             } else {
+                Log.d(TAG, "onNewCandidate: " + candidate);
                 mMediaDescription.addCandidate(candidate);
+                continueIfLocalDescriptionIsComplete();
             }
+        }
+
+        @Override
+        public void onCnameChanged(final String cname) {
+            Log.d(TAG, "onCnameChanged: " + cname);
+            mMediaDescription.setCname(cname);
+            continueIfLocalDescriptionIsComplete();
+        }
+
+        @Override
+        public void onDtlsCertificateChanged(final String pem) {
+            Log.d(TAG, "onDtlsCertificateChanged: " + pem);
+            mMediaDescription.setDtlsCertificate(pem);
+            continueIfLocalDescriptionIsComplete();
+        }
+
+        @Override
+        public void onSendSsrcChanged(final int ssrc) {
+            Log.d(TAG, "onSendSsrcChanged: " + ssrc);
+            mMediaDescription.addSsrc(ssrc);
+            continueIfLocalDescriptionIsComplete();
         }
     }
 
