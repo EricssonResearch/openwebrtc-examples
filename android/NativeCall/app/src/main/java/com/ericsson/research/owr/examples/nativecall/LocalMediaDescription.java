@@ -349,7 +349,7 @@ class LocalMediaDescription {
         try {
             byte[] der = Base64.decode(base64der.getBytes("UTF8"), Base64.NO_WRAP | Base64.NO_PADDING | Base64.CRLF);
             if (der != null) {
-                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                MessageDigest digest = MessageDigest.getInstance(hashFunction.toUpperCase());
                 byte[] derHash = digest.digest(der);
 
                 StringBuilder fingerprintBuilder = new StringBuilder(derHash.length * 3 - 1);
