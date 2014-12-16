@@ -73,11 +73,25 @@ function SignalingChannel(sessionId) {
             fireEvent({"type": "disconnect" }, listeners);
         };
 
-        this.send = function (message) {
+        var sendQueue = [];
+
+        function processSendQueue() {
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/ctos/" + sessionId + "/" + userId + "/" + peerUserId);
             xhr.setRequestHeader("Content-Type", "text/plain");
-            xhr.send(message);
+            xhr.send(sendQueue[0]);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == xhr.DONE) {
+                    sendQueue.shift();
+                    if (sendQueue.length > 0)
+                        processSendQueue();
+                }
+            };
+        }
+
+        this.send = function (message) {
+            if (sendQueue.push(message) == 1)
+                processSendQueue();
         };
     }
 
