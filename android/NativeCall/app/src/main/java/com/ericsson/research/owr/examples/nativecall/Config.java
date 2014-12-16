@@ -33,7 +33,7 @@ import com.ericsson.research.owr.Payload;
 import com.ericsson.research.owr.VideoPayload;
 
 public class Config {
-    public static final String SERVER_BASE_ADDRESS = "http://demo.openwebrtc.io:38080";
+    public static final String DEFAULT_SERVER_ADDRESS = "http://demo.openwebrtc.io:38080";
 
     public static final HelperServer[] HELPER_SERVERS = new HelperServer[] {
             new HelperServer(HelperServerType.STUN, "stun.l.google.com", 19302, "", ""),

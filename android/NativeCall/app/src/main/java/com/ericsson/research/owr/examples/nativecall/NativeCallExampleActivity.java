@@ -27,18 +27,20 @@ package com.ericsson.research.owr.examples.nativecall;
 
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.graphics.SurfaceTexture;
 import android.os.Bundle;
-import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ericsson.research.owr.CaptureSourcesCallback;
@@ -46,11 +48,14 @@ import com.ericsson.research.owr.MediaSource;
 import com.ericsson.research.owr.MediaType;
 import com.ericsson.research.owr.Owr;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class NativeCallExampleActivity extends Activity implements SignalingChannel.JoinListener, SignalingChannel.DisconnectListener, SignalingChannel.SessionFullListener, PeerHandler.CallStateListener {
     private static final String TAG = "NativeCallExampleActivity";
+
+    private static final String PREFERENCE_KEY_SERVER_URL = "url";
+    private static final int SETTINGS_ANIMATION_DURATION = 400;
+    private static final int SETTINGS_ANIMATION_ANGLE = 90;
 
     /**
      * Initialize OpenWebRTC at startup
@@ -65,11 +70,15 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
         });
     }
 
+
     private Button mJoinButton;
     private Button mCallButton;
     private EditText mSessionInput;
     private CheckBox mAudioCheckBox;
     private CheckBox mVideoCheckBox;
+    private EditText mUrlSetting;
+    private View mHeader;
+    private View mSettingsHeader;
 
     private SignalingChannel mSignalingChannel;
     private PeerHandler mPeerHandler;
@@ -115,6 +124,30 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
         mSessionInput = (EditText) findViewById(R.id.session_id);
         mAudioCheckBox = (CheckBox) findViewById(R.id.audio);
         mVideoCheckBox = (CheckBox) findViewById(R.id.video);
+
+        mHeader = findViewById(R.id.header);
+        mHeader.setCameraDistance(getResources().getDisplayMetrics().widthPixels * 5);
+        mHeader.setPivotX(getResources().getDisplayMetrics().widthPixels / 2);
+        mHeader.setPivotY(0);
+        mSettingsHeader = findViewById(R.id.settings_header);
+        mSettingsHeader.setCameraDistance(getResources().getDisplayMetrics().widthPixels * 5);
+        mSettingsHeader.setPivotX(getResources().getDisplayMetrics().widthPixels / 2);
+        mSettingsHeader.setPivotY(0);
+
+        mUrlSetting = (EditText) findViewById(R.id.url_setting);
+        mUrlSetting.setText(getUrl());
+        mUrlSetting.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(final TextView view, final int actionId, final KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    hideSettings();
+                    String url = view.getText().toString();
+                    saveUrl(url);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void onCallClicked(final View view) {
@@ -149,7 +182,7 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
 
         mMediaController.showSelfView();
 
-        mSignalingChannel = new SignalingChannel(Config.SERVER_BASE_ADDRESS, sessionId);
+        mSignalingChannel = new SignalingChannel(getUrl(), sessionId);
         mSignalingChannel.setJoinListener(this);
         mSignalingChannel.setDisconnectListener(this);
         mSignalingChannel.setSessionFullListener(this);
@@ -194,6 +227,59 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
     public void onSessionFull() {
         Toast.makeText(this, "Session is full", Toast.LENGTH_LONG).show();
         mJoinButton.setEnabled(true);
+    }
+
+    public void onSettingsClicked(final View view) {
+        showSettings();
+    }
+
+    public void onCancelSettingsClicked(final View view) {
+        hideSettings();
+    }
+
+    private void showSettings() {
+        mUrlSetting.requestFocus();
+        mInputMethodManager.showSoftInput(mUrlSetting, InputMethodManager.SHOW_IMPLICIT);
+        mSettingsHeader.setVisibility(View.VISIBLE);
+        mSettingsHeader.setRotationX(SETTINGS_ANIMATION_ANGLE);
+        mSettingsHeader.animate().rotationX(0).setDuration(SETTINGS_ANIMATION_DURATION).start();
+        mHeader.setVisibility(View.VISIBLE);
+        mHeader.animate()
+                .rotationX(-SETTINGS_ANIMATION_ANGLE)
+                .setDuration(SETTINGS_ANIMATION_DURATION)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHeader.setVisibility(View.INVISIBLE);
+                    }
+                }).start();
+    }
+
+    private void hideSettings() {
+        mInputMethodManager.hideSoftInputFromWindow(mUrlSetting.getWindowToken(), 0);
+        mHeader.setVisibility(View.VISIBLE);
+        mHeader.setRotationX(SETTINGS_ANIMATION_ANGLE);
+        mHeader.animate().rotationX(0).setDuration(SETTINGS_ANIMATION_DURATION).start();
+        mSettingsHeader.setVisibility(View.VISIBLE);
+        mSettingsHeader.animate()
+                .rotationX(-SETTINGS_ANIMATION_ANGLE)
+                .setDuration(SETTINGS_ANIMATION_DURATION)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSettingsHeader.setVisibility(View.INVISIBLE);
+                    }
+                }).start();
+    }
+
+    private void saveUrl(final String url) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putString(PREFERENCE_KEY_SERVER_URL, url).commit();
+    }
+
+    private String getUrl() {
+        return PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(PREFERENCE_KEY_SERVER_URL, Config.DEFAULT_SERVER_ADDRESS);
     }
 
     /**
