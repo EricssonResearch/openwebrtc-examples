@@ -47,7 +47,7 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="lol"
-                android:textColor="#333"/>
+                android:textColor="@color/default_text"/>
 
             <Button
                 android:id="@+id/join"
@@ -57,7 +57,7 @@
                 android:fontFamily="sans-serif-light"
                 android:onClick="onJoinClicked"
                 android:text="Join"
-                android:textColor="#333"/>
+                android:textColor="@color/default_text"/>
 
             <Button
                 android:id="@+id/call"
@@ -67,7 +67,7 @@
                 android:fontFamily="sans-serif-light"
                 android:onClick="onCallClicked"
                 android:text="Call"
-                android:textColor="#333"/>
+                android:textColor="@color/default_text"/>
         </LinearLayout>
 
         <CheckBox
@@ -78,7 +78,7 @@
             android:layout_marginStart="10dp"
             android:fontFamily="sans-serif-light"
             android:text="Audio"
-            android:textColor="#333"/>
+            android:textColor="@color/default_text"/>
 
         <CheckBox
             android:id="@+id/video"
@@ -89,7 +89,7 @@
             android:checked="true"
             android:fontFamily="sans-serif-light"
             android:text="Video"
-            android:textColor="#333"/>
+            android:textColor="@color/default_text"/>
     </LinearLayout>
 
     <include layout="@layout/video_layout"/>
