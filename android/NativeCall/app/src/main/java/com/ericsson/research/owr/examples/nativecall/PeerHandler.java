@@ -297,6 +297,7 @@ public class PeerHandler implements SignalingChannel.MessageListener {
                 Payload payload = mLocalDescription.getMediaDescription(MediaType.VIDEO).getPayloads().get(0);
                 mVideoSession.addReceivePayload(clonePayload(payload));
             }
+            mCallStateListener.onIncomingCall();
             mState = State.WAITING_TO_ANSWER;
         } else {
             mState = State.ACTIVE;
