@@ -125,8 +125,8 @@ public class MediaController {
             selfView.setVisibility(mSelfView.getVisibility());
         }
         mSelfView = selfView;
+        mSelfView.setOpaque(false);
         mSelfView.setSurfaceTextureListener(mSelfViewTagger);
-        mSelfView.requestLayout();
     }
 
     public void setRemoteView(final TextureView remoteView) {
@@ -134,6 +134,7 @@ public class MediaController {
             remoteView.setVisibility(mRemoteView.getVisibility());
         }
         mRemoteView = remoteView;
+        mRemoteView.setOpaque(false);
         mRemoteView.setSurfaceTextureListener(mRemoteViewTagger);
     }
 

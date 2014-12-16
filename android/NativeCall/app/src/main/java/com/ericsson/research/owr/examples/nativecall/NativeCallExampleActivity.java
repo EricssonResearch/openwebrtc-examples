@@ -102,7 +102,9 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
         mMediaController.setSelfView((TextureView) findViewById(R.id.self_view));
         mMediaController.setRemoteView((TextureView) findViewById(R.id.remote_view));
         mMediaController.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
-        mPeerHandler.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
+        if (mPeerHandler != null) {
+            mPeerHandler.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
+        }
     }
 
     public void initUi() {
@@ -120,6 +122,7 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
 
         if (mPeerHandler != null) {
             mPeerHandler.call();
+            mCallButton.setEnabled(false);
         }
     }
 
