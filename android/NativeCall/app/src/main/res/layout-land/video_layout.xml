@@ -22,8 +22,8 @@
 
         <TextureView
             android:id="@+id/self_view"
-            android:layout_width="160dp"
-            android:layout_height="90dp"
+            android:layout_width="128dp"
+            android:layout_height="96dp"
             android:onClick="onSelfViewClicked"
             android:visibility="invisible"/>
     </LinearLayout>

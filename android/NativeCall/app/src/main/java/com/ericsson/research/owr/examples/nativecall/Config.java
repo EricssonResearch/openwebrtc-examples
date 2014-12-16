@@ -39,8 +39,8 @@ public class Config {
             new HelperServer(HelperServerType.STUN, "stun.l.google.com", 19302, "", ""),
     };
 
-    public static final int VIDEO_HEIGHT = 720;
-    public static final int VIDEO_WIDTH = 1280;
+    public static final int VIDEO_HEIGHT = 480;
+    public static final int VIDEO_WIDTH = 640;
     public static final double VIDEO_FRAMERATE = 30.0;
 
     public static final String DEFAULT_DTLS_FINGERPRINT_HASH_FUNCTION = "sha-256";
