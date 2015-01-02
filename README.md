@@ -8,6 +8,10 @@ This repo contains client examples showing how to use OpenWebRTC as well as simp
 
 **Contents**
 
+Android
+* Native - Uses the C API to show a self-view video. Video is rendered using OpenGL.
+* WebView - Hybrid (native/webview) app that wraps [http://demo.openwebrtc.io](http://demo.openwebrtc.io).
+
 iOS
 * Selfie - Uses the C API to show a self-view video. Video is rendered using OpenGL.
 * SimpleDemo - Hybrid (native/webview) app that wraps [http://demo.openwebrtc.io](http://demo.openwebrtc.io).
