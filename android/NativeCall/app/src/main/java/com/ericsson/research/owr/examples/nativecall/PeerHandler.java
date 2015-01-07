@@ -171,7 +171,7 @@ public class PeerHandler implements SignalingChannel.MessageListener {
 
         MediaSession mediaSession = null;
 
-        int mediaType = mediaDescription.getMediaType();
+        MediaType mediaType = mediaDescription.getMediaType();
         if (mediaType == MediaType.AUDIO) {
             mediaSession = mAudioSession;
         } else if (mediaType == MediaType.VIDEO) {
@@ -214,7 +214,7 @@ public class PeerHandler implements SignalingChannel.MessageListener {
             mediaSession.addReceivePayload(clonePayload(payload));
         }
         MediaSessionEventListener mediaSessionEventListener = new MediaSessionEventListener(mediaDescription);
-        mediaSession.addNewCandidateListener(mediaSessionEventListener);
+        mediaSession.addOnNewCandidateListener(mediaSessionEventListener);
         mediaSession.addDtlsCertificateChangeListener(mediaSessionEventListener);
         mediaSession.addSendSsrcChangeListener(mediaSessionEventListener);
         mediaSession.addCnameChangeListener(mediaSessionEventListener);
@@ -328,7 +328,7 @@ public class PeerHandler implements SignalingChannel.MessageListener {
     }
 
     private class MediaSessionEventListener implements
-            Session.NewCandidateListener,
+            Session.OnNewCandidateListener,
             Session.DtlsCertificateChangeListener,
             MediaSession.SendSsrcChangeListener,
             MediaSession.CnameChangeListener {

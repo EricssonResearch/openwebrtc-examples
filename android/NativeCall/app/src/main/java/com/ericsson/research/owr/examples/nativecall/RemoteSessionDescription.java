@@ -28,6 +28,8 @@ package com.ericsson.research.owr.examples.nativecall;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.ericsson.research.owr.MediaType;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,7 +66,7 @@ public class RemoteSessionDescription {
         return mMediaDescriptions;
     }
 
-    public RemoteMediaDescription getMediaDescription(int mediaType) {
+    public RemoteMediaDescription getMediaDescription(MediaType mediaType) {
         for (int i = 0; i < mMediaDescriptions.size(); i++) {
             RemoteMediaDescription mediaDescription = mMediaDescriptions.valueAt(i);
             if (mediaDescription.getMediaType() == mediaType) {

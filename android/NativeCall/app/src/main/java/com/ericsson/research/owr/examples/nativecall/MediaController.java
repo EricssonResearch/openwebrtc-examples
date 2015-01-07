@@ -86,10 +86,10 @@ public class MediaController {
         mHandler = new Handler(Looper.getMainLooper());
 
         for (MediaSource mediaSource : mediaSources) {
-            if (mediaSource.getMediaType() == MediaType.VIDEO) {
+            if (mediaSource.getMediaType().contains(MediaType.VIDEO)) {
                 Log.d(TAG, "have video source: " + mediaSource.getName());
                 mVideoSources.add(mediaSource);
-            } else if (mediaSource.getMediaType() == MediaType.AUDIO) {
+            } else if (mediaSource.getMediaType().contains(MediaType.AUDIO)) {
                 Log.d(TAG, "have audio source: " + mediaSource.getName());
                 if (mLocalAudio != null) {
                     Log.e(TAG, "got multiple audio sources, that should be handled by the system");
@@ -190,7 +190,7 @@ public class MediaController {
 
     public synchronized void setVideoSession(final MediaSession mediaSession) {
         mVideoSession = mediaSession;
-        mVideoSession.addIncomingSourceListener(new MediaSession.IncomingSourceListener() {
+        mVideoSession.addOnIncomingSourceListener(new MediaSession.OnIncomingSourceListener() {
             @Override
             public void onIncomingSource(final RemoteMediaSource remoteMediaSource) {
                 synchronized (MediaController.this) {
@@ -204,7 +204,7 @@ public class MediaController {
     }
 
     public synchronized void setAudioSession(final MediaSession mediaSession) {
-        mediaSession.addIncomingSourceListener(new MediaSession.IncomingSourceListener() {
+        mediaSession.addOnIncomingSourceListener(new MediaSession.OnIncomingSourceListener() {
             @Override
             public void onIncomingSource(final RemoteMediaSource remoteMediaSource) {
                 synchronized (MediaController.this) {
