@@ -122,7 +122,7 @@ public class LocalSessionDescription {
         return mSessionId;
     }
 
-    public LocalMediaDescription getMediaDescription(int mediaType) {
+    public LocalMediaDescription getMediaDescription(MediaType mediaType) {
         for (LocalMediaDescription mediaDescription : mMediaDescriptions) {
             if (mediaDescription.getMediaType() == mediaType) {
                 return mediaDescription;

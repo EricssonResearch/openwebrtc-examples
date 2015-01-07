@@ -47,7 +47,7 @@ import java.util.List;
 class RemoteMediaDescription {
     public static final String TAG = "RemoteMediaDescription";
 
-    private final int mMediaType;
+    private final MediaType mMediaType;
     private final boolean mRtcpMux;
     private final List<Payload> mPayloads = new ArrayList<>();
     private final String mPassword;
@@ -62,11 +62,9 @@ class RemoteMediaDescription {
 
     private RemoteMediaDescription(JSONObject json) throws JSONException {
         String type = json.getString("type");
-        if ("video".equals(type)) {
-            mMediaType = MediaType.VIDEO;
-        } else if ("audio".equals(type)) {
-            mMediaType = MediaType.AUDIO;
-        } else {
+        try {
+            mMediaType = MediaType.valueOfNick(type);
+        } catch (IllegalArgumentException e) {
             throw new FormatException("unknown media type: " + type);
         }
 
@@ -149,7 +147,7 @@ class RemoteMediaDescription {
         return new RemoteMediaDescription(json);
     }
 
-    public int getMediaType() {
+    public MediaType getMediaType() {
         return mMediaType;
     }
 

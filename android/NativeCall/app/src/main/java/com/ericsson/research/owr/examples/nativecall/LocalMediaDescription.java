@@ -52,7 +52,7 @@ import java.util.regex.Pattern;
 class LocalMediaDescription {
     public static final String TAG = "MediaDescription";
 
-    private final int mMediaType;
+    private final MediaType mMediaType;
     private final boolean mIsOffer;
     private final String mFingerprintHashFunction;
     private final List<Candidate> mCandidates = new ArrayList<>();
@@ -78,7 +78,7 @@ class LocalMediaDescription {
     }
 
     /* offer */
-    private LocalMediaDescription(int mediaType) {
+    private LocalMediaDescription(MediaType mediaType) {
         mIsOffer = true;
         mMediaType = mediaType;
         mRtcpMux = true;
@@ -100,7 +100,7 @@ class LocalMediaDescription {
         return true;
     }
 
-    public static LocalMediaDescription createOffeer(int mediaType) {
+    public static LocalMediaDescription createOffeer(MediaType mediaType) {
         return new LocalMediaDescription(mediaType);
     }
 
@@ -158,7 +158,7 @@ class LocalMediaDescription {
         mLineIndex = lineIndex;
     }
 
-    public int getMediaType() {
+    public MediaType getMediaType() {
         return mMediaType;
     }
 
@@ -323,7 +323,7 @@ class LocalMediaDescription {
         }
 
         candidateJson.put("foundation", candidate.getFoundation());
-        candidateJson.put("componentId", candidate.getComponentType().value);
+        candidateJson.put("componentId", candidate.getComponentType().getValue());
         candidateJson.put("priority", candidate.getPriority());
         candidateJson.put("address", candidate.getAddress());
 

@@ -48,6 +48,7 @@ import com.ericsson.research.owr.MediaSource;
 import com.ericsson.research.owr.MediaType;
 import com.ericsson.research.owr.Owr;
 
+import java.util.EnumSet;
 import java.util.List;
 
 public class NativeCallExampleActivity extends Activity implements SignalingChannel.JoinListener, SignalingChannel.DisconnectListener, SignalingChannel.SessionFullListener, PeerHandler.CallStateListener {
@@ -62,14 +63,13 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
      */
     static {
         Owr.init();
-        Owr.getCaptureSources(MediaType.VIDEO | MediaType.AUDIO, new CaptureSourcesCallback() {
+        Owr.getCaptureSources(EnumSet.of(MediaType.VIDEO, MediaType.AUDIO), new CaptureSourcesCallback() {
             @Override
-            public void onCaptureSources(final List<MediaSource> sources) {
+            public void onCaptureSourcesCallback(final List<MediaSource> sources) {
                 MediaController.create(sources);
             }
         });
     }
-
 
     private Button mJoinButton;
     private Button mCallButton;

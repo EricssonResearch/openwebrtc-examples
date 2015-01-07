@@ -60,7 +60,7 @@ public class Config {
 
 
 
-    public static Payload[] getDefaultPayloadsForMediaType(int mediaType) {
+    public static Payload[] getDefaultPayloadsForMediaType(MediaType mediaType) {
         if (mediaType == MediaType.VIDEO) {
             return DEFAULT_VIDEO_PAYLOADS;
         } else if (mediaType == MediaType.AUDIO) {
