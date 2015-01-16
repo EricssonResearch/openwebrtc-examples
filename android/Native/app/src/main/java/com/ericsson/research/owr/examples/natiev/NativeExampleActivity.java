@@ -41,6 +41,7 @@ import com.ericsson.research.owr.Owr;
 import com.ericsson.research.owr.VideoRenderer;
 import com.ericsson.research.owr.WindowRegistry;
 
+import java.util.EnumSet;
 import java.util.List;
 
 public class NativeExampleActivity extends Activity {
@@ -62,11 +63,11 @@ public class NativeExampleActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_openwebrtc);
 
-        Owr.getCaptureSources(MediaType.VIDEO, new CaptureSourcesCallback() {
+        Owr.getCaptureSources(EnumSet.of(MediaType.VIDEO), new CaptureSourcesCallback() {
             @Override
-            public void onCaptureSources(final List<MediaSource> sources) {
+            public void onCaptureSourcesCallback(final List<MediaSource> mediaSources) {
                 /* Use default video source */
-                MediaSource mediaSource = sources.get(0);
+                MediaSource mediaSource = mediaSources.get(0);
 
                 VideoRenderer videoRenderer = new VideoRenderer(SELF_VIEW_TAG);
                 videoRenderer.setWidth(720);
