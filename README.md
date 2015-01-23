@@ -10,6 +10,7 @@ This repo contains client examples showing how to use OpenWebRTC as well as simp
 
 Android
 * Native - Uses the C API to show a self-view video. Video is rendered using OpenGL.
+* NativeCall - Fully native app that connects to [http://demo.openwebrtc.io](http://demo.openwebrtc.io).
 * WebView - Hybrid (native/webview) app that wraps [http://demo.openwebrtc.io](http://demo.openwebrtc.io).
 
 iOS
