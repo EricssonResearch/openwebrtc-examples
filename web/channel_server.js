@@ -1,13 +1,6 @@
 var fs = require("fs");
 var http = require("http");
 var path = require("path");
-try {
-    var SDP = require("./sdp");
-} catch (e) {
-    console.error("+-------------------------WARNING-------------------------+");
-    console.error("| sdp.js not found, will not transform signaling messages |");
-    console.error("+---------------------------------------------------------+");
-}
 
 var sessions = {};
 var usersInSessionLimit = 2;
@@ -116,50 +109,6 @@ var server = http.createServer(function (request, response) {
             request.on("end", function () {
                 console.log("@" + sessionId + " - " + userId + " => " + peerId + " :");
                 // console.log(body);
-                try {
-                    if (SDP) {
-                        var message = JSON.parse(body);
-                        if (message.sdp && !message.sessionDescription) {
-                            message.sessionDescription = SDP.parse(message.sdp.sdp);
-                            message.type = message.sdp.type;
-                        } else if (message.sessionDescription && message.type && !message.sdp) {
-                            message.sdp = {
-                                type: message.type,
-                                sdp: SDP.generate(message.sessionDescription),
-                            };
-                        } else if (message.candidate) {
-                            var candidate = message.candidate;
-                            if (candidate.candidate && !candidate.candidateDescription) {
-                                var candidateInfo = SDP.parse("m=application 0 NONE\r\na=" + candidate.candidate + "\r\n");
-
-                                if (candidateInfo.mediaDescriptions[0]
-                                    && candidateInfo.mediaDescriptions[0].ice
-                                    && candidateInfo.mediaDescriptions[0].ice.candidates) {
-                                    candidate.candidateDescription = candidateInfo.mediaDescriptions[0].ice.candidates[0];
-                                }
-                            } else if (candidate.candidateDescription && !candidate.candidate) {
-                                var description = candidate.candidateDescription;
-                                candidate.candidate = 'candidate:' + [
-                                    description.foundation,
-                                    description.componentId,
-                                    description.transport,
-                                    description.priority,
-                                    description.address,
-                                    description.port,
-                                    'typ',
-                                    description.type,
-                                    description.relatedAddress && ('raddr ' + description.relatedAddress),
-                                    description.relatedPort && ('rport ' + description.relatedPort),
-                                    description.tcpType && ('tcptype ' + description.tcpType),
-                                ].filter(function (x) { return x; }).join(' ');
-                            }
-                        }
-                        body = JSON.stringify(message);
-                        // console.log(body)
-                    }
-                } catch (err) {
-                    console.error("failed to parse message: " + err)
-                }
                 var evtdata = "data:" + body.replace(/\n/g, "\ndata:") + "\n";
                 peer.esResponse.write("event:user-" + userId + "\n" + evtdata + "\n");
             });
