@@ -20,7 +20,8 @@
                 <input class="btn" type="button" id="join_but" value="Join" disabled>
                 <input class="btn" type="button" id="call_but" value="Call" disabled><br>
                 <input type="checkbox" id="audio_cb">Audio<br>
-                <input type="checkbox" id="video_cb" checked>Video
+                <input type="checkbox" id="video_cb" checked>Video<br>
+                <input type="checkbox" id="chat_cb" checked>Chat
                 <div id="audio-only-container">Audio-only call</div>
                 <div id="share-container">
                     Send link to a friend: <a id="share_link" target="_blank" href=""></a>
@@ -30,6 +31,22 @@
                 <video id="self_view" class="shadow" autoplay muted></video>
                 <video id="remote_view" class="shadow" autoplay></video>
             </div>
+
+
+            <div id="chat_div">
+                
+            </div>
+
+           
+            <div id="chat-container">
+            <input type="sendtext" id="chat_txt" disable placeholder="Type here" onkeydown="if (event.keyCode == 13) document.getElementById('chat_but').click()">
+    
+             <input type="button" class="btn" id="chat_but" value="Send">
+
+            </div>
+
+
+
             <div id="log_div"></div>    
         </section>
         <footer>

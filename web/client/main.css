@@ -43,10 +43,11 @@ footer {
 	font-size: 14px;
 	color: #AAA;
 	clear: both;
-	margin-top: 3em;
+	margin-top: 8em;
 	width: 100%;
 	height: 30px;
 }
+
 input {
 	font-size: 1.3em;
 }
@@ -55,9 +56,45 @@ input[type="text"] {
 	position: relative;
 	top: 3px;
 }
+input[type="sendtext"] {
+	width: 25%;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+	font-size: 1.1em;
+	background-color: rgba(255,255,255,0.9);
+	position: relative;
+	bottom: 200px;
+	visibility: hidden;
+}
 video {
 	border: 0;
 	vertical-align: top;
+	visibility: hidden;
+}
+
+
+#chat_div {
+	width: calc(25% + 46px);
+	height: 200px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+	font-size: 1.1em;
+	background-color: rgba(255,255,255,0.9);
+	box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.2);
+	margin-bottom: 10px;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	padding-top: 0.2em;	
+	bottom: 200px;
+	visibility: hidden;
+	overflow-y: scroll;
+	word-wrap: break-word;
+	position: relative;
+
+}
+#chat_but {
+	position: relative;
+	bottom: 200px;
 	visibility: hidden;
 }
 .shadow {
@@ -69,6 +106,7 @@ video {
 	visibility: hidden;
 	color: red;
 }
+
 #share-container {
 	visibility: hidden;
 	padding-top: 5px;
