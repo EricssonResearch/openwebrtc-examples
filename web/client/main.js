@@ -13,11 +13,15 @@ var callButton;
 var audioCheckBox;
 var videoCheckBox;
 var audioOnlyView;
-
 var signalingChannel;
 var pc;
 var peer;
 var localStream;
+var chatDiv;
+var chatText;
+var chatButton;
+var chatCheckBox;
+var channel;
 
 if (!window.hasOwnProperty("orientation"))
     window.orientation = -90;
@@ -31,16 +35,22 @@ window.onload = function () {
     callButton = document.getElementById("call_but");
     var joinButton = document.getElementById("join_but");
     audioCheckBox = document.getElementById("audio_cb");
-    videoCheckBox = document.getElementById("video_cb");
+    videoCheckBox = document.getElementById("video_cb"); 
     audioOnlyView = document.getElementById("audio-only-container");
     var shareView = document.getElementById("share-container");
+    chatText = document.getElementById("chat_txt");
+    chatButton = document.getElementById("chat_but");
+    chatDiv = document.getElementById("chat_div");
+    chatCheckBox = document.getElementById("chat_cb");
 
     // Store media preferences
-    audioCheckBox.onclick = videoCheckBox.onclick = function(evt) {
+    audioCheckBox.onclick = videoCheckBox.onclick = chatCheckBox.onclick = function(evt) {
         localStorage.setItem(this.id, this.checked);
     }
+    
     audioCheckBox.checked = localStorage.getItem("audio_cb") == "true";
     videoCheckBox.checked = localStorage.getItem("video_cb") == "true";
+    chatCheckBox.checked = localStorage.getItem("chat_cb") == "true";
 
     // Check video box if no preferences exist
     if (!localStorage.getItem("video_cb"))
@@ -48,27 +58,17 @@ window.onload = function () {
 
     joinButton.disabled = !navigator.webkitGetUserMedia;
     joinButton.onclick = function (evt) {
-        if (!(audioCheckBox.checked || videoCheckBox.checked)) {
-            alert("Choose at least audio or video");
+        if (!(audioCheckBox.checked || videoCheckBox.checked || chatCheckBox.checked)) {
+            alert("Choose at least audio, video or chat.");
             return;
         }
 
-        audioCheckBox.disabled = videoCheckBox.disabled = joinButton.disabled = true;
+        audioCheckBox.disabled = videoCheckBox.disabled = chatCheckBox.disabled = joinButton.disabled = true;
+            
+        // only chat  
+        if (!(videoCheckBox.checked || audioCheckBox.checked)) peerJoin();
 
-        // get a local stream
-        navigator.webkitGetUserMedia({ "audio": audioCheckBox.checked,
-            "video": videoCheckBox.checked }, function (stream) {
-            // .. show it in a self-view
-            selfView.src = URL.createObjectURL(stream);
-            // .. and keep it to be sent later
-            localStream = stream;
-
-            joinButton.disabled = true;
-            if (videoCheckBox.checked)
-                selfView.style.visibility = "visible";
-            else
-                audioOnlyView.style.visibility = "visible";
-
+            function peerJoin() {
             var sessionId = document.getElementById("session_txt").value;
             signalingChannel = new SignalingChannel(sessionId);
 
@@ -84,6 +84,7 @@ window.onload = function () {
 
             // another peer has joined our session
             signalingChannel.onpeer = function (evt) {
+                
                 callButton.disabled = false;
                 shareView.style.visibility = "hidden";
 
@@ -98,7 +99,29 @@ window.onload = function () {
                     pc = null;
                 };
             };
-        }, logError);
+            }
+        
+        // video/audio with our without chat
+        if (videoCheckBox.checked || audioCheckBox.checked) {
+        // get a local stream 
+        navigator.webkitGetUserMedia({ "audio": audioCheckBox.checked,
+            "video": videoCheckBox.checked}, function (stream){
+            // .. show it in a self-view
+            selfView.src = URL.createObjectURL(stream);
+            // .. and keep it to be sent later
+            localStream = stream;
+
+            joinButton.disabled = true;
+            chatButton.disabled = true;
+
+            if (videoCheckBox.checked)
+                selfView.style.visibility = "visible";
+            else
+                audioOnlyView.style.visibility = "visible";
+            
+            peerJoin();
+            }, logError);
+        }
     };
 
     document.getElementById("owr-logo").onclick = function() {
@@ -155,17 +178,31 @@ function start(isInitiator) {
             pc.createOffer(localDescCreated, logError);
     };
 
+    // start the chat
+    if (isInitiator) {
+        channel = pc.createDataChannel("chat");
+        setupChat();
+    } else {
+        pc.ondatachannel = function (evt) {
+            channel = evt.channel;
+            setupChat();
+        };
+    }
+
     // once the remote stream arrives, show it in the remote video element
     pc.onaddstream = function (evt) {
         remoteView.src = URL.createObjectURL(evt.stream);
         if (videoCheckBox.checked)
             remoteView.style.visibility = "visible";
-        else
+        else if(audioCheckBox.checked) {
             audioOnlyView.style.visibility = "visible";
         sendOrientationUpdate();
+        }
     };
 
+    if(audioCheckBox.checked || videoCheckBox.checked){
     pc.addStream(localStream);
+    }
 
     // the negotiationneeded event is not supported in Firefox
     if (isMozilla && isInitiator)
@@ -176,6 +213,11 @@ function localDescCreated(desc) {
     pc.setLocalDescription(desc, function () {
         peer.send(JSON.stringify({ "sdp": pc.localDescription }));
     }, logError);
+}
+
+function prettyPrintSDP(sdp) {
+    var pre = document.createElement("pre");
+    pre.appendChild(document.createTextNode(sdp));
 }
 
 function sendOrientationUpdate() {
@@ -206,4 +248,38 @@ function log(msg) {
     log.div = log.div || document.getElementById("log_div");
     log.div.appendChild(document.createTextNode(msg));
     log.div.appendChild(document.createElement("br"));
+}
+
+// setup chat
+function setupChat() {
+    channel.onopen = function () {
+        if (chatCheckBox.checked) {
+            chatDiv.style.visibility = "visible";
+            chatText.style.visibility = "visible";
+            chatButton.style.visibility = "visible";
+            chatButton.disabled = false;
+        }
+        else {
+            chatDiv.style.visibility = "hidden";
+            chatText.style.visibility = "hidden";
+            chatButton.style.visibility = "hidden";
+        }
+
+        chatButton.onclick = function () {
+            postChatMessage("me: " + chatText.value);
+            channel.send(chatText.value);
+            chatText.value = "";
+            chatText.placeholder = "";
+        };
+    };
+
+    // recieve data from remote user
+    channel.onmessage = function (evt) {
+       postChatMessage(evt.data)
+    };
+
+    function postChatMessage(msg) {
+        chatDiv.insertBefore(document.createElement("br"), chatDiv.firstChild);
+        chatDiv.insertBefore(document.createTextNode(msg), chatDiv.firstChild);
+    }
 }
