@@ -13,18 +13,15 @@ var callButton;
 var audioCheckBox;
 var videoCheckBox;
 var audioOnlyView;
-
 var signalingChannel;
 var pc;
 var peer;
 var localStream;
-
 var chatDiv;
 var chatText;
 var chatButton;
 var chatCheckBox;
 var channel;
-
 
 if (!window.hasOwnProperty("orientation"))
     window.orientation = -90;
@@ -38,10 +35,9 @@ window.onload = function () {
     callButton = document.getElementById("call_but");
     var joinButton = document.getElementById("join_but");
     audioCheckBox = document.getElementById("audio_cb");
-    videoCheckBox = document.getElementById("video_cb");    
+    videoCheckBox = document.getElementById("video_cb"); 
     audioOnlyView = document.getElementById("audio-only-container");
     var shareView = document.getElementById("share-container");
-
     chatText = document.getElementById("chat_txt");
     chatButton = document.getElementById("chat_but");
     chatDiv = document.getElementById("chat_div");
@@ -52,10 +48,9 @@ window.onload = function () {
         localStorage.setItem(this.id, this.checked);
     }
     
-
     audioCheckBox.checked = localStorage.getItem("audio_cb") == "true";
     videoCheckBox.checked = localStorage.getItem("video_cb") == "true";
-    chatCheckBox.checked = localStorage.getItem("chat_cb") == "true"; 
+    chatCheckBox.checked = localStorage.getItem("chat_cb") == "true";
 
     // Check video box if no preferences exist
     if (!localStorage.getItem("video_cb"))
@@ -82,8 +77,6 @@ window.onload = function () {
             var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
             link.href = link.textContent = window.location.href + maybeAddHash;
             shareView.style.visibility = "visible";
-
-          
 
             callButton.onclick = function () {
                 start(true);
@@ -127,7 +120,6 @@ window.onload = function () {
                 audioOnlyView.style.visibility = "visible";
             
             peerJoin();
-
             }, logError);
         }
     };
@@ -146,10 +138,6 @@ window.onload = function () {
         document.getElementById("session_txt").value = Math.random().toString(16).substr(4);
     }
 }
-
-
-
-
 
 // handle signaling messages received from the other peer
 function handleMessage(evt) {
@@ -212,12 +200,10 @@ function start(isInitiator) {
         }
     };
 
-
     if(audioCheckBox.checked || videoCheckBox.checked){
     pc.addStream(localStream);
     }
 
-    
     // the negotiationneeded event is not supported in Firefox
     if (isMozilla && isInitiator)
         pc.onnegotiationneeded();
@@ -280,23 +266,19 @@ function setupChat() {
         }
 
         chatButton.onclick = function () {
-            
             postChatMessage("me: " + chatText.value);
             channel.send(chatText.value);
             chatText.value = "";
             chatText.placeholder = "";
         };
-
-    };  
+    };
 
     // recieve data from remote user
     channel.onmessage = function (evt) {
-        
        postChatMessage(evt.data)
     };
 
     function postChatMessage(msg) {
-      
         chatDiv.insertBefore(document.createElement("br"), chatDiv.firstChild);
         chatDiv.insertBefore(document.createTextNode(msg), chatDiv.firstChild);
     }

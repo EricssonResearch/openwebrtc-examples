@@ -47,7 +47,6 @@ footer {
 	width: 100%;
 	height: 30px;
 }
-
 input {
 	font-size: 1.3em;
 }
@@ -71,8 +70,6 @@ video {
 	vertical-align: top;
 	visibility: hidden;
 }
-
-
 #chat_div {
 	width: calc(25% + 46px);
 	height: 200px;
@@ -90,7 +87,6 @@ video {
 	overflow-y: scroll;
 	word-wrap: break-word;
 	position: relative;
-
 }
 #chat_but {
 	position: relative;
