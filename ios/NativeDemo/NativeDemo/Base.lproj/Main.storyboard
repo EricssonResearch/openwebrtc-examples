@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7rz-jU-cyw">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Native OpenWebRTC Demo-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="NativeDemoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pAC-L4-6fz" customClass="I">
+                                <rect key="frame" x="16" y="72" width="568" height="476"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WLO-xN-aST" customClass="OpenWebRTCVideoView">
+                                        <rect key="frame" x="8" y="8" width="94" height="125"/>
+                                        <color key="backgroundColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pAC-L4-6fz" secondAttribute="bottom" constant="8" id="4qp-zH-yJJ"/>
+                            <constraint firstItem="pAC-L4-6fz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="OyD-rS-Dkp"/>
+                            <constraint firstItem="pAC-L4-6fz" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="bvh-is-AH9"/>
+                            <constraint firstItem="pAC-L4-6fz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="ice-PV-jbr"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Call" id="meE-Iu-5yq">
+                            <color key="tintColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="callButtonTapped:" destination="BYZ-38-t0r" id="uMx-8Q-Rd4"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="30" style="plain" systemItem="fixedSpace" id="NrP-5J-UC8"/>
+                        <barButtonItem title="Hang Up" id="c6H-Ie-SZy">
+                            <color key="tintColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="hangupButtonTapped:" destination="BYZ-38-t0r" id="KcB-Wd-RNS"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Native OpenWebRTC Demo" id="7r3-5r-MrZ"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="callButton" destination="meE-Iu-5yq" id="Uch-Wh-swh"/>
+                        <outlet property="hangupButton" destination="c6H-Ie-SZy" id="EHq-fY-jU4"/>
+                        <outlet property="remoteView" destination="pAC-L4-6fz" id="A9U-16-v0j"/>
+                        <outlet property="selfView" destination="WLO-xN-aST" id="FYF-xu-sZy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1066" y="336"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bGl-Af-ovt">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7rz-jU-cyw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3ac-GU-B9I">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.4247974537037037" green="0.64265046296296291" blue="0.74085648148148153" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="AdJ-ta-YMy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QhG-NR-c6H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="263" y="337"/>
+        </scene>
+    </scenes>
+</document>
