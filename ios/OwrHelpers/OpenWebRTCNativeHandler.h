@@ -1,6 +1,5 @@
 //
-//  PeerServerHandler.h
-//  NativeDemo
+//  OpenWebRTCNativeHandler.h
 //
 //  Copyright (c) 2015, Ericsson AB.
 //  All rights reserved.
@@ -28,30 +27,31 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import "OpenWebRTCVideoView.h"
 
-@class PeerServerHandler;
+#include <owr/owr_local.h>
+#include <owr/owr_transport_agent.h>
 
-@protocol PeerServerHandlerDelegate <NSObject>
+@protocol OpenWebRTCNativeHandlerDelegate <NSObject>
 
-- (void)peerServer:(PeerServerHandler *)peerServer failedToJoinRoom:(NSString *)roomID withError:(NSError *)error;
-- (void)peerServer:(PeerServerHandler *)peerServer successfullyJoinedRoom:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer roomIsFull:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID joinedRoom:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID leftRoom:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSString *)offer;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSString *)candidate;
+- (void)answerGenerated:(NSString *)answer;
+
+- (void)addHelperServersForTransportAgent:(OwrTransportAgent *)transport_agent;
 
 @end
 
+@interface OpenWebRTCNativeHandler : NSObject
 
-@interface PeerServerHandler : NSObject
+@property (nonatomic, weak) id <OpenWebRTCNativeHandlerDelegate> delegate;
 
-- (instancetype)initWithBaseURL:(NSString *)baseURL;
-- (void)joinRoomWithID:(NSString *)roomID;
+- (instancetype)init;
 
-@property (nonatomic, weak) id <PeerServerHandlerDelegate> delegate;
+- (void)setSelfView:(OpenWebRTCVideoView *)selfView;
+- (void)setRemoteView:(OpenWebRTCVideoView *)remoteView;
+
+- (void)startGetCaptureSources:(OwrMediaType)types;
+
+- (void)handleOfferReceived:(NSString *)offer;
+- (void)handleRemoteCandidateReceived:(NSString *)candidate;
 
 @end
-
-

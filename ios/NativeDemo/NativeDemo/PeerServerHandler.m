@@ -34,9 +34,6 @@
 
 
 @interface PeerServerHandler () <TRVSEventSourceDelegate>
-{
-
-}
 
 @property (nonatomic, strong) TRVSEventSource *eventSource;
 @property (nonatomic, strong) NSString *baseURL;
@@ -68,8 +65,6 @@
      * Join a room.
      */
     [eventSource addListenerForEvent:@"join" usingEventHandler:^(TRVSServerSentEvent *event, NSError *error) {
-        //NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:event.data options:0 error:NULL];
-
         NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
         NSLog(@"[PeerServerHandler] Received JOIN response with data: %@", data);
 
@@ -127,17 +122,22 @@
 {
     PeerServerHandler *weakSelf = self;
     [self.eventSource addListenerForEvent:peerID usingEventHandler:^(TRVSServerSentEvent *event, NSError *error) {
-        //NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:event.data options:0 error:NULL];
-        NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
-        NSLog(@"[PeerServerHandler] Received DATA frome peer: %@", data);
-
         NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:event.data options:0 error:NULL];
-        NSLog(@"JSON:\n%@", JSON);
-        if ([@"OFFER" isEqualToString:JSON[@"messageType"]]) {
-            NSLog(@"[PeerServerHandler] OFFER received");
+        NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
+        NSLog(@"[PeerServerHandler] Received DATA from peer: %@", data);
 
+        NSLog(@"JSON:\n%@", JSON);
+        if ([JSON valueForKey:@"sdp"]) {
+            NSLog(@"[PeerServerHandler] OFFER received");
             if (weakSelf.delegate) {
-                [weakSelf.delegate peerServer:weakSelf peer:peerID sentOffer:JSON];
+                NSString *sdp = JSON[@"sdp"][@"sdp"];
+                [weakSelf.delegate peerServer:weakSelf peer:peerID sentOffer:sdp];
+            }
+        } else if ([JSON valueForKey:@"candidate"]) {
+            NSLog(@"[PeerServerHandler] CANDIDATE received");
+            if (weakSelf.delegate) {
+                NSString *candidate = JSON[@"candidate"][@"candidate"];
+                [weakSelf.delegate peerServer:weakSelf peer:peerID sentCandidate:candidate];
             }
         }
     }];
