@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB5BE517CFB1888352F71A2E /* libPods-NativeDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DEC75C0F284C35831C02F1 /* libPods-NativeDemo.a */; };
 		F8CE35981A8F502B0022C4BC /* OpenWebRTCNativeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CE35971A8F502B0022C4BC /* OpenWebRTCNativeHandler.m */; };
 		F8CE359A1A8F64250022C4BC /* OpenWebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8CE35991A8F64250022C4BC /* OpenWebRTC.framework */; };
 		F8D10DD41A8B8585000BCA7E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D10DD31A8B8585000BCA7E /* main.m */; };
@@ -32,11 +33,12 @@
 		F8D10E1B1A8BB296000BCA7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D10E1A1A8BB296000BCA7E /* QuartzCore.framework */; };
 		F8D10E1D1A8BB29B000BCA7E /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D10E1C1A8BB29B000BCA7E /* VideoToolbox.framework */; };
 		F8D114681A8C92F4000BCA7E /* PeerServerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D114671A8C92F4000BCA7E /* PeerServerHandler.m */; };
-		F8D1146F1A8C983A000BCA7E /* TRVSEventSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D1146B1A8C983A000BCA7E /* TRVSEventSource.m */; };
-		F8D114701A8C983A000BCA7E /* TRVSServerSentEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D1146E1A8C983A000BCA7E /* TRVSServerSentEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03DEC75C0F284C35831C02F1 /* libPods-NativeDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NativeDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2FDE7223506D0C2C58BED66 /* Pods-NativeDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NativeDemo/Pods-NativeDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		F5AF3E7B3485044168CC87D8 /* Pods-NativeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-NativeDemo/Pods-NativeDemo.release.xcconfig"; sourceTree = "<group>"; };
 		F8CE35961A8F502B0022C4BC /* OpenWebRTCNativeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenWebRTCNativeHandler.h; path = ../../OwrHelpers/OpenWebRTCNativeHandler.h; sourceTree = "<group>"; };
 		F8CE35971A8F502B0022C4BC /* OpenWebRTCNativeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenWebRTCNativeHandler.m; path = ../../OwrHelpers/OpenWebRTCNativeHandler.m; sourceTree = "<group>"; };
 		F8CE35991A8F64250022C4BC /* OpenWebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenWebRTC.framework; path = ../../../../../Library/Developer/OpenWebRTC/iPhone.sdk/OpenWebRTC.framework; sourceTree = "<group>"; };
@@ -69,11 +71,6 @@
 		F8D10E1C1A8BB29B000BCA7E /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		F8D114661A8C92F4000BCA7E /* PeerServerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeerServerHandler.h; sourceTree = "<group>"; };
 		F8D114671A8C92F4000BCA7E /* PeerServerHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeerServerHandler.m; sourceTree = "<group>"; };
-		F8D1146A1A8C983A000BCA7E /* TRVSEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSEventSource.h; sourceTree = "<group>"; };
-		F8D1146B1A8C983A000BCA7E /* TRVSEventSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSEventSource.m; sourceTree = "<group>"; };
-		F8D1146C1A8C983A000BCA7E /* TRVSEventSourceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSEventSourceDelegate.h; sourceTree = "<group>"; };
-		F8D1146D1A8C983A000BCA7E /* TRVSServerSentEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSServerSentEvent.h; sourceTree = "<group>"; };
-		F8D1146E1A8C983A000BCA7E /* TRVSServerSentEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSServerSentEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,18 +94,29 @@
 				F8D10E051A8BB22F000BCA7E /* libiconv.dylib in Frameworks */,
 				F8D10E031A8BB225000BCA7E /* libresolv.dylib in Frameworks */,
 				F8D10E011A8BB21D000BCA7E /* libz.dylib in Frameworks */,
+				BB5BE517CFB1888352F71A2E /* libPods-NativeDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D250A0D53B589F2535D34BE7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2FDE7223506D0C2C58BED66 /* Pods-NativeDemo.debug.xcconfig */,
+				F5AF3E7B3485044168CC87D8 /* Pods-NativeDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F8D10DC51A8B8585000BCA7E = {
 			isa = PBXGroup;
 			children = (
 				F8D10DD01A8B8585000BCA7E /* NativeDemo */,
 				F8D10DCF1A8B8585000BCA7E /* Products */,
 				F8D10DFF1A8BAB39000BCA7E /* Frameworks */,
+				D250A0D53B589F2535D34BE7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,7 +131,6 @@
 		F8D10DD01A8B8585000BCA7E /* NativeDemo */ = {
 			isa = PBXGroup;
 			children = (
-				F8D114691A8C983A000BCA7E /* TRVSEventSource */,
 				F8D10DF71A8B8868000BCA7E /* OpenWebRTC */,
 				F8D10DD51A8B8585000BCA7E /* NativeDemoAppDelegate.h */,
 				F8D10DD61A8B8585000BCA7E /* NativeDemoAppDelegate.m */,
@@ -178,20 +185,9 @@
 				F8D10E041A8BB22F000BCA7E /* libiconv.dylib */,
 				F8D10E021A8BB225000BCA7E /* libresolv.dylib */,
 				F8D10E001A8BB21D000BCA7E /* libz.dylib */,
+				03DEC75C0F284C35831C02F1 /* libPods-NativeDemo.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F8D114691A8C983A000BCA7E /* TRVSEventSource */ = {
-			isa = PBXGroup;
-			children = (
-				F8D1146A1A8C983A000BCA7E /* TRVSEventSource.h */,
-				F8D1146B1A8C983A000BCA7E /* TRVSEventSource.m */,
-				F8D1146C1A8C983A000BCA7E /* TRVSEventSourceDelegate.h */,
-				F8D1146D1A8C983A000BCA7E /* TRVSServerSentEvent.h */,
-				F8D1146E1A8C983A000BCA7E /* TRVSServerSentEvent.m */,
-			);
-			path = TRVSEventSource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,9 +197,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8D10DF11A8B8585000BCA7E /* Build configuration list for PBXNativeTarget "NativeDemo" */;
 			buildPhases = (
+				D1B68F5B21047527235249D5 /* Check Pods Manifest.lock */,
 				F8D10DCA1A8B8585000BCA7E /* Sources */,
 				F8D10DCB1A8B8585000BCA7E /* Frameworks */,
 				F8D10DCC1A8B8585000BCA7E /* Resources */,
+				B76A9FE5E46385ED5013881B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -259,18 +257,49 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B76A9FE5E46385ED5013881B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NativeDemo/Pods-NativeDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D1B68F5B21047527235249D5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F8D10DCA1A8B8585000BCA7E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8D114701A8C983A000BCA7E /* TRVSServerSentEvent.m in Sources */,
 				F8D10DDA1A8B8585000BCA7E /* NativeDemoViewController.m in Sources */,
 				F8CE35981A8F502B0022C4BC /* OpenWebRTCNativeHandler.m in Sources */,
 				F8D10DD71A8B8585000BCA7E /* NativeDemoAppDelegate.m in Sources */,
 				F8D10DD41A8B8585000BCA7E /* main.m in Sources */,
 				F8D10DFA1A8B8885000BCA7E /* OpenWebRTCVideoView.m in Sources */,
-				F8D1146F1A8C983A000BCA7E /* TRVSEventSource.m in Sources */,
 				F8D114681A8C92F4000BCA7E /* PeerServerHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,6 +406,7 @@
 		};
 		F8D10DF21A8B8585000BCA7E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2FDE7223506D0C2C58BED66 /* Pods-NativeDemo.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -400,6 +430,7 @@
 		};
 		F8D10DF31A8B8585000BCA7E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5AF3E7B3485044168CC87D8 /* Pods-NativeDemo.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

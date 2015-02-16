@@ -49,6 +49,7 @@
 
 - (instancetype)initWithBaseURL:(NSString *)baseURL;
 - (void)joinRoomWithID:(NSString *)roomID;
+- (void)leave;
 
 @property (nonatomic, weak) id <PeerServerHandlerDelegate> delegate;
 

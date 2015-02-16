@@ -35,8 +35,7 @@
 @protocol OpenWebRTCNativeHandlerDelegate <NSObject>
 
 - (void)answerGenerated:(NSString *)answer;
-
-- (void)addHelperServersForTransportAgent:(OwrTransportAgent *)transport_agent;
+- (void)addHelperServersForTransportAgent:(OwrTransportAgent *)transportAgent;
 
 @end
 

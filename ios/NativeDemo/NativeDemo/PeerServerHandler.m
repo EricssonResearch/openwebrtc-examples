@@ -112,6 +112,15 @@
     [self.eventSource open];
 }
 
+- (void)leave
+{
+    if (self.eventSource) {
+        [self.eventSource close];
+        self.eventSource = nil;
+    }
+    self.currentRoomID = nil;
+}
+
 - (void)removeEventSourceListenerWithName:(NSString *)eventName
 {
     NSLog(@"[PeerServerHandler] Removing listener for: %@", eventName);
@@ -155,6 +164,9 @@
 - (void)eventSource:(TRVSEventSource *)eventSource didFailWithError:(NSError *)error
 {
     NSLog(@"[PeerServerHandler] An error occurred: %@", error);
+    if (self.delegate) {
+        [self.delegate peerServer:self failedToJoinRoom:self.currentRoomID withError:error];
+    }
 }
 
 

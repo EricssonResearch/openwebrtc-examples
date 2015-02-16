@@ -1,0 +1,10 @@
+PODS:
+  - TRVSEventSource (0.0.7)
+
+DEPENDENCIES:
+  - TRVSEventSource (~> 0.0.7)
+
+SPEC CHECKSUMS:
+  TRVSEventSource: 34c96950c91b73aedcb090df5abf92e114bb6633
+
+COCOAPODS: 0.35.0
