@@ -124,7 +124,7 @@ window.onload = function () {
 
                 if (videoCheckBox.checked)
                     selfView.style.visibility = "visible";
-                else
+                else if (audioCheckBox.checked && !(chatCheckBox.checked))
                     audioOnlyView.style.visibility = "visible";
 
                 peerJoin();
@@ -204,7 +204,7 @@ function start(isInitiator) {
         remoteView.src = URL.createObjectURL(evt.stream);
         if (videoCheckBox.checked)
             remoteView.style.visibility = "visible";
-        else
+        else if (audioCheckBox.checked && !(chatCheckBox.checked))
             audioOnlyView.style.visibility = "visible";
         sendOrientationUpdate();
     };
