@@ -81,6 +81,7 @@ video {
 	padding-left: 0.5em;
 	padding-right: 0.5em;
 	padding-top: 0.2em;
+	padding-bottom: 0.375em;
 	bottom: 245px;
 	visibility: hidden;
 	overflow-y: scroll;
