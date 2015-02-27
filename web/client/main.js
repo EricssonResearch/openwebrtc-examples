@@ -288,7 +288,7 @@ function setupChat() {
         var messageNode = document.createElement('div');
         var messageContent = document.createElement('div');
         messageNode.classList.add('chatMessage');
-        messageContent.innerHTML = msg;
+        messageContent.textContent = msg;
         messageNode.appendChild(messageContent);
 
         if (author) {
