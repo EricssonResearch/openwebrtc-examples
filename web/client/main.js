@@ -27,7 +27,7 @@ if (!window.hasOwnProperty("orientation"))
     window.orientation = -90;
 
 // must use 'url' here since Firefox doesn't understand 'urls'
-var configuration = { "iceServers": [{ "url": "stun:mmt-stun.verkstad.net" }] };
+var configuration = { "iceServers": [{ "url": "turn:mmt-turn.verkstad.net", "username": "webrtc", "credential": "secret" }] };
 
 window.onload = function () {
     selfView = document.getElementById("self_view");
