@@ -28,7 +28,7 @@
 //
 
 #import "PeerServerHandler.h"
-#import "TRVSEventSource.h" // From https://github.com/travisjeffery/TRVSEventSource
+#import <TRVSEventSource/TRVSEventSource.h>
 
 #define kEventSourceURL @"%@/stoc/%@/%@"
 
@@ -67,6 +67,14 @@
     [eventSource addListenerForEvent:@"join" usingEventHandler:^(TRVSServerSentEvent *event, NSError *error) {
         NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
         NSLog(@"[PeerServerHandler] Received JOIN response with data: %@", data);
+
+        if (!data) {
+            if (self.delegate) {
+                NSError *joinError = [NSError errorWithDomain:@"Got invalid response from JOIN" code:0 userInfo:nil];
+                [self.delegate peerServer:self failedToJoinRoom:self.currentRoomID withError:joinError];
+            }
+            return;
+        }
 
         NSString *peerUserID = [NSString stringWithFormat:@"user-%@", data];
 
@@ -135,7 +143,7 @@
         NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
         NSLog(@"[PeerServerHandler] Received DATA from peer: %@", data);
 
-        NSLog(@"JSON:\n%@", JSON);
+        //NSLog(@"JSON:\n%@", JSON);
         if ([JSON valueForKey:@"sdp"]) {
             NSLog(@"[PeerServerHandler] OFFER received");
             if (weakSelf.delegate) {
@@ -145,7 +153,7 @@
         } else if ([JSON valueForKey:@"candidate"]) {
             NSLog(@"[PeerServerHandler] CANDIDATE received");
             if (weakSelf.delegate) {
-                NSString *candidate = JSON[@"candidate"][@"candidate"];
+                NSDictionary *candidate = JSON[@"candidate"];
                 [weakSelf.delegate peerServer:weakSelf peer:peerID sentCandidate:candidate];
             }
         }

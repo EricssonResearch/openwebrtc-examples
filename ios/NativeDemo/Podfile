@@ -3,5 +3,7 @@ platform :ios, '8.0'
 target 'NativeDemo' do
 
 pod 'TRVSEventSource', '~> 0.0.7'
+pod 'OpenWebRTC', :path => '../../../openwebrtc-ios-sdk/OpenWebRTC.podspec'
+pod 'OpenWebRTC-SDK', :path => '../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec'
 
 end

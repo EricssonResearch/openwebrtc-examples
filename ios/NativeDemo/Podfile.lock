@@ -1,10 +1,22 @@
 PODS:
+  - OpenWebRTC (1.0)
+  - OpenWebRTC-SDK (0.1.1)
   - TRVSEventSource (0.0.7)
 
 DEPENDENCIES:
+  - OpenWebRTC (from `../../../openwebrtc-ios-sdk/OpenWebRTC.podspec`)
+  - OpenWebRTC-SDK (from `../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec`)
   - TRVSEventSource (~> 0.0.7)
 
+EXTERNAL SOURCES:
+  OpenWebRTC:
+    :path: ../../../openwebrtc-ios-sdk/OpenWebRTC.podspec
+  OpenWebRTC-SDK:
+    :path: ../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec
+
 SPEC CHECKSUMS:
+  OpenWebRTC: a80b6a5aef2141dcd624e35df2cbf42ed2e00662
+  OpenWebRTC-SDK: e8fda5ea926a49b892a8f49c240df32397930d33
   TRVSEventSource: 34c96950c91b73aedcb090df5abf92e114bb6633
 
 COCOAPODS: 0.35.0

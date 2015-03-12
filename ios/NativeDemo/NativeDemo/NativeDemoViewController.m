@@ -30,12 +30,11 @@
 #import "NativeDemoViewController.h"
 #import "PeerServerHandler.h"
 
-#import "OpenWebRTCVideoView.h"
-#import "OpenWebRTCNativeHandler.h"
-
+#import <OpenWebRTC-SDK/OpenWebRTC.h>
 
 //#define kServerURL @"http://demo.openwebrtc.io:38080"
-#define kServerURL @"http://213.159.185.91:8080"
+//#define kServerURL @"http://localhost:8080"
+#define kServerURL @"http://129.192.20.149:8080"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -196,7 +195,7 @@
     [nativeHandler handleOfferReceived:offer];
 }
 
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSString *)candidate
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSDictionary *)candidate
 {
     NSLog(@"peer <%@> sentCandidate: %@", peerID, candidate);
     [nativeHandler handleRemoteCandidateReceived:candidate];
