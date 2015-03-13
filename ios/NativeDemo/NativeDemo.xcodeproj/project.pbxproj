@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BB5BE517CFB1888352F71A2E /* libPods-NativeDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DEC75C0F284C35831C02F1 /* libPods-NativeDemo.a */; };
+		F80B5C291AB393A000A20926 /* EventSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F80B5C281AB393A000A20926 /* EventSource.m */; };
 		F8D10DD41A8B8585000BCA7E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D10DD31A8B8585000BCA7E /* main.m */; };
 		F8D10DD71A8B8585000BCA7E /* NativeDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D10DD61A8B8585000BCA7E /* NativeDemoAppDelegate.m */; };
 		F8D10DDA1A8B8585000BCA7E /* NativeDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D10DD91A8B8585000BCA7E /* NativeDemoViewController.m */; };
@@ -25,6 +26,8 @@
 		03DEC75C0F284C35831C02F1 /* libPods-NativeDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NativeDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2FDE7223506D0C2C58BED66 /* Pods-NativeDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NativeDemo/Pods-NativeDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		F5AF3E7B3485044168CC87D8 /* Pods-NativeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-NativeDemo/Pods-NativeDemo.release.xcconfig"; sourceTree = "<group>"; };
+		F80B5C271AB393A000A20926 /* EventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSource.h; sourceTree = "<group>"; };
+		F80B5C281AB393A000A20926 /* EventSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventSource.m; sourceTree = "<group>"; };
 		F8D10DCE1A8B8585000BCA7E /* NativeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D10DD21A8B8585000BCA7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8D10DD31A8B8585000BCA7E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -68,6 +71,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F80B5C261AB3937100A20926 /* Signalling */ = {
+			isa = PBXGroup;
+			children = (
+				F8D114661A8C92F4000BCA7E /* PeerServerHandler.h */,
+				F8D114671A8C92F4000BCA7E /* PeerServerHandler.m */,
+				F80B5C271AB393A000A20926 /* EventSource.h */,
+				F80B5C281AB393A000A20926 /* EventSource.m */,
+			);
+			name = Signalling;
+			sourceTree = "<group>";
+		};
 		F8D10DC51A8B8585000BCA7E = {
 			isa = PBXGroup;
 			children = (
@@ -89,12 +103,11 @@
 		F8D10DD01A8B8585000BCA7E /* NativeDemo */ = {
 			isa = PBXGroup;
 			children = (
+				F80B5C261AB3937100A20926 /* Signalling */,
 				F8D10DD51A8B8585000BCA7E /* NativeDemoAppDelegate.h */,
 				F8D10DD61A8B8585000BCA7E /* NativeDemoAppDelegate.m */,
 				F8D10DD81A8B8585000BCA7E /* NativeDemoViewController.h */,
 				F8D10DD91A8B8585000BCA7E /* NativeDemoViewController.m */,
-				F8D114661A8C92F4000BCA7E /* PeerServerHandler.h */,
-				F8D114671A8C92F4000BCA7E /* PeerServerHandler.m */,
 				F8D10DDB1A8B8585000BCA7E /* Main.storyboard */,
 				F8D10DDE1A8B8585000BCA7E /* Images.xcassets */,
 				F8D10DE01A8B8585000BCA7E /* LaunchScreen.xib */,
@@ -230,6 +243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8D10DDA1A8B8585000BCA7E /* NativeDemoViewController.m in Sources */,
+				F80B5C291AB393A000A20926 /* EventSource.m in Sources */,
 				F8D10DD71A8B8585000BCA7E /* NativeDemoAppDelegate.m in Sources */,
 				F8D10DD41A8B8585000BCA7E /* main.m in Sources */,
 				F8D114681A8C92F4000BCA7E /* PeerServerHandler.m in Sources */,

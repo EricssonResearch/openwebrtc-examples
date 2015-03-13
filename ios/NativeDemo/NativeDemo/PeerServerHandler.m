@@ -28,14 +28,13 @@
 //
 
 #import "PeerServerHandler.h"
-#import <TRVSEventSource/TRVSEventSource.h>
+#import "EventSource.h"
 
 #define kEventSourceURL @"%@/stoc/%@/%@"
 
+@interface PeerServerHandler () <EventSourceDelegate>
 
-@interface PeerServerHandler () <TRVSEventSourceDelegate>
-
-@property (nonatomic, strong) TRVSEventSource *eventSource;
+@property (nonatomic, strong) EventSource *eventSource;
 @property (nonatomic, strong) NSString *baseURL;
 @property (nonatomic, strong) NSString *currentRoomID;
 
@@ -58,124 +57,56 @@
     NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     NSString *eventSourceURL = [NSString stringWithFormat:kEventSourceURL, self.baseURL, roomID, deviceID, nil];
 
-    TRVSEventSource *eventSource = [[TRVSEventSource alloc] initWithURL:[NSURL URLWithString:eventSourceURL]];
-    NSLog(@"[PeerServerHandler] Connecting to server at: %@", eventSourceURL);
+    self.eventSource = [[EventSource alloc] initWithURL:[NSURL URLWithString:eventSourceURL]
+                                               delegate:self];
+}
 
-    /**
-     * Join a room.
-     */
-    [eventSource addListenerForEvent:@"join" usingEventHandler:^(TRVSServerSentEvent *event, NSError *error) {
-        NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
-        NSLog(@"[PeerServerHandler] Received JOIN response with data: %@", data);
+#pragma mark - EventSource
 
-        if (!data) {
-            if (self.delegate) {
-                NSError *joinError = [NSError errorWithDomain:@"Got invalid response from JOIN" code:0 userInfo:nil];
-                [self.delegate peerServer:self failedToJoinRoom:self.currentRoomID withError:joinError];
-            }
+- (void)eventSource:(EventSource *)eventSource didFailWithError:(NSError *)error
+{
+    NSLog(@"[PeerServerHandler] EventSource didFailWithError: %@", error);
+    [self.delegate peerServer:self failedToJoinRoom:self.currentRoomID withError:error];
+}
+
+- (void)eventSource:(EventSource *)eventSource didReceiveEvent:(NSString *)event withData:(NSString *)data
+{
+    //NSLog(@"[PeerServerHandler] didReceiveEvent: %@ - %@", event, data);
+
+    if ([@"join" isEqualToString:event]) {
+        [self.delegate peerServer:self peer:data joinedRoom:self.currentRoomID];
+    } else if ([@"leave" isEqualToString:event]) {
+        [self.delegate peerServer:self peer:data leftRoom:self.currentRoomID];
+    } else if ([@"sessionfull" isEqualToString:event]) {
+        [self.delegate peerServer:self roomIsFull:self.currentRoomID];
+    } else if ([event hasPrefix:@"user"]) {
+        // Events on the form: user-78ba491c
+        NSString *peerUser = [event componentsSeparatedByString:@"-"][0];
+
+        NSError *error = nil;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[data dataUsingEncoding:NSUTF8StringEncoding]
+                                                             options:0
+                                                               error:&error];
+        if (error || !json) {
+            [self eventSource:eventSource didFailWithError:error];
             return;
         }
 
-        NSString *peerUserID = [NSString stringWithFormat:@"user-%@", data];
-
-        if (self.delegate) {
-            [self.delegate peerServer:self peer:peerUserID joinedRoom:self.currentRoomID];
+        if (json[@"sdp"]) {
+            [self.delegate peerServer:self peer:peerUser sentOffer:json[@"sdp"][@"sdp"]];
+        } else if (json[@"candidate"]) {
+            [self.delegate peerServer:self peer:peerUser sentCandidate:json];
         }
-
-        [self performSelector:@selector(joinEventSourceChannelWithPeerID:) withObject:peerUserID];
-    }];
-
-    /**
-     * Peer leaves room.
-     */
-    [eventSource addListenerForEvent:@"leave" usingEventHandler:^(TRVSServerSentEvent *event, NSError *error) {
-        //NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:event.data options:0 error:NULL];
-        NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
-        NSLog(@"[PeerServerHandler] Received LEAVE with data: %@", data);
-
-        NSString *peerUserID = [NSString stringWithFormat:@"user-%@", data];
-
-        if (self.delegate) {
-            [self.delegate peerServer:self peer:peerUserID leftRoom:self.currentRoomID];
-        }
-
-        [self performSelector:@selector(removeEventSourceListenerWithName:) withObject:peerUserID];
-    }];
-
-    /**
-     * Room is full.
-     */
-    [eventSource addListenerForEvent:@"sessionfull" usingEventHandler:^(TRVSServerSentEvent *event, NSError *error) {
-        //NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:event.data options:0 error:NULL];
-        NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
-        NSLog(@"[PeerServerHandler] Received SESSIONFULL with data: %@", data);
-
-        if (self.delegate) {
-            [self.delegate peerServer:self roomIsFull:self.currentRoomID];
-        }
-    }];
-
-    self.eventSource = eventSource;
-    [self.eventSource setDelegate:self];
-    [self.eventSource open];
+    }
 }
 
 - (void)leave
 {
     if (self.eventSource) {
-        [self.eventSource close];
+        [self.eventSource disconnect];
         self.eventSource = nil;
     }
     self.currentRoomID = nil;
 }
-
-- (void)removeEventSourceListenerWithName:(NSString *)eventName
-{
-    NSLog(@"[PeerServerHandler] Removing listener for: %@", eventName);
-    [self.eventSource removeAllListenersForEvent:eventName];
-}
-
-- (void)joinEventSourceChannelWithPeerID:(NSString *)peerID
-{
-    PeerServerHandler *weakSelf = self;
-    [self.eventSource addListenerForEvent:peerID usingEventHandler:^(TRVSServerSentEvent *event, NSError *error) {
-        NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:event.data options:0 error:NULL];
-        NSString *data = [NSString stringWithUTF8String:[event.data bytes]];
-        NSLog(@"[PeerServerHandler] Received DATA from peer: %@", data);
-
-        //NSLog(@"JSON:\n%@", JSON);
-        if ([JSON valueForKey:@"sdp"]) {
-            NSLog(@"[PeerServerHandler] OFFER received");
-            if (weakSelf.delegate) {
-                NSString *sdp = JSON[@"sdp"][@"sdp"];
-                [weakSelf.delegate peerServer:weakSelf peer:peerID sentOffer:sdp];
-            }
-        } else if ([JSON valueForKey:@"candidate"]) {
-            NSLog(@"[PeerServerHandler] CANDIDATE received");
-            if (weakSelf.delegate) {
-                NSDictionary *candidate = JSON[@"candidate"];
-                [weakSelf.delegate peerServer:weakSelf peer:peerID sentCandidate:candidate];
-            }
-        }
-    }];
-}
-
-#pragma mark - TRVSEventSourceDelegate methods
-
-- (void)eventSourceDidOpen:(TRVSEventSource *)eventSource
-{
-    if (self.delegate) {
-        [self.delegate peerServer:self successfullyJoinedRoom:self.currentRoomID];
-    }
-}
-
-- (void)eventSource:(TRVSEventSource *)eventSource didFailWithError:(NSError *)error
-{
-    NSLog(@"[PeerServerHandler] An error occurred: %@", error);
-    if (self.delegate) {
-        [self.delegate peerServer:self failedToJoinRoom:self.currentRoomID withError:error];
-    }
-}
-
 
 @end

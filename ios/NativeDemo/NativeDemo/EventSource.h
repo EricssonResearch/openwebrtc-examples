@@ -1,5 +1,5 @@
 //
-//  PeerServerHandler.h
+//  EventSource.h
 //  NativeDemo
 //
 //  Copyright (c) 2015, Ericsson AB.
@@ -28,30 +28,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
-@class PeerServerHandler;
-
-@protocol PeerServerHandlerDelegate <NSObject>
-
-- (void)peerServer:(PeerServerHandler *)peerServer failedToJoinRoom:(NSString *)roomID withError:(NSError *)error;
-- (void)peerServer:(PeerServerHandler *)peerServer roomIsFull:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID joinedRoom:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID leftRoom:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSString *)offer;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSDictionary *)candidate;
+@interface EventSource : NSObject
 
 @end
 
+@protocol EventSourceDelegate <NSObject>
 
-@interface PeerServerHandler : NSObject
-
-- (instancetype)initWithBaseURL:(NSString *)baseURL;
-- (void)joinRoomWithID:(NSString *)roomID;
-- (void)leave;
-
-@property (nonatomic, weak) id <PeerServerHandlerDelegate> delegate;
+- (void)eventSource:(EventSource *)eventSource didFailWithError:(NSError *)error;
+- (void)eventSource:(EventSource *)eventSource didReceiveEvent:(NSString *)event withData:(NSString *)data;
 
 @end
 
+@interface EventSource ()
 
+@property id <EventSourceDelegate> delegate;
+
+- (instancetype)initWithURL:(NSURL *)url delegate:(id <EventSourceDelegate>)delegate;
+- (void)disconnect;
+
+@end

@@ -33,8 +33,8 @@
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
 //#define kServerURL @"http://demo.openwebrtc.io:38080"
-//#define kServerURL @"http://localhost:8080"
-#define kServerURL @"http://129.192.20.149:8080"
+#define kServerURL @"http://localhost:8080"
+//#define kServerURL @"http://129.192.20.149:8080"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -164,12 +164,7 @@
 
 - (void)peerServer:(PeerServerHandler *)peerServer failedToJoinRoom:(NSString *)roomID withError:(NSError *)error
 {
-    [self presentErrorWithMessage:error.localizedDescription];
-}
-
-- (void)peerServer:(PeerServerHandler *)peerServer successfullyJoinedRoom:(NSString *)roomID
-{
-    NSLog(@"successfullyJoinedRoom: %@", roomID);
+    [self presentErrorWithMessage:error.description];
 }
 
 - (void)peerServer:(PeerServerHandler *)peerServer roomIsFull:(NSString *)roomID
