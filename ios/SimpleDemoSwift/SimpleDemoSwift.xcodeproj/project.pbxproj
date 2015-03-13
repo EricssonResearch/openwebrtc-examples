@@ -3815,11 +3815,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/joseph.ross/git/openwebrtc/openwebrtc-deps-armv7-ios/lib/gio/modules",
-					"/Users/joseph.ross/git/openwebrtc/openwebrtc-deps-armv7-ios/lib/gstreamer-1.0",
-					"/Users/joseph.ross/git/openwebrtc/openwebrtc-deps-armv7-ios/lib",
-					"/Users/joseph.ross/git/openwebrtc/openwebrtc-deps-armv7-ios/lib/seed-gtk3",
-					"/Users/joseph.ross/git/openwebrtc/out/arm-apple-darwin10/lib",
+					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib/gio/modules",
+					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib/gstreamer-1.0",
+					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib",
+					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib/seed-gtk3",
+					"$(SRCROOT)/../../../openwebrtc/out/arm-apple-darwin10/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/../OwrHelpers/OpenWebRTC-BridgingHeader.h";
@@ -3834,11 +3834,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/joseph.ross/git/openwebrtc/openwebrtc-deps-armv7-ios/lib/gio/modules",
-					"/Users/joseph.ross/git/openwebrtc/openwebrtc-deps-armv7-ios/lib/gstreamer-1.0",
-					"/Users/joseph.ross/git/openwebrtc/openwebrtc-deps-armv7-ios/lib",
-					"/Users/joseph.ross/git/openwebrtc/openwebrtc-deps-armv7-ios/lib/seed-gtk3",
-					"/Users/joseph.ross/git/openwebrtc/out/arm-apple-darwin10/lib",
+					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib/gio/modules",
+					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib/gstreamer-1.0",
+					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib",
+					"$(SRCROOT)/../../../openwebrtc/openwebrtc-deps-armv7-ios/lib/seed-gtk3",
+					"$(SRCROOT)/../../../openwebrtc/out/arm-apple-darwin10/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/../OwrHelpers/OpenWebRTC-BridgingHeader.h";
