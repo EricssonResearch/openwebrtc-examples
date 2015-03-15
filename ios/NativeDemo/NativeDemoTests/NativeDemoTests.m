@@ -1,6 +1,6 @@
 //
-//  PeerServerHandler.h
-//  NativeDemo
+//  NativeDemoTests.m
+//  NativeDemoTests
 //
 //  Copyright (c) 2015, Ericsson AB.
 //  All rights reserved.
@@ -27,33 +27,45 @@
 //  OF SUCH DAMAGE.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <XCTest/XCTest.h>
 
-@class PeerServerHandler;
+#import "NativeDemoViewController.h"
 
-@protocol PeerServerHandlerDelegate <NSObject>
-
-- (void)peerServer:(PeerServerHandler *)peerServer failedToJoinRoom:(NSString *)roomID withError:(NSError *)error;
-- (void)peerServer:(PeerServerHandler *)peerServer roomIsFull:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID joinedRoom:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID leftRoom:(NSString *)roomID;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSString *)offer;
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSDictionary *)candidate;
-- (void)peerServer:(PeerServerHandler *)peerServer failedToSendDataWithError:(NSError *)error;
+@interface NativeDemoTests : XCTestCase
 
 @end
 
+@implementation NativeDemoTests
 
-@interface PeerServerHandler : NSObject
+- (void)testConnectToRoom
+{
+    NativeDemoViewController *vc = [[NativeDemoViewController alloc] init];
+    [vc viewDidLoad];
 
-- (instancetype)initWithBaseURL:(NSString *)baseURL;
-- (void)joinRoomWithID:(NSString *)roomID;
-- (void)sendMessage:(NSString *)message toPeer:(NSString *)peerID;
-- (void)leave;
+    XCTAssert(YES, @"Pass");
+}
 
-@property (nonatomic, weak) id <PeerServerHandlerDelegate> delegate;
+- (void)setUp {
+    [super setUp];
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+}
+
+- (void)tearDown {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [super tearDown];
+}
+
+- (void)testExample {
+    // This is an example of a functional test case.
+    XCTAssert(YES, @"Pass");
+}
+
+- (void)testPerformanceExample {
+    // This is an example of a performance test case.
+    [self measureBlock:^{
+        // Put the code you want to measure the time of here.
+    }];
+}
 
 @end
-
-

@@ -31,12 +31,14 @@
 #import "EventSource.h"
 
 #define kEventSourceURL @"%@/stoc/%@/%@"
+#define kSendMessageURL @"%@/ctos/%@/%@/%@"
 
-@interface PeerServerHandler () <EventSourceDelegate>
+@interface PeerServerHandler () <EventSourceDelegate, NSURLConnectionDelegate>
 
 @property (nonatomic, strong) EventSource *eventSource;
 @property (nonatomic, strong) NSString *baseURL;
 @property (nonatomic, strong) NSString *currentRoomID;
+@property (nonatomic, strong) NSMutableArray *sendQueue;
 
 @end
 
@@ -61,6 +63,14 @@
                                                delegate:self];
 }
 
+- (NSMutableArray *)sendQueue
+{
+    if (!_sendQueue) {
+        _sendQueue = [NSMutableArray array];
+    }
+    return _sendQueue;
+}
+
 #pragma mark - EventSource
 
 - (void)eventSource:(EventSource *)eventSource didFailWithError:(NSError *)error
@@ -71,8 +81,6 @@
 
 - (void)eventSource:(EventSource *)eventSource didReceiveEvent:(NSString *)event withData:(NSString *)data
 {
-    //NSLog(@"[PeerServerHandler] didReceiveEvent: %@ - %@", event, data);
-
     if ([@"join" isEqualToString:event]) {
         [self.delegate peerServer:self peer:data joinedRoom:self.currentRoomID];
     } else if ([@"leave" isEqualToString:event]) {
@@ -100,6 +108,34 @@
     }
 }
 
+- (void)processSendQueue
+{
+    NSDictionary *currentMessage = self.sendQueue[0];
+
+    NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSString *url = [NSString stringWithFormat:kSendMessageURL, self.baseURL, self.currentRoomID, deviceID, currentMessage[@"peerID"], nil];
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"text/plain" forHTTPHeaderField:@"Content-Type"];
+
+    NSString *stringData = currentMessage[@"message"];
+    NSData *requestBodyData = [stringData dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestBodyData;
+
+    NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [conn start];
+}
+
+- (void)sendMessage:(NSString *)message toPeer:(NSString *)peerID
+{
+    [self.sendQueue addObject:@{@"peerID": peerID, @"message": message}];
+
+    if ([self.sendQueue count] == 1) {
+        [self processSendQueue];
+    }
+}
+
 - (void)leave
 {
     if (self.eventSource) {
@@ -107,6 +143,34 @@
         self.eventSource = nil;
     }
     self.currentRoomID = nil;
+}
+
+- (void)maybeSendNextMessage
+{
+    [self.sendQueue removeObjectAtIndex:0];
+    if ([self.sendQueue count] > 0) {
+        [self processSendQueue];
+    }
+}
+
+#pragma mark NSURLConnection Delegate Methods
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                  willCacheResponse:(NSCachedURLResponse*)cachedResponse
+{
+    return nil;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSLog(@"[PeerServerHandler] Message successfully sent to peer");
+    [self maybeSendNextMessage];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    NSLog(@"[PeerServerHandler] WARNING! Failed to send data to peer: %@", error);
+    [self maybeSendNextMessage];
 }
 
 @end

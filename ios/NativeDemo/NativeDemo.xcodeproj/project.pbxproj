@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BB5BE517CFB1888352F71A2E /* libPods-NativeDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DEC75C0F284C35831C02F1 /* libPods-NativeDemo.a */; };
 		F80B5C291AB393A000A20926 /* EventSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F80B5C281AB393A000A20926 /* EventSource.m */; };
+		F8B4B0561AB5B48D008D2C4C /* NativeDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B4B0551AB5B48D008D2C4C /* NativeDemoTests.m */; };
 		F8D10DD41A8B8585000BCA7E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D10DD31A8B8585000BCA7E /* main.m */; };
 		F8D10DD71A8B8585000BCA7E /* NativeDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D10DD61A8B8585000BCA7E /* NativeDemoAppDelegate.m */; };
 		F8D10DDA1A8B8585000BCA7E /* NativeDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D10DD91A8B8585000BCA7E /* NativeDemoViewController.m */; };
@@ -22,12 +23,25 @@
 		F8D114681A8C92F4000BCA7E /* PeerServerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = F8D114671A8C92F4000BCA7E /* PeerServerHandler.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F8B4B0571AB5B48D008D2C4C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D10DC61A8B8585000BCA7E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8D10DCD1A8B8585000BCA7E;
+			remoteInfo = NativeDemo;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		03DEC75C0F284C35831C02F1 /* libPods-NativeDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NativeDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2FDE7223506D0C2C58BED66 /* Pods-NativeDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NativeDemo/Pods-NativeDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		F5AF3E7B3485044168CC87D8 /* Pods-NativeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-NativeDemo/Pods-NativeDemo.release.xcconfig"; sourceTree = "<group>"; };
 		F80B5C271AB393A000A20926 /* EventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSource.h; sourceTree = "<group>"; };
 		F80B5C281AB393A000A20926 /* EventSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventSource.m; sourceTree = "<group>"; };
+		F8B4B0511AB5B48D008D2C4C /* NativeDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NativeDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B4B0541AB5B48D008D2C4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8B4B0551AB5B48D008D2C4C /* NativeDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativeDemoTests.m; sourceTree = "<group>"; };
 		F8D10DCE1A8B8585000BCA7E /* NativeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NativeDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D10DD21A8B8585000BCA7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8D10DD31A8B8585000BCA7E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -47,6 +61,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F8B4B04E1AB5B48D008D2C4C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8D10DCB1A8B8585000BCA7E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -82,10 +103,28 @@
 			name = Signalling;
 			sourceTree = "<group>";
 		};
+		F8B4B0521AB5B48D008D2C4C /* NativeDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				F8B4B0551AB5B48D008D2C4C /* NativeDemoTests.m */,
+				F8B4B0531AB5B48D008D2C4C /* Supporting Files */,
+			);
+			path = NativeDemoTests;
+			sourceTree = "<group>";
+		};
+		F8B4B0531AB5B48D008D2C4C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F8B4B0541AB5B48D008D2C4C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		F8D10DC51A8B8585000BCA7E = {
 			isa = PBXGroup;
 			children = (
 				F8D10DD01A8B8585000BCA7E /* NativeDemo */,
+				F8B4B0521AB5B48D008D2C4C /* NativeDemoTests */,
 				F8D10DCF1A8B8585000BCA7E /* Products */,
 				F8D10DFF1A8BAB39000BCA7E /* Frameworks */,
 				D250A0D53B589F2535D34BE7 /* Pods */,
@@ -96,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				F8D10DCE1A8B8585000BCA7E /* NativeDemo.app */,
+				F8B4B0511AB5B48D008D2C4C /* NativeDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,6 +180,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F8B4B0501AB5B48D008D2C4C /* NativeDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8B4B05B1AB5B48D008D2C4C /* Build configuration list for PBXNativeTarget "NativeDemoTests" */;
+			buildPhases = (
+				F8B4B04D1AB5B48D008D2C4C /* Sources */,
+				F8B4B04E1AB5B48D008D2C4C /* Frameworks */,
+				F8B4B04F1AB5B48D008D2C4C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F8B4B0581AB5B48D008D2C4C /* PBXTargetDependency */,
+			);
+			name = NativeDemoTests;
+			productName = NativeDemoTests;
+			productReference = F8B4B0511AB5B48D008D2C4C /* NativeDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F8D10DCD1A8B8585000BCA7E /* NativeDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8D10DF11A8B8585000BCA7E /* Build configuration list for PBXNativeTarget "NativeDemo" */;
@@ -168,6 +226,10 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Ericsson Research";
 				TargetAttributes = {
+					F8B4B0501AB5B48D008D2C4C = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = F8D10DCD1A8B8585000BCA7E;
+					};
 					F8D10DCD1A8B8585000BCA7E = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
@@ -187,11 +249,19 @@
 			projectRoot = "";
 			targets = (
 				F8D10DCD1A8B8585000BCA7E /* NativeDemo */,
+				F8B4B0501AB5B48D008D2C4C /* NativeDemoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F8B4B04F1AB5B48D008D2C4C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8D10DCC1A8B8585000BCA7E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -238,6 +308,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F8B4B04D1AB5B48D008D2C4C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8B4B0561AB5B48D008D2C4C /* NativeDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8D10DCA1A8B8585000BCA7E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,6 +329,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F8B4B0581AB5B48D008D2C4C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8D10DCD1A8B8585000BCA7E /* NativeDemo */;
+			targetProxy = F8B4B0571AB5B48D008D2C4C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		F8D10DDB1A8B8585000BCA7E /* Main.storyboard */ = {
@@ -272,6 +358,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F8B4B0591AB5B48D008D2C4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = NativeDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativeDemo.app/NativeDemo";
+			};
+			name = Debug;
+		};
+		F8B4B05A1AB5B48D008D2C4C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = NativeDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NativeDemo.app/NativeDemo";
+			};
+			name = Release;
+		};
 		F8D10DEF1A8B8585000BCA7E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -354,7 +477,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A2FDE7223506D0C2C58BED66 /* Pods-NativeDemo.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -370,7 +493,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 arm64 armv7s";
 			};
 			name = Debug;
 		};
@@ -378,7 +501,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F5AF3E7B3485044168CC87D8 /* Pods-NativeDemo.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -394,13 +517,22 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 arm64 armv7s";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F8B4B05B1AB5B48D008D2C4C /* Build configuration list for PBXNativeTarget "NativeDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8B4B0591AB5B48D008D2C4C /* Debug */,
+				F8B4B05A1AB5B48D008D2C4C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F8D10DC91A8B8585000BCA7E /* Build configuration list for PBXProject "NativeDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

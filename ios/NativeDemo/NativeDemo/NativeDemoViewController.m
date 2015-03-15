@@ -34,7 +34,6 @@
 
 //#define kServerURL @"http://demo.openwebrtc.io:38080"
 #define kServerURL @"http://localhost:8080"
-//#define kServerURL @"http://129.192.20.149:8080"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -48,6 +47,7 @@
 @property (weak) IBOutlet OpenWebRTCVideoView *remoteView;
 
 @property (nonatomic, strong) NSString *roomID;
+@property (nonatomic, strong) NSString *peerID;
 @property (nonatomic, strong) PeerServerHandler *peerServer;
 
 @end
@@ -60,15 +60,21 @@
 
     [self.navigationController setToolbarHidden:NO animated:NO];
 
+    nativeHandler = [[OpenWebRTCNativeHandler alloc] initWithDelegate:self];
+
     // Setup the video windows.
-
     self.selfView.transform = CGAffineTransformMakeRotation(M_PI_2);
-
-    nativeHandler = [[OpenWebRTCNativeHandler alloc] init];
-    nativeHandler.delegate = self;
-
+    self.selfView.hidden = YES;
     [nativeHandler setSelfView:self.selfView];
     [nativeHandler setRemoteView:self.remoteView];
+
+    [nativeHandler addSTUNServerWithAddress:@"mmt-stun.verkstad.net"
+                                       port:3478];
+    [nativeHandler addTURNServerWithAddress:@"mmt-turn.verkstad.net"
+                                       port:443
+                                   username:@"webrtc"
+                                   password:@"secret"
+                                      isTCP:NO];
 
     callButton.enabled = hangupButton.enabled = NO;
 
@@ -110,7 +116,7 @@
     NSLog(@"Joining room with ID: %@", roomID);
     self.roomID = roomID;
 
-    [nativeHandler startGetCaptureSources:OWR_MEDIA_TYPE_AUDIO | OWR_MEDIA_TYPE_VIDEO];
+    [nativeHandler startGetCaptureSourcesForAudio:YES video:YES];
 
     [self.peerServer joinRoomWithID:roomID];
 }
@@ -119,6 +125,8 @@
 {
     callButton.enabled = NO;
     hangupButton.enabled = YES;
+
+    [nativeHandler initiateCall];
 }
 
 - (IBAction)hangupButtonTapped:(id)sender
@@ -149,15 +157,22 @@
 
 #pragma mark - OpenWebRTCNativeHandlerDelegate
 
-- (void)addHelperServersForTransportAgent:(OwrTransportAgent *)transportAgent
-{
-    owr_transport_agent_add_helper_server(transportAgent, OWR_HELPER_SERVER_TYPE_STUN,
-                                          "stun.services.mozilla.com", 3478, NULL, NULL);
-}
-
 - (void)answerGenerated:(NSString *)answer
 {
     NSLog(@"Answer generated: \n%@", answer);
+    if (self.peerID) {
+        [self.peerServer sendMessage:answer toPeer:self.peerID];
+    }
+}
+
+- (void)offerGenerated:(NSString *)offer
+{
+    NSLog(@"Offer generated: \n%@", offer);
+}
+
+- (void)gotLocalSources
+{
+    self.selfView.hidden = NO;
 }
 
 #pragma mark - PeerServerHandlerDelegate
@@ -175,6 +190,7 @@
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID joinedRoom:(NSString *)roomID
 {
     callButton.enabled = YES;
+    self.peerID = peerID;
 
     NSLog(@"peer <%@> joinedRoom: %@", peerID, roomID);
 }
@@ -182,6 +198,7 @@
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID leftRoom:(NSString *)roomID
 {
     NSLog(@"peer <%@> leftRoom: %@", peerID, roomID);
+    self.peerID = nil;
 }
 
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSString *)offer
@@ -194,6 +211,11 @@
 {
     NSLog(@"peer <%@> sentCandidate: %@", peerID, candidate);
     [nativeHandler handleRemoteCandidateReceived:candidate];
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer failedToSendDataWithError:(NSError *)error
+{
+    [self presentErrorWithMessage:error.description];
 }
 
 @end
