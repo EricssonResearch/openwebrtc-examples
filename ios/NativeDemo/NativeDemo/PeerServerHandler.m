@@ -89,7 +89,7 @@
         [self.delegate peerServer:self roomIsFull:self.currentRoomID];
     } else if ([event hasPrefix:@"user"]) {
         // Events on the form: user-78ba491c
-        NSString *peerUser = [event componentsSeparatedByString:@"-"][0];
+        NSString *peerUser = [event componentsSeparatedByString:@"-"][1];
 
         NSError *error = nil;
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[data dataUsingEncoding:NSUTF8StringEncoding]
