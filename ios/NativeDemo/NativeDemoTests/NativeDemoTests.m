@@ -116,14 +116,37 @@
     NSString *js = [NSString stringWithContentsOfURL:[NSURL fileURLWithPath:path]
                                             encoding:NSUTF8StringEncoding
                                                error:&error];
-    if (js && !error) {
-        NSDictionary *sdp = [OpenWebRTCUtils parseSDPFromString:js];
-        XCTAssert(sdp && [sdp[@"mediaDescriptions"] count] == 1);
-        XCTAssert([sdp[@"mediaDescriptions"][0][@"address"] isEqualToString:@"192.168.1.86"]);
-        XCTAssert([sdp[@"mediaDescriptions"][0][@"ice"][@"password"] isEqualToString:@"2gMDyNA8fu2WOCnIyyU1gkur"]);
-    } else {
-        XCTFail();
-    }
+
+    XCTAssert(js);
+    XCTAssert(!error);
+
+    NSDictionary *sdp = [OpenWebRTCUtils parseSDPFromString:js];
+    XCTAssert(sdp);
+    XCTAssert([sdp[@"mediaDescriptions"] count] == 1);
+
+    NSDictionary *desc = sdp[@"mediaDescriptions"][0];
+    XCTAssert(desc);
+    XCTAssert([desc[@"address"] isEqualToString:@"192.168.1.86"]);
+    XCTAssert([desc[@"addressType"] isEqualToString:@"IP4"]);
+
+    NSDictionary *dtls = desc[@"dtls"];
+    XCTAssert(dtls);
+    XCTAssert([dtls[@"fingerprint"] isEqualToString:@"1A:3C:A9:43:47:14:D1:12:E3:6E:C0:D5:19:14:EE:57:F6:FC:F9:1F:18:64:65:79:8B:AA:88:EB:3E:1A:B6:69"]);
+    XCTAssert([dtls[@"fingerprintHashFunction"] isEqualToString:@"sha-256"]);
+    XCTAssert([dtls[@"setup"] isEqualToString:@"actpass"]);
+
+    NSDictionary *ice = desc[@"ice"];
+    XCTAssert(ice);
+
+    NSArray *candidates = ice[@"candidates"];
+    XCTAssert([candidates count] == 1);
+    XCTAssert([candidates[0][@"priority"] intValue] == 2122260223);
+    XCTAssert([candidates[0][@"address"] isEqualToString:@"192.168.1.86"]);
+
+    XCTAssert([ice[@"password"] isEqualToString:@"2gMDyNA8fu2WOCnIyyU1gkur"]);
+    XCTAssert([ice[@"ufrag"] isEqualToString:@"9I+z5/4mb+Y00teq"]);
+
+    
     /*
      {
      mediaDescriptions =     (
