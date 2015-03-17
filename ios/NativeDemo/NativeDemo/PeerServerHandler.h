@@ -48,7 +48,7 @@
 @interface PeerServerHandler : NSObject
 
 - (instancetype)initWithBaseURL:(NSString *)baseURL;
-- (void)joinRoomWithID:(NSString *)roomID;
+- (void)joinRoom:(NSString *)roomID withDeviceID:(NSString *)deviceID;
 - (void)sendMessage:(NSString *)message toPeer:(NSString *)peerID;
 - (void)leave;
 

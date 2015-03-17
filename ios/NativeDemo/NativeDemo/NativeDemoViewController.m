@@ -33,7 +33,8 @@
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
 //#define kServerURL @"http://demo.openwebrtc.io:38080"
-#define kServerURL @"http://localhost:8080"
+//#define kServerURL @"http://localhost:8080"
+#define kServerURL @"http://129.192.20.149:8080"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -118,7 +119,8 @@
 
     [nativeHandler startGetCaptureSourcesForAudio:YES video:YES];
 
-    [self.peerServer joinRoomWithID:roomID];
+    NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    [self.peerServer joinRoom:roomID withDeviceID:deviceID];
 }
 
 - (IBAction)callButtonTapped:(id)sender

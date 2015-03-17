@@ -31,40 +31,160 @@
 #import <XCTest/XCTest.h>
 
 #import "NativeDemoViewController.h"
+#import "PeerServerHandler.h"
+#import <OpenWebRTC-SDK/OpenWebRTC.h>
 
-@interface NativeDemoTests : XCTestCase
+@interface NativeDemoTests : XCTestCase <PeerServerHandlerDelegate>
 
 @end
 
 @implementation NativeDemoTests
 
-- (void)testConnectToRoom
+- (void)setUp
 {
-    NativeDemoViewController *vc = [[NativeDemoViewController alloc] init];
-    [vc viewDidLoad];
-
-    XCTAssert(YES, @"Pass");
-}
-
-- (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
-- (void)tearDown {
+- (void)tearDown
+{
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
+
+- (void)testConnectToRoom
+{
     XCTAssert(YES, @"Pass");
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
+#pragma mark - PeerServerHandlerDelegate
+
+- (void)peerServer:(PeerServerHandler *)peerServer failedToJoinRoom:(NSString *)roomID withError:(NSError *)error
+{
+
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer roomIsFull:(NSString *)roomID
+{
+
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID joinedRoom:(NSString *)roomID
+{
+
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID leftRoom:(NSString *)roomID
+{
+
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSString *)offer
+{
+
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSDictionary *)candidate
+{
+
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer failedToSendDataWithError:(NSError *)error
+{
+    
+}
+
+
+- (void)testFindResourcesToParse
+{
+    NSArray *tests = @[@"example_dc", @"example_ff_remote"];
+
+    for (NSString *file in tests) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:file ofType:@"sdp"];
+        if (!path) {
+            XCTFail();
+        }
+    }
+    XCTAssert(YES, @"Pass");
+}
+
+- (void)testParseDataChannelSDP
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"example_dc" ofType:@"sdp"];
+    NSError *error = nil;
+    NSString *js = [NSString stringWithContentsOfURL:[NSURL fileURLWithPath:path]
+                                            encoding:NSUTF8StringEncoding
+                                               error:&error];
+    if (js && !error) {
+        NSDictionary *sdp = [OpenWebRTCUtils parseSDPFromString:js];
+        XCTAssert(sdp && [sdp[@"mediaDescriptions"] count] == 1);
+        XCTAssert([sdp[@"mediaDescriptions"][0][@"address"] isEqualToString:@"192.168.1.86"]);
+        XCTAssert([sdp[@"mediaDescriptions"][0][@"ice"][@"password"] isEqualToString:@"2gMDyNA8fu2WOCnIyyU1gkur"]);
+    } else {
+        XCTFail();
+    }
+    /*
+     {
+     mediaDescriptions =     (
+     {
+     address = "192.168.1.86";
+     addressType = IP4;
+     dtls =             {
+     fingerprint = "1A:3C:A9:43:47:14:D1:12:E3:6E:C0:D5:19:14:EE:57:F6:FC:F9:1F:18:64:65:79:8B:AA:88:EB:3E:1A:B6:69";
+     fingerprintHashFunction = "sha-256";
+     setup = actpass;
+     };
+     ice =             {
+     candidates =                 (
+     {
+     address = "192.168.1.86";
+     componentId = 1;
+     foundation = 3681649477;
+     port = 57049;
+     priority = 2122260223;
+     transport = UDP;
+     type = host;
+     }
+     );
+     password = 2gMDyNA8fu2WOCnIyyU1gkur;
+     ufrag = "9I+z5/4mb+Y00teq";
+     };
+     netType = IN;
+     port = 57049;
+     protocol = "DTLS/SCTP";
+     sctp =             {
+     app = "webrtc-datachannel";
+     maxMessageSize = 1024;
+     port = 5000;
+     };
+     type = application;
+     }
+     );
+     originator =     {
+     address = "127.0.0.1";
+     addressType = IP4;
+     netType = IN;
+     sessionId = "1.282549890398803e+17";
+     sessionVersion = 2;
+     username = "-";
+     };
+     sessionName = "-";
+     startTime = 0;
+     stopTime = 0;
+     version = 0;
+     }
+     */
+}
+
+- (void)testParsePerformance
+{
     [self measureBlock:^{
-        // Put the code you want to measure the time of here.
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"example_ff_remote" ofType:@"sdp"];
+        NSString *content = [NSString stringWithContentsOfURL:[NSURL fileURLWithPath:path]
+                                                     encoding:NSUTF8StringEncoding
+                                                        error:nil];
+        [OpenWebRTCUtils parseSDPFromString:content];
     }];
 }
 

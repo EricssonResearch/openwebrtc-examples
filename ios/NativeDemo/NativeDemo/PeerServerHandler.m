@@ -52,11 +52,9 @@
     return self;
 }
 
-- (void)joinRoomWithID:(NSString *)roomID
+- (void)joinRoom:(NSString *)roomID withDeviceID:(NSString *)deviceID
 {
     self.currentRoomID = roomID;
-
-    NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     NSString *eventSourceURL = [NSString stringWithFormat:kEventSourceURL, self.baseURL, roomID, deviceID, nil];
 
     self.eventSource = [[EventSource alloc] initWithURL:[NSURL URLWithString:eventSourceURL]
