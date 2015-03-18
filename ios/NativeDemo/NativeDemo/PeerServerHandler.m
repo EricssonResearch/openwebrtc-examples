@@ -99,9 +99,18 @@
         }
 
         if (json[@"sdp"]) {
-            [self.delegate peerServer:self peer:peerUser sentOffer:json[@"sdp"][@"sdp"]];
+            NSString *type = json[@"type"];
+            if ([@"offer" isEqualToString:type]) {
+                [self.delegate peerServer:self peer:peerUser sentOffer:json[@"sdp"][@"sdp"]];
+            } else if ([@"answer" isEqualToString:type]) {
+                [self.delegate peerServer:self peer:peerUser sentAnswer:json[@"sdp"][@"sdp"]];
+            } else {
+                NSLog(@"[PeerServerHandler] WARNING! Got malformed offer/answer from peer");
+            }
         } else if (json[@"candidate"]) {
             [self.delegate peerServer:self peer:peerUser sentCandidate:json];
+        } else {
+            NSLog(@"[PeerServerHandler] WARNING! Received unsupported message: %@", json);
         }
     }
 }
@@ -136,6 +145,8 @@
 
 - (void)leave
 {
+    [self.sendQueue removeAllObjects];
+
     if (self.eventSource) {
         [self.eventSource disconnect];
         self.eventSource = nil;

@@ -32,9 +32,8 @@
 
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
-//#define kServerURL @"http://demo.openwebrtc.io:38080"
+#define kServerURL @"http://demo.openwebrtc.io:38080"
 //#define kServerURL @"http://localhost:8080"
-#define kServerURL @"http://129.192.20.149:8080"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -117,7 +116,7 @@
     NSLog(@"Joining room with ID: %@", roomID);
     self.roomID = roomID;
 
-    [nativeHandler startGetCaptureSourcesForAudio:NO video:YES];
+    [nativeHandler startGetCaptureSourcesForAudio:YES video:YES];
 
     NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     [self.peerServer joinRoom:roomID withDeviceID:deviceID];
@@ -133,7 +132,13 @@
 
 - (IBAction)hangupButtonTapped:(id)sender
 {
-    exit(0); // Nice :)
+    [nativeHandler terminateCall];
+    [self.peerServer leave];
+
+    callButton.enabled = NO;
+    hangupButton.enabled = NO;
+
+    [self presentRoomInputView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -219,6 +224,12 @@
 {
     NSLog(@"peer <%@> sentOffer: %@", peerID, offer);
     [nativeHandler handleOfferReceived:offer];
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentAnswer:(NSString *)answer
+{
+    NSLog(@"############################## peer <%@> sentAnswer: %@", peerID, answer);
+    [nativeHandler handleAnswerReceived:answer];
 }
 
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSDictionary *)candidate
