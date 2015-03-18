@@ -117,7 +117,7 @@
     NSLog(@"Joining room with ID: %@", roomID);
     self.roomID = roomID;
 
-    [nativeHandler startGetCaptureSourcesForAudio:YES video:YES];
+    [nativeHandler startGetCaptureSourcesForAudio:NO video:YES];
 
     NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     [self.peerServer joinRoom:roomID withDeviceID:deviceID];
@@ -170,6 +170,18 @@
 - (void)offerGenerated:(NSString *)offer
 {
     NSLog(@"Offer generated: \n%@", offer);
+    if (self.peerID) {
+        [self.peerServer sendMessage:offer toPeer:self.peerID];
+    }
+}
+
+- (void)candidateGenerate:(NSString *)candidate
+{
+    NSLog(@"Candidate generated: \n%@", candidate);
+    if (self.peerID) {
+        NSLog(@"Sending candidate to peer: %@", self.peerID);
+        [self.peerServer sendMessage:candidate toPeer:self.peerID];
+    }
 }
 
 - (void)gotLocalSources

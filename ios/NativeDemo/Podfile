@@ -1,12 +1,13 @@
 platform :ios, '8.0'
 
 target 'NativeDemo' do
-    #pod 'OpenWebRTC', :path => '../../../openwebrtc-ios-sdk/OpenWebRTC.podspec'
-    pod 'OpenWebRTC', '~> 0.1'
+    pod 'OpenWebRTC', :path => '../../../openwebrtc-ios-sdk/OpenWebRTC.podspec'
+    #pod 'OpenWebRTC', '~> 0.1'
     pod 'OpenWebRTC-SDK', :path => '../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec'
 end
 
 target 'NativeDemoTests' do
-    pod 'OpenWebRTC', '~> 0.1'
+	pod 'OpenWebRTC', :path => '../../../openwebrtc-ios-sdk/OpenWebRTC.podspec'
+    #pod 'OpenWebRTC', '~> 0.1'
     pod 'OpenWebRTC-SDK', :path => '../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec'
 end

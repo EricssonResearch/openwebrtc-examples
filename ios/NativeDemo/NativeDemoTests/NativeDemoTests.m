@@ -98,15 +98,18 @@
 
 - (void)testFindResourcesToParse
 {
-    NSArray *tests = @[@"example_dc", @"example_ff_remote"];
-
-    for (NSString *file in tests) {
+    for (NSString *file in @[@"example_dc", @"example_ff_remote"]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:file ofType:@"sdp"];
-        if (!path) {
-            XCTFail();
-        }
+        XCTAssert(path);
     }
     XCTAssert(YES, @"Pass");
+}
+
+- (void)testParseBadSDP
+{
+    NSDictionary *sdp = [OpenWebRTCUtils parseSDPFromString:@"hej"];
+    XCTAssert(sdp[@"mediaDescriptions"]);
+    XCTAssert([sdp[@"mediaDescriptions"] count] == 0);
 }
 
 - (void)testParseDataChannelSDP
@@ -146,7 +149,7 @@
     XCTAssert([ice[@"password"] isEqualToString:@"2gMDyNA8fu2WOCnIyyU1gkur"]);
     XCTAssert([ice[@"ufrag"] isEqualToString:@"9I+z5/4mb+Y00teq"]);
 
-    
+
     /*
      {
      mediaDescriptions =     (
