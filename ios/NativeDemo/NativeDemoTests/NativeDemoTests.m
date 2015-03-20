@@ -85,6 +85,11 @@
 
 }
 
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentAnswer:(NSString *)answer
+{
+
+}
+
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSDictionary *)candidate
 {
 

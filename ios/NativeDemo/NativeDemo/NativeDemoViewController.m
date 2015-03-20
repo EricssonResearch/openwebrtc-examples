@@ -164,19 +164,33 @@
 
 #pragma mark - OpenWebRTCNativeHandlerDelegate
 
-- (void)answerGenerated:(NSString *)answer
+- (void)answerGenerated:(NSDictionary *)answer
 {
     NSLog(@"Answer generated: \n%@", answer);
+
+    NSDictionary *d = @{@"sdp": answer};
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:d
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:nil];
+    NSString *answerString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
     if (self.peerID) {
-        [self.peerServer sendMessage:answer toPeer:self.peerID];
+        [self.peerServer sendMessage:answerString toPeer:self.peerID];
     }
 }
 
-- (void)offerGenerated:(NSString *)offer
+- (void)offerGenerated:(NSDictionary *)offer
 {
     NSLog(@"Offer generated: \n%@", offer);
+
+    NSDictionary *d = @{@"sdp": offer};
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:d
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:nil];
+    NSString *offerString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
     if (self.peerID) {
-        [self.peerServer sendMessage:offer toPeer:self.peerID];
+        [self.peerServer sendMessage:offerString toPeer:self.peerID];
     }
 }
 

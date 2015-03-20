@@ -108,7 +108,7 @@
                 NSLog(@"[PeerServerHandler] WARNING! Got malformed offer/answer from peer");
             }
         } else if (json[@"candidate"]) {
-            [self.delegate peerServer:self peer:peerUser sentCandidate:json];
+            [self.delegate peerServer:self peer:peerUser sentCandidate:json[@"candidate"]];
         } else {
             NSLog(@"[PeerServerHandler] WARNING! Received unsupported message: %@", json);
         }
