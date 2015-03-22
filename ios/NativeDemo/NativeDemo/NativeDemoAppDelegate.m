@@ -29,28 +29,14 @@
 
 #import "NativeDemoAppDelegate.h"
 #import <AVFoundation/AVAudioSession.h>
-#import "owr.h"
+#import <OpenWebRTC-SDK/OpenWebRTC.h>
 
 @implementation NativeDemoAppDelegate
-
-static gpointer owr_run(GMainLoop *main_loop)
-{
-    g_return_val_if_fail(main_loop, NULL);
-    NSLog(@"OpenWebRTC initialized");
-    g_main_loop_run(main_loop);
-    return NULL;
-}
 
 + (void)initialize
 {
     if (self == [NativeDemoAppDelegate class]) {
-        GMainContext *main_context;
-        GMainLoop *main_loop;
-
-        main_context = g_main_context_default();
-        owr_init_with_main_context(main_context);
-        main_loop = g_main_loop_new(NULL, FALSE);
-        g_thread_new("owr_main_loop", (GThreadFunc) owr_run, main_loop);
+        [OpenWebRTC initialize];
     }
 }
 
