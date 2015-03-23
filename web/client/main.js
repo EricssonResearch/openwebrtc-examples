@@ -185,8 +185,10 @@ function start(isInitiator) {
 
     // send any ice candidates to the other peer
     pc.onicecandidate = function (evt) {
-        if (evt.candidate)
+        if (evt.candidate) {
             peer.send(JSON.stringify({ "candidate": evt.candidate }));
+            console.log("candidate emitted: " + evt.candidate.candidate);
+        }
     };
 
     // let the "negotiationneeded" event trigger offer generation
@@ -231,6 +233,7 @@ function start(isInitiator) {
 function localDescCreated(desc) {
     pc.setLocalDescription(desc, function () {
         peer.send(JSON.stringify({ "sdp": pc.localDescription }));
+        console.log("localDescription set and sent to peer, type: " + pc.localDescription.type + ", sdp: " + pc.localDescription.sdp);
     }, logError);
 }
 
