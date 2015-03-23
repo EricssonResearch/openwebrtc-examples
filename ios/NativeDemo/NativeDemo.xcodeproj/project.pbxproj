@@ -10,6 +10,8 @@
 		BB5BE517CFB1888352F71A2E /* libPods-NativeDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DEC75C0F284C35831C02F1 /* libPods-NativeDemo.a */; };
 		BE4CDFCE95270AEB079D003D /* libPods-NativeDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC0BC22E89CCF7F6189B62A /* libPods-NativeDemoTests.a */; };
 		F80B5C291AB393A000A20926 /* EventSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F80B5C281AB393A000A20926 /* EventSource.m */; };
+		F86CB6501ABFF08E00788753 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F86CB64F1ABFF08E00788753 /* Settings.bundle */; };
+		F86CB6531ABFF32D00788753 /* VideoAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = F86CB6521ABFF32D00788753 /* VideoAttributes.m */; };
 		F87B9B0A1AB772F000C02653 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B9B071AB772F000C02653 /* libiconv.dylib */; };
 		F87B9B0B1AB772F000C02653 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B9B081AB772F000C02653 /* libresolv.dylib */; };
 		F87B9B0C1AB772F000C02653 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F87B9B091AB772F000C02653 /* libc++.dylib */; };
@@ -49,6 +51,9 @@
 		F5AF3E7B3485044168CC87D8 /* Pods-NativeDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-NativeDemo/Pods-NativeDemo.release.xcconfig"; sourceTree = "<group>"; };
 		F80B5C271AB393A000A20926 /* EventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSource.h; sourceTree = "<group>"; };
 		F80B5C281AB393A000A20926 /* EventSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventSource.m; sourceTree = "<group>"; };
+		F86CB64F1ABFF08E00788753 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		F86CB6511ABFF32D00788753 /* VideoAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoAttributes.h; sourceTree = "<group>"; };
+		F86CB6521ABFF32D00788753 /* VideoAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoAttributes.m; sourceTree = "<group>"; };
 		F87B9B071AB772F000C02653 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		F87B9B081AB772F000C02653 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		F87B9B091AB772F000C02653 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -177,6 +182,8 @@
 				F8D10DD61A8B8585000BCA7E /* NativeDemoAppDelegate.m */,
 				F8D10DD81A8B8585000BCA7E /* NativeDemoViewController.h */,
 				F8D10DD91A8B8585000BCA7E /* NativeDemoViewController.m */,
+				F86CB6511ABFF32D00788753 /* VideoAttributes.h */,
+				F86CB6521ABFF32D00788753 /* VideoAttributes.m */,
 				F8D10DDB1A8B8585000BCA7E /* Main.storyboard */,
 				F8D10DDE1A8B8585000BCA7E /* Images.xcassets */,
 				F8D10DE01A8B8585000BCA7E /* LaunchScreen.xib */,
@@ -188,6 +195,7 @@
 		F8D10DD11A8B8585000BCA7E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F86CB64F1ABFF08E00788753 /* Settings.bundle */,
 				F8D10DD21A8B8585000BCA7E /* Info.plist */,
 				F8D10DD31A8B8585000BCA7E /* main.m */,
 			);
@@ -308,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F86CB6501ABFF08E00788753 /* Settings.bundle in Resources */,
 				F8D10DDD1A8B8585000BCA7E /* Main.storyboard in Resources */,
 				F8D10DE21A8B8585000BCA7E /* LaunchScreen.xib in Resources */,
 				F8D10DDF1A8B8585000BCA7E /* Images.xcassets in Resources */,
@@ -392,6 +401,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F86CB6531ABFF32D00788753 /* VideoAttributes.m in Sources */,
 				F8D10DDA1A8B8585000BCA7E /* NativeDemoViewController.m in Sources */,
 				F80B5C291AB393A000A20926 /* EventSource.m in Sources */,
 				F8D10DD71A8B8585000BCA7E /* NativeDemoAppDelegate.m in Sources */,

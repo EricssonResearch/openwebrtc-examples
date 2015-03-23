@@ -1,5 +1,5 @@
 //
-//  NativeDemoAppDelegate.m
+//  VideoAttributes.h
 //  NativeDemo
 //
 //  Copyright (c) 2015, Ericsson AB.
@@ -27,41 +27,24 @@
 //  OF SUCH DAMAGE.
 //
 
-#import "NativeDemoAppDelegate.h"
-#import <AVFoundation/AVAudioSession.h>
-#import <OpenWebRTC-SDK/OpenWebRTC.h>
+#import <Foundation/Foundation.h>
 
-@implementation NativeDemoAppDelegate
+#define kVideoBitrate 768000
+#define kSupportedVideoModes @[@"QCIF",@"QVGA",@"CIF",@"360p",@"VGA",@"720p"]
 
-+ (void)initialize
-{
-    if (self == [NativeDemoAppDelegate class]) {
-        [OpenWebRTC initialize];
-    }
-}
+@interface VideoAttributes : NSObject
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+@property (nonatomic, assign) NSInteger width;
+@property (nonatomic, assign) NSInteger height;
+@property (nonatomic, assign) NSInteger framerate;
+@property (nonatomic, assign) NSInteger bitrate;
+//@property (nonatomic, assign) NSInteger droppingBrokenFrames;
+//@property (nonatomic, strong) NSString *orientation;
+@property (nonatomic, strong) NSString *mode;
 
-    NSDictionary *defaults = @{@"video_resolution": @"VGA",
-                               @"video_bitrate": @"1024000",
-                               @"video_fps": @"25"};
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-
-    AVAudioSession *myAudioSession = [AVAudioSession sharedInstance];
-
-    NSError* theError = nil;
-    BOOL result = [myAudioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&theError];
-    if (!result) {
-        NSLog(@"setCategory failed");
-    }
-
-    result = [myAudioSession setActive:YES error:&theError];
-    if (!result) {
-        NSLog(@"setActive failed");
-    }
-
-    // Override point for customization after application launch.
-    return YES;
-}
++ (NSDictionary *)modesDictionary;
++ (VideoAttributes *)loadFromSettings;
+- (void)setResolutionFromMode:(NSString *)mode;
+- (NSDictionary *)toDictionary;
 
 @end

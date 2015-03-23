@@ -29,6 +29,7 @@
 
 #import "NativeDemoViewController.h"
 #import "PeerServerHandler.h"
+#import "VideoAttributes.h"
 
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
@@ -80,6 +81,17 @@
 
     self.peerServer = [[PeerServerHandler alloc] initWithBaseURL:kServerURL];
     self.peerServer.delegate = self;
+
+    // Configure OpenWebRTC with media settings.
+    VideoAttributes *attrs = [VideoAttributes loadFromSettings];
+    NSLog(@"Video settings: %@", attrs);
+
+    OpenWebRTCSettings *settings = [[OpenWebRTCSettings alloc] initWithDefaults];
+    settings.videoFramerate = attrs.framerate;
+    settings.videoBitrate = (int)attrs.bitrate;
+    settings.videoWidth = (int)attrs.width;
+    settings.videoHeight = (int)attrs.height;
+    nativeHandler.settings = settings;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -203,9 +215,17 @@
     }
 }
 
-- (void)gotLocalSources
+- (void)gotLocalSourcesWithNames:(NSArray *)names
 {
+    NSLog(@"gotLocalSourcesWithNames: %@", names);
     self.selfView.hidden = NO;
+}
+
+- (void)gotRemoteSourceWithName:(NSString *)name
+{
+    NSLog(@"gotRemoteSourceWithName: %@", name);
+    callButton.enabled = NO;
+    hangupButton.enabled = YES;
 }
 
 #pragma mark - PeerServerHandlerDelegate
