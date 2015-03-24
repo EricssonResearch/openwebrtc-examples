@@ -34,7 +34,6 @@
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
 #define kServerURL @"http://demo.openwebrtc.io:38080"
-//#define kServerURL @"http://localhost:8080"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -92,6 +91,11 @@
     settings.videoWidth = (int)attrs.width;
     settings.videoHeight = (int)attrs.height;
     nativeHandler.settings = settings;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(sendCurrentOrientation)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -226,6 +230,36 @@
     NSLog(@"gotRemoteSourceWithName: %@", name);
     callButton.enabled = NO;
     hangupButton.enabled = YES;
+
+    [self sendCurrentOrientation];
+}
+
+- (void)sendCurrentOrientation
+{
+    NSInteger orientation;
+    switch ([[UIDevice currentDevice] orientation]) {
+        case UIDeviceOrientationLandscapeLeft:
+            orientation = 180;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            orientation = 0;
+            break;
+        case UIDeviceOrientationPortrait:
+            orientation = 90;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            orientation = 270;
+            break;
+        default:
+            orientation = 0;
+            break;
+    };
+
+    NSString *message = [NSString stringWithFormat:@"{\"orientation\": %ld}", orientation];
+    if (self.peerID) {
+        NSLog(@"[PeerServerHandler] Sending orientation msg: %@", message);
+        [self.peerServer sendMessage:message toPeer:self.peerID];
+    }
 }
 
 #pragma mark - PeerServerHandlerDelegate
@@ -242,10 +276,12 @@
 
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID joinedRoom:(NSString *)roomID
 {
+    NSLog(@"peer <%@> joinedRoom: %@", peerID, roomID);
+
     callButton.enabled = YES;
     self.peerID = peerID;
 
-    NSLog(@"peer <%@> joinedRoom: %@", peerID, roomID);
+    [self sendCurrentOrientation];
 }
 
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID leftRoom:(NSString *)roomID
@@ -262,7 +298,7 @@
 
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentAnswer:(NSString *)answer
 {
-    NSLog(@"############################## peer <%@> sentAnswer: %@", peerID, answer);
+    NSLog(@"peer <%@> sentAnswer: %@", peerID, answer);
     [nativeHandler handleAnswerReceived:answer];
 }
 
@@ -270,6 +306,12 @@
 {
     NSLog(@"peer <%@> sentCandidate: %@", peerID, candidate);
     [nativeHandler handleRemoteCandidateReceived:candidate];
+}
+
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOrientation:(NSInteger)orientation
+{
+    NSLog(@"Rotating remote view to: %ld", orientation);
+    self.remoteView.transform = CGAffineTransformMakeRotation(M_PI * orientation / 360.0);
 }
 
 - (void)peerServer:(PeerServerHandler *)peerServer failedToSendDataWithError:(NSError *)error

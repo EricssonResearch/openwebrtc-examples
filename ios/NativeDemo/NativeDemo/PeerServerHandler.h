@@ -41,6 +41,7 @@
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSString *)offer;
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentAnswer:(NSString *)answer;
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentCandidate:(NSDictionary *)candidate;
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOrientation:(NSInteger)orientation;
 - (void)peerServer:(PeerServerHandler *)peerServer failedToSendDataWithError:(NSError *)error;
 
 @end

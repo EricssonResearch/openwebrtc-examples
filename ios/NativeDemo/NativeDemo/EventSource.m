@@ -74,7 +74,7 @@
         }
     } else {
         if ([line hasPrefix:@"data:"]) {
-            [self.data addObject:[line substringFromIndex:5]];
+            [self.data addObject:[NSMutableString stringWithString:[line substringFromIndex:5]]];
         } else if ([line length] == 0) {
             NSString* dataConcat = [self.data componentsJoinedByString:@"\n"];
             [self.delegate eventSource:self didReceiveEvent:self.currentEventName withData:dataConcat];
@@ -82,6 +82,7 @@
             self.data = nil;
         } else {
             NSLog(@"[EventSource] invalid line, expected data: %@", line);
+            [self.data.lastObject appendString:line];
         }
     }
 }

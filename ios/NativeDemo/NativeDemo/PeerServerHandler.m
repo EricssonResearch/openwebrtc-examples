@@ -37,6 +37,7 @@
 
 @property (nonatomic, strong) EventSource *eventSource;
 @property (nonatomic, strong) NSString *baseURL;
+@property (nonatomic, strong) NSString *deviceID;
 @property (nonatomic, strong) NSString *currentRoomID;
 @property (nonatomic, strong) NSMutableArray *sendQueue;
 
@@ -55,6 +56,7 @@
 - (void)joinRoom:(NSString *)roomID withDeviceID:(NSString *)deviceID
 {
     self.currentRoomID = roomID;
+    self.deviceID = deviceID;
     NSString *eventSourceURL = [NSString stringWithFormat:kEventSourceURL, self.baseURL, roomID, deviceID, nil];
 
     self.eventSource = [[EventSource alloc] initWithURL:[NSURL URLWithString:eventSourceURL]
@@ -94,6 +96,7 @@
                                                              options:0
                                                                error:&error];
         if (error || !json) {
+            NSLog(@"[PeerServerHandler] ###################### Got INVALID json: %@", data);
             [self eventSource:eventSource didFailWithError:error];
             return;
         }
@@ -109,9 +112,14 @@
             }
         } else if (json[@"candidate"]) {
             [self.delegate peerServer:self peer:peerUser sentCandidate:json[@"candidate"]];
+        } else if (json[@"orientation"]) {
+            NSInteger orientation = [json[@"orientation"] integerValue];
+            [self.delegate peerServer:self peer:peerUser sentOrientation:orientation];
         } else {
             NSLog(@"[PeerServerHandler] WARNING! Received unsupported message: %@", json);
         }
+    } else {
+        NSLog(@"Unsupported message received: %@", event);
     }
 }
 
@@ -119,8 +127,7 @@
 {
     NSDictionary *currentMessage = self.sendQueue[0];
 
-    NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSString *url = [NSString stringWithFormat:kSendMessageURL, self.baseURL, self.currentRoomID, deviceID, currentMessage[@"peerID"], nil];
+    NSString *url = [NSString stringWithFormat:kSendMessageURL, self.baseURL, self.currentRoomID, self.deviceID, currentMessage[@"peerID"], nil];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     request.HTTPMethod = @"POST";
@@ -138,7 +145,8 @@
 {
     [self.sendQueue addObject:@{@"peerID": peerID, @"message": message}];
 
-    if ([self.sendQueue count] == 1) {
+    //if ([self.sendQueue count] == 1) {
+    if ([self.sendQueue count] > 0) {
         [self processSendQueue];
     }
 }
@@ -156,7 +164,10 @@
 
 - (void)maybeSendNextMessage
 {
-    [self.sendQueue removeObjectAtIndex:0];
+    if ([self.sendQueue count] > 0) {
+        [self.sendQueue removeObjectAtIndex:0];
+    }
+
     if ([self.sendQueue count] > 0) {
         [self processSendQueue];
     }
