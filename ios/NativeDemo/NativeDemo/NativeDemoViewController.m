@@ -33,8 +33,7 @@
 
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
-//#define kServerURL @"http://demo.openwebrtc.io:38080"
-#define kServerURL @"http://129.192.20.149:8080"
+#define kServerURL @"http://demo.openwebrtc.io:38080"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -64,7 +63,7 @@
     nativeHandler = [[OpenWebRTCNativeHandler alloc] initWithDelegate:self];
 
     // Setup the video windows.
-    self.selfView.layer.transform = CATransform3DMakeScale(-1, -1, 1);
+    //self.selfView.layer.transform = CATransform3DMakeScale(-1, -1, 1);
     self.selfView.hidden = YES;
     [nativeHandler setSelfView:self.selfView];
     [nativeHandler setRemoteView:self.remoteView];
@@ -312,7 +311,8 @@
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOrientation:(NSInteger)orientation
 {
     NSLog(@"Rotating remote view to: %ld", orientation);
-    self.remoteView.transform = CGAffineTransformMakeRotation(M_PI * orientation / 360.0);
+
+    //self.remoteView.transform = CGAffineTransformMakeRotation(M_PI * orientation / 360.0);
 }
 
 - (void)peerServer:(PeerServerHandler *)peerServer failedToSendDataWithError:(NSError *)error
