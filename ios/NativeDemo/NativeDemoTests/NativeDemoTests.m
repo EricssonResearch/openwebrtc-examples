@@ -100,6 +100,10 @@
     
 }
 
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOrientation:(NSInteger)orientation
+{
+    
+}
 
 - (void)testFindResourcesToParse
 {

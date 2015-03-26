@@ -126,6 +126,7 @@
 - (void)processSendQueue
 {
     NSDictionary *currentMessage = self.sendQueue[0];
+    [self.sendQueue removeObjectAtIndex:0];
 
     NSString *url = [NSString stringWithFormat:kSendMessageURL, self.baseURL, self.currentRoomID, self.deviceID, currentMessage[@"peerID"], nil];
 
@@ -145,8 +146,7 @@
 {
     [self.sendQueue addObject:@{@"peerID": peerID, @"message": message}];
 
-    //if ([self.sendQueue count] == 1) {
-    if ([self.sendQueue count] > 0) {
+    if ([self.sendQueue count] == 1) {
         [self processSendQueue];
     }
 }
@@ -164,10 +164,6 @@
 
 - (void)maybeSendNextMessage
 {
-    if ([self.sendQueue count] > 0) {
-        [self.sendQueue removeObjectAtIndex:0];
-    }
-
     if ([self.sendQueue count] > 0) {
         [self processSendQueue];
     }

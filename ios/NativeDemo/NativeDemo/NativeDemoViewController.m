@@ -33,7 +33,8 @@
 
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
-#define kServerURL @"http://demo.openwebrtc.io:38080"
+//#define kServerURL @"http://demo.openwebrtc.io:38080"
+#define kServerURL @"http://129.192.20.149:8080"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -63,7 +64,7 @@
     nativeHandler = [[OpenWebRTCNativeHandler alloc] initWithDelegate:self];
 
     // Setup the video windows.
-    self.selfView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    self.selfView.layer.transform = CATransform3DMakeScale(-1, -1, 1);
     self.selfView.hidden = YES;
     [nativeHandler setSelfView:self.selfView];
     [nativeHandler setRemoteView:self.remoteView];
