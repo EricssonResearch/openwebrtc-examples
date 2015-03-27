@@ -41,7 +41,8 @@ static NSDictionary *modesDictionary;
                             @"CIF":@[@"352", @"288"],
                             @"360p":@[@"640", @"360"],
                             @"VGA":@[@"640", @"480"],
-                            @"720p":@[@"1280", @"720"]};
+                            @"720p":@[@"1280", @"720"],
+                            @"1080p":@[@"1920", @"1080"]};
     }
     return modesDictionary;
 }
@@ -50,7 +51,6 @@ static NSDictionary *modesDictionary;
 {
     // Decide on video attributes.
     VideoAttributes *attrs = [[VideoAttributes alloc] init];
-    //attrs.orientation = @"landscape";
 
     NSString *videoResolution = [[NSUserDefaults standardUserDefaults] stringForKey:@"video_resolution"];
     [attrs setResolutionFromMode:videoResolution];
@@ -77,8 +77,6 @@ static NSDictionary *modesDictionary;
     [dict setValue:[NSNumber numberWithInteger:self.height] forKey:@"height"];
     [dict setValue:[NSNumber numberWithInteger:self.framerate] forKey:@"framerate"];
     [dict setValue:[NSNumber numberWithInteger:self.bitrate] forKey:@"bitrate"];
-    //[dict setValue:[NSNumber numberWithInteger:self.droppingBrokenFrames] forKey:@"droppingBrokenFrames"];
-    //[dict setObject:self.orientation forKey:@"orientation"];
     [dict setObject:self.mode forKey:@"mode"];
     return dict;
 }

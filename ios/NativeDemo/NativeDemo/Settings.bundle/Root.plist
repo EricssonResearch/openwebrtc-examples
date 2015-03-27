@@ -57,6 +57,7 @@
 				<string>360p</string>
 				<string>VGA</string>
 				<string>720p</string>
+                <string>1080p</string>
 			</array>
 			<key>Values</key>
 			<array>
@@ -66,6 +67,7 @@
 				<string>360p</string>
 				<string>VGA</string>
 				<string>720p</string>
+                <string>1080p</string>
 			</array>
 		</dict>
 		<dict>
@@ -76,7 +78,7 @@
 			<key>Key</key>
 			<string>video_fps</string>
 			<key>DefaultValue</key>
-			<string>15</string>
+			<string>25</string>
 			<key>Titles</key>
 			<array>
 				<string>5</string>

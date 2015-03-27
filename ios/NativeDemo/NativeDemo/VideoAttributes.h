@@ -30,7 +30,7 @@
 #import <Foundation/Foundation.h>
 
 #define kVideoBitrate 768000
-#define kSupportedVideoModes @[@"QCIF",@"QVGA",@"CIF",@"360p",@"VGA",@"720p"]
+#define kSupportedVideoModes @[@"QCIF",@"QVGA",@"CIF",@"360p",@"VGA",@"720p", @"1080p"]
 
 @interface VideoAttributes : NSObject
 
@@ -38,8 +38,6 @@
 @property (nonatomic, assign) NSInteger height;
 @property (nonatomic, assign) NSInteger framerate;
 @property (nonatomic, assign) NSInteger bitrate;
-//@property (nonatomic, assign) NSInteger droppingBrokenFrames;
-//@property (nonatomic, strong) NSString *orientation;
 @property (nonatomic, strong) NSString *mode;
 
 + (NSDictionary *)modesDictionary;
