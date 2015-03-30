@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7rz-jU-cyw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7rz-jU-cyw">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,10 +17,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" enableSetNeedsDisplay="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J2l-lT-9r1">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OhA-Bm-ncF" customClass="OpenWebRTCVideoView">
                                 <rect key="frame" x="16" y="81" width="568" height="302"/>
-                                <color key="backgroundColor" white="0.95999999999999996" alpha="1" colorSpace="calibratedWhite"/>
-                            </glkView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="99" translatesAutoresizingMaskIntoConstraints="NO" id="e9N-Z4-9Q2">
                                 <rect key="frame" x="130" y="512" width="456" height="31"/>
                                 <color key="tintColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -48,34 +48,34 @@
                                 <color key="textColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <glkView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" enableSetNeedsDisplay="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nY-QA-fvc">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WEG-Ya-uVA" customClass="OpenWebRTCVideoView">
                                 <rect key="frame" x="16" y="398" width="108" height="144"/>
-                                <color key="backgroundColor" red="0.64705882349999999" green="0.81568627449999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="144" id="IdO-Sv-2Vt"/>
-                                    <constraint firstAttribute="width" constant="108" id="oNH-MI-iH0"/>
+                                    <constraint firstAttribute="width" constant="108" id="QK6-Bf-II7"/>
+                                    <constraint firstAttribute="height" constant="144" id="oif-qd-MeZ"/>
                                 </constraints>
-                            </glkView>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Kay-Hn-ce7" firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" id="4Qu-PZ-adx"/>
                             <constraint firstAttribute="centerY" secondItem="VcG-7Y-8B7" secondAttribute="centerY" constant="-170.5" id="6M9-vF-wQk"/>
-                            <constraint firstItem="J2l-lT-9r1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Fr4-dt-Ebl"/>
+                            <constraint firstItem="OhA-Bm-ncF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="17" id="8jx-fO-11S"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WEG-Ya-uVA" secondAttribute="trailing" constant="460" id="Cql-MG-rdt"/>
+                            <constraint firstItem="OhA-Bm-ncF" firstAttribute="trailing" secondItem="e9N-Z4-9Q2" secondAttribute="trailing" id="FVc-GG-BE1"/>
                             <constraint firstItem="Kay-Hn-ce7" firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" id="GZH-oo-e2o"/>
-                            <constraint firstItem="J2l-lT-9r1" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="17" id="GZM-jZ-N4L"/>
                             <constraint firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" constant="-58" id="JHC-pB-igY"/>
                             <constraint firstItem="VcG-7Y-8B7" firstAttribute="top" secondItem="Kay-Hn-ce7" secondAttribute="bottom" constant="8" id="ROW-y9-cjw"/>
+                            <constraint firstItem="WEG-Ya-uVA" firstAttribute="top" secondItem="OhA-Bm-ncF" secondAttribute="bottom" constant="15" id="SbL-3G-SbP"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="e9N-Z4-9Q2" secondAttribute="bottom" constant="14" id="TwG-e0-G78"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8nY-QA-fvc" secondAttribute="trailing" constant="460" id="UUW-qL-PGZ"/>
-                            <constraint firstItem="J2l-lT-9r1" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="WVq-b4-Z31"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="WEG-Ya-uVA" secondAttribute="bottom" constant="14" id="YLJ-c4-QIi"/>
                             <constraint firstAttribute="centerY" secondItem="e9N-Z4-9Q2" secondAttribute="centerY" constant="-227" id="c1w-yB-vlC"/>
-                            <constraint firstItem="e9N-Z4-9Q2" firstAttribute="leading" secondItem="8nY-QA-fvc" secondAttribute="trailing" constant="8" id="fd3-im-waX"/>
                             <constraint firstItem="e9N-Z4-9Q2" firstAttribute="top" secondItem="VcG-7Y-8B7" secondAttribute="bottom" constant="8" id="g3e-8c-YBB"/>
+                            <constraint firstItem="WEG-Ya-uVA" firstAttribute="leading" secondItem="OhA-Bm-ncF" secondAttribute="leading" id="gcG-bH-C5j"/>
                             <constraint firstItem="VcG-7Y-8B7" firstAttribute="top" secondItem="Kay-Hn-ce7" secondAttribute="bottom" constant="8" id="lKt-Q7-CKJ"/>
-                            <constraint firstItem="8nY-QA-fvc" firstAttribute="top" secondItem="J2l-lT-9r1" secondAttribute="bottom" constant="15" id="m5H-AJ-k1t"/>
+                            <constraint firstItem="e9N-Z4-9Q2" firstAttribute="leading" secondItem="WEG-Ya-uVA" secondAttribute="trailing" constant="8" id="lph-1n-PhE"/>
                             <constraint firstItem="e9N-Z4-9Q2" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="pzS-3s-nBx"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8nY-QA-fvc" secondAttribute="bottom" constant="14" id="ugF-eg-Oh1"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -114,10 +114,10 @@
                         <outlet property="callButton" destination="meE-Iu-5yq" id="Uch-Wh-swh"/>
                         <outlet property="hangupButton" destination="c6H-Ie-SZy" id="EHq-fY-jU4"/>
                         <outlet property="joinButton" destination="QSc-Lj-Oxp" id="iHl-jf-3ww"/>
-                        <outlet property="remoteView" destination="J2l-lT-9r1" id="yMz-Rw-4bv"/>
+                        <outlet property="remoteView" destination="OhA-Bm-ncF" id="Rfd-KJ-qMu"/>
                         <outlet property="roomLabel" destination="VcG-7Y-8B7" id="4ml-fC-TNK"/>
                         <outlet property="roomSlider" destination="e9N-Z4-9Q2" id="EnH-ol-mBj"/>
-                        <outlet property="selfView" destination="8nY-QA-fvc" id="VNG-bg-SxY"/>
+                        <outlet property="selfView" destination="WEG-Ya-uVA" id="9BF-zV-vBE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -27,8 +27,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GLKit/GLKit.h>
 
+#import "OpenWebRTCVideoView.h"
 #import "OpenWebRTCWebView.h"
 
 @interface OpenWebRTCViewController : UIViewController <WKNavigationDelegate, WKScriptMessageHandler, OpenWebRTCWebViewDelegate>
@@ -36,8 +36,8 @@
     NSTimer *pageNavigationTimer;
 }
 
-@property (nonatomic, strong) IBOutlet GLKView *selfView;
-@property (nonatomic, strong) IBOutlet GLKView *remoteView;
+@property (nonatomic, strong) IBOutlet OpenWebRTCVideoView *selfView;
+@property (nonatomic, strong) IBOutlet OpenWebRTCVideoView *remoteView;
 @property (strong, nonatomic) IBOutlet OpenWebRTCWebView *browserView;
 @property (nonatomic, strong) NSString *javascriptCode;
 
