@@ -216,10 +216,14 @@ public class SignalingChannel {
         public void onDisconnect();
     }
 
+    public interface PeerDisconnectListener {
+        public void onPeerDisconnect(final PeerChannel peerChannel);
+    }
+
     public class PeerChannel {
         private final String mPeerId;
         private MessageListener mMessageListener;
-        private DisconnectListener mDisconnectListener;
+        private PeerDisconnectListener mDisconnectListener;
         private boolean mDisconnected = false;
 
         private PeerChannel(String peerId) {
@@ -263,7 +267,7 @@ public class SignalingChannel {
         private void onDisconnect() {
             mDisconnected = true;
             if (mDisconnectListener != null) {
-                mDisconnectListener.onDisconnect();
+                mDisconnectListener.onPeerDisconnect(this);
                 mDisconnectListener = null;
                 mMessageListener = null;
             }
@@ -273,7 +277,7 @@ public class SignalingChannel {
             mMessageListener = messageListener;
         }
 
-        public void setDisconnectListener(final DisconnectListener onDisconnectListener) {
+        public void setDisconnectListener(final PeerDisconnectListener onDisconnectListener) {
             mDisconnectListener = onDisconnectListener;
         }
 

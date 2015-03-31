@@ -28,9 +28,12 @@ package com.ericsson.research.owr.examples.nativecall;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
@@ -43,16 +46,35 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ericsson.research.owr.CaptureSourcesCallback;
-import com.ericsson.research.owr.MediaSource;
-import com.ericsson.research.owr.MediaType;
 import com.ericsson.research.owr.Owr;
+import com.ericsson.research.owr.sdk.InvalidDescriptionException;
+import com.ericsson.research.owr.sdk.RtcCandidate;
+import com.ericsson.research.owr.sdk.RtcCandidates;
+import com.ericsson.research.owr.sdk.RtcConfig;
+import com.ericsson.research.owr.sdk.RtcConfigs;
+import com.ericsson.research.owr.sdk.RtcSession;
+import com.ericsson.research.owr.sdk.RtcSessions;
+import com.ericsson.research.owr.sdk.SessionDescription;
+import com.ericsson.research.owr.sdk.SessionDescriptions;
+import com.ericsson.research.owr.sdk.SimpleStreamSet;
 
-import java.util.EnumSet;
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class NativeCallExampleActivity extends Activity implements SignalingChannel.JoinListener, SignalingChannel.DisconnectListener, SignalingChannel.SessionFullListener, PeerHandler.CallStateListener {
-    private static final String TAG = "NativeCallExampleActivity";
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Map;
+
+public class NativeCallExampleActivity extends Activity implements
+        SignalingChannel.JoinListener,
+        SignalingChannel.DisconnectListener,
+        SignalingChannel.SessionFullListener,
+        SignalingChannel.MessageListener,
+        SignalingChannel.PeerDisconnectListener,
+        RtcSession.OnLocalCandidateListener,
+        RtcSession.OnLocalDescriptionListener {
+    private static final String TAG = "NativeCall";
 
     private static final String PREFERENCE_KEY_SERVER_URL = "url";
     private static final int SETTINGS_ANIMATION_DURATION = 400;
@@ -62,14 +84,9 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
      * Initialize OpenWebRTC at startup
      */
     static {
+        Log.d(TAG, "Initializing OpenWebRTC");
         Owr.init();
         Owr.runInBackground();
-        Owr.getCaptureSources(EnumSet.of(MediaType.VIDEO, MediaType.AUDIO), new CaptureSourcesCallback() {
-            @Override
-            public void onCaptureSourcesCallback(final List<MediaSource> sources) {
-                MediaController.create(sources);
-            }
-        });
     }
 
     private Button mJoinButton;
@@ -82,10 +99,12 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
     private View mSettingsHeader;
 
     private SignalingChannel mSignalingChannel;
-    private PeerHandler mPeerHandler;
-    private MediaController mMediaController;
     private InputMethodManager mInputMethodManager;
     private WindowManager mWindowManager;
+    private SignalingChannel.PeerChannel mPeerChannel;
+    private RtcSession mRtcSession;
+    private SimpleStreamSet mStreamSet;
+    private RtcConfig mRtcConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,25 +114,32 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
 
         mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
-        mMediaController = MediaController.getInstance();
-        mMediaController.setSelfView((TextureView) findViewById(R.id.self_view));
-        mMediaController.setRemoteView((TextureView) findViewById(R.id.remote_view));
-        mJoinButton.setEnabled(true);
-
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mMediaController.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
+        mRtcConfig = RtcConfigs.defaultConfig(Config.STUN_SERVER);
     }
 
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         initUi();
-        Log.e(TAG, "set self view: " + findViewById(R.id.self_view));
-        mMediaController.setSelfView((TextureView) findViewById(R.id.self_view));
-        mMediaController.setRemoteView((TextureView) findViewById(R.id.remote_view));
-        mMediaController.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
-        if (mPeerHandler != null) {
-            mPeerHandler.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
+        updateStreamSetViews(true);
+    }
+
+    private void updateStreamSetViews(boolean running) {
+        if (mStreamSet != null) {
+            TextureView selfView = (TextureView) findViewById(R.id.self_view);
+            TextureView remoteView = (TextureView) findViewById(R.id.remote_view);
+            selfView.setVisibility(running ? View.VISIBLE : View.INVISIBLE);
+            remoteView.setVisibility(running ? View.VISIBLE : View.INVISIBLE);
+            if (running) {
+                Log.d(TAG, "setting self-view: " + selfView);
+                mStreamSet.setSelfView(selfView);
+                mStreamSet.setRemoteView(remoteView);
+    //            mStreamSet.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
+            } else {
+                mStreamSet.setSelfView((SurfaceView) null);
+                mStreamSet.setRemoteView((TextureView) null);
+            }
         }
     }
 
@@ -125,6 +151,8 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
         mSessionInput = (EditText) findViewById(R.id.session_id);
         mAudioCheckBox = (CheckBox) findViewById(R.id.audio);
         mVideoCheckBox = (CheckBox) findViewById(R.id.video);
+
+        mJoinButton.setEnabled(true);
 
         mHeader = findViewById(R.id.header);
         mHeader.setCameraDistance(getResources().getDisplayMetrics().widthPixels * 5);
@@ -151,18 +179,9 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
         });
     }
 
-    public void onCallClicked(final View view) {
-        Log.d(TAG, "onCallClicked");
-
-        if (mPeerHandler != null) {
-            mPeerHandler.call();
-            mCallButton.setEnabled(false);
-        }
-    }
-
     public void onSelfViewClicked(final View view) {
         Log.d(TAG, "onSelfViewClicked");
-        mMediaController.toggleCamera();
+//        mStreamSet.toggleCamera();
     }
 
     public void onJoinClicked(final View view) {
@@ -181,46 +200,136 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
         mAudioCheckBox.setEnabled(false);
         mVideoCheckBox.setEnabled(false);
 
-        mMediaController.showSelfView();
-
         mSignalingChannel = new SignalingChannel(getUrl(), sessionId);
         mSignalingChannel.setJoinListener(this);
         mSignalingChannel.setDisconnectListener(this);
         mSignalingChannel.setSessionFullListener(this);
+
+        boolean wantAudio = mAudioCheckBox.isChecked();
+        boolean wantVideo = mVideoCheckBox.isChecked();
+        mStreamSet = SimpleStreamSet.defaultConfig(wantAudio, wantVideo);
+        updateStreamSetViews(true);
     }
 
     @Override
     public void onPeerJoin(final SignalingChannel.PeerChannel peerChannel) {
         Log.v(TAG, "onPeerJoin => " + peerChannel.getPeerId());
         mCallButton.setEnabled(true);
-        boolean wantAudio = mAudioCheckBox.isChecked();
-        boolean wantVideo = mVideoCheckBox.isChecked();
-        mPeerHandler = new PeerHandler(peerChannel, mMediaController, wantAudio, wantVideo, this);
-        mPeerHandler.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
+        mPeerChannel = peerChannel;
+        mPeerChannel.setDisconnectListener(this);
+        mPeerChannel.setMessageListener(this);
+
+        mRtcSession = RtcSessions.create(mRtcConfig);
+        mRtcSession.setOnLocalCandidateListener(this);
+        mRtcSession.setOnLocalDescriptionListener(this);
     }
 
     @Override
-    public void onIncomingCall() {
-        Log.d(TAG, "onIncomingCall");
+    public void onPeerDisconnect(final SignalingChannel.PeerChannel peerChannel) {
+        Log.d(TAG, "onPeerDisconnect => " + peerChannel.getPeerId());
+        mRtcSession.stop();
+        mPeerChannel = null;
+        updateStreamSetViews(false);
+        mSessionInput.setEnabled(true);
+        mJoinButton.setEnabled(true);
         mCallButton.setEnabled(false);
+        mAudioCheckBox.setEnabled(true);
+        mVideoCheckBox.setEnabled(true);
     }
 
     @Override
-    public void onPeerDisconnect(final String peerId) {
-        Log.d(TAG, "onPeerDisconnect => " + peerId);
+    public synchronized void onMessage(final JSONObject json) {
+        if (json.has("candidate")) {
+            JSONObject candidate = json.optJSONObject("candidate");
+            Log.v(TAG, "candidate: " + candidate);
+            RtcCandidate rtcCandidate = RtcCandidates.fromJsep(candidate);
+            if (rtcCandidate != null) {
+                mRtcSession.addRemoteCandidate(rtcCandidate);
+            } else {
+                Log.w(TAG, "invalid candidate: " + candidate);
+            }
+        }
+        if (json.has("sdp")) {
+            JSONObject sdp = json.optJSONObject("sdp");
+            Log.v(TAG, "sdp: " + sdp);
+            try {
+                SessionDescription sessionDescription = SessionDescriptions.fromJsep(sdp);
+                if (sessionDescription.getType() == SessionDescription.Type.OFFER) {
+                    onInboundCall(sessionDescription);
+                } else {
+                    onAnswer(sessionDescription);
+                }
+            } catch (InvalidDescriptionException e) {
+                e.printStackTrace();
+            }
+        }
+        if (json.has("orientation")) {
+//                handleOrientation(json.getInt("orientation"));
+        }
+    }
+
+    @Override
+    public void onLocalCandidate(final RtcCandidate candidate) {
+        if (mPeerChannel != null) {
+            try {
+                JSONObject json = new JSONObject();
+                json.putOpt("candidate", RtcCandidates.toJsep(candidate));
+                json.getJSONObject("candidate").put("sdpMid", "video");
+                Log.d(TAG, "sending candidate: " + json);
+                mPeerChannel.send(json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void onCallClicked(final View view) {
+        Log.d(TAG, "onCallClicked");
+
+        mRtcSession.start(mStreamSet);
         mCallButton.setEnabled(false);
-        mMediaController.clearRemoteSources();
-        mPeerHandler = null;
+    }
+
+    private void onInboundCall(final SessionDescription sessionDescription) {
+        try {
+            mRtcSession.setRemoteDescription(sessionDescription);
+            mRtcSession.start(mStreamSet);
+        } catch (InvalidDescriptionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void onAnswer(final SessionDescription sessionDescription) {
+        if (mRtcSession != null) {
+            try {
+                mRtcSession.setRemoteDescription(sessionDescription);
+            } catch (InvalidDescriptionException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onLocalDescription(final SessionDescription localDescription) {
+        if (mPeerChannel != null) {
+            try {
+                JSONObject json = new JSONObject();
+                json.putOpt("sdp", SessionDescriptions.toJsep(localDescription));
+                Log.d(TAG, "sending sdp: " + json);
+                mPeerChannel.send(json);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void onDisconnect() {
-        Toast.makeText(this, "Disconnected from session", Toast.LENGTH_LONG).show();
-        mJoinButton.setEnabled(true);
-        mMediaController.hideSelfView();
-        mMediaController.clearRemoteSources();
-        mAudioCheckBox.setEnabled(true);
-        mVideoCheckBox.setEnabled(true);
+        Toast.makeText(this, "Disconnected from server", Toast.LENGTH_LONG).show();
+        updateStreamSetViews(false);
+        mStreamSet = null;
+        mRtcSession.stop();
+        mRtcSession = null;
         mSignalingChannel = null;
     }
 
