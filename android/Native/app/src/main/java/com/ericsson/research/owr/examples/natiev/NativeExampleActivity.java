@@ -54,6 +54,7 @@ public class NativeExampleActivity extends Activity {
      */
     static {
         Owr.init();
+        Owr.runInBackground();
     }
 
     @Override

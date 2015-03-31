@@ -63,6 +63,7 @@ public class NativeCallExampleActivity extends Activity implements SignalingChan
      */
     static {
         Owr.init();
+        Owr.runInBackground();
         Owr.getCaptureSources(EnumSet.of(MediaType.VIDEO, MediaType.AUDIO), new CaptureSourcesCallback() {
             @Override
             public void onCaptureSourcesCallback(final List<MediaSource> sources) {
