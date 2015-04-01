@@ -76,8 +76,9 @@ static void got_sources(GList *sources, gpointer user_data)
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
 
-    owr_init();
+    owr_init(NULL);
     NSLog(@"OpenWebRTC initialized");
+    owr_run_in_background();
 
     NSLog(@"Registering self view %@", self.selfView);
     owr_window_registry_register(owr_window_registry_get(), SELF_VIEW_TAG, (__bridge gpointer)(self.selfView));
