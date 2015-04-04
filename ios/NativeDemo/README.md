@@ -11,7 +11,8 @@ If you haven't installed CocoaPods yet, do so first:
     pod setup
 
 Then run:
-	pod install
-	open NativeDemo.xcworkspace
 
-*NOTE!* When using CocoaPods, you should always use the `.xcworkspace` file and not the usual `.xcproject`.
+    pod install
+    open NativeDemo.xcworkspace
+
+**NOTE!** When using CocoaPods, you should always use the `.xcworkspace` file and not the usual `.xcproject`.
