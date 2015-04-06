@@ -28,7 +28,6 @@
 //
 
 #import "NativeDemoAppDelegate.h"
-#import <AVFoundation/AVAudioSession.h>
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
 @implementation NativeDemoAppDelegate
@@ -40,27 +39,14 @@
     }
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // Override point for customization after application launch.
     NSDictionary *defaults = @{@"video_resolution": @"VGA",
                                @"video_bitrate": @"1024000",
                                @"video_fps": @"25"};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 
-    AVAudioSession *myAudioSession = [AVAudioSession sharedInstance];
-
-    NSError* theError = nil;
-    BOOL result = [myAudioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&theError];
-    if (!result) {
-        NSLog(@"setCategory failed");
-    }
-
-    result = [myAudioSession setActive:YES error:&theError];
-    if (!result) {
-        NSLog(@"setActive failed");
-    }
-
-    // Override point for customization after application launch.
     return YES;
 }
 
