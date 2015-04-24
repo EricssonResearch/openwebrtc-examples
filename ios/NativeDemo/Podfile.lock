@@ -1,6 +1,6 @@
 PODS:
   - InAppSettingsKit (2.4.4)
-  - OpenWebRTC (0.1.4)
+  - OpenWebRTC (0.3.0)
   - OpenWebRTC-SDK (0.1.1):
     - OpenWebRTC
 
@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   InAppSettingsKit: df2c0b0cafd5c6f375f4d792eef8cbcdf63ae5ed
-  OpenWebRTC: e143e98796c5f08ea7bd07985dffcaeff095b8a5
+  OpenWebRTC: c22617a553cc7f88b182d1eee6499c48f8b4f79f
   OpenWebRTC-SDK: fd66e49ab80e88ed1e55231ac875a4976dc3ba74
 
 COCOAPODS: 0.36.3
