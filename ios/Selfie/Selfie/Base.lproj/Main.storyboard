@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -30,10 +30,32 @@
                                             <action selector="cameraSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="yqM-AW-zr3"/>
                                         </connections>
                                     </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G76-Tz-HEG">
+                                        <rect key="frame" x="8" y="533" width="103" height="59"/>
+                                        <state key="normal" title="Rotate">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onRotate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kHR-Je-NRQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyr-By-8Fw">
+                                        <rect key="frame" x="489" y="533" width="103" height="59"/>
+                                        <state key="normal" title="Mirror">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onMirror:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P3F-QK-6Rn"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="6cB-UX-mhq" firstAttribute="top" secondItem="U7U-J1-C9m" secondAttribute="top" constant="24" id="M5Q-uC-47b"/>
+                                    <constraint firstAttribute="bottom" secondItem="hyr-By-8Fw" secondAttribute="bottom" constant="8" id="Pbn-nx-kbP"/>
+                                    <constraint firstAttribute="bottom" secondItem="G76-Tz-HEG" secondAttribute="bottom" constant="8" id="Suh-j7-Krm"/>
                                     <constraint firstItem="6cB-UX-mhq" firstAttribute="centerX" secondItem="U7U-J1-C9m" secondAttribute="centerX" id="TXz-aI-mEU"/>
+                                    <constraint firstItem="G76-Tz-HEG" firstAttribute="leading" secondItem="U7U-J1-C9m" secondAttribute="leading" constant="8" id="njY-Ih-58g"/>
+                                    <constraint firstAttribute="trailing" secondItem="hyr-By-8Fw" secondAttribute="trailing" constant="8" id="tpa-po-t7f"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -50,6 +72,8 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="cameraSelector" destination="6cB-UX-mhq" id="Wh9-PY-sO4"/>
+                        <outlet property="mirror" destination="hyr-By-8Fw" id="dFp-ZD-geF"/>
+                        <outlet property="rotation" destination="G76-Tz-HEG" id="Ega-tl-9Al"/>
                         <outlet property="selfView" destination="U7U-J1-C9m" id="wgY-xJ-aap"/>
                     </connections>
                 </viewController>

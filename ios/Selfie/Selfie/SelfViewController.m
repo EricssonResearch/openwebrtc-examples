@@ -44,6 +44,8 @@ static SelfViewController *staticSelf;
 @property (weak) IBOutlet OpenWebRTCVideoView *selfView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *cameraSelector;
 @property (strong) NSMutableDictionary *segments;
+@property (weak, nonatomic) IBOutlet UIButton *rotation;
+@property (weak, nonatomic) IBOutlet UIButton *mirror;
 
 @end
 
@@ -58,6 +60,26 @@ OwrVideoRenderer *renderer;
 
     NSLog(@"Switching to %@ : %p", key, source);
     owr_media_renderer_set_source(OWR_MEDIA_RENDERER(renderer), source);
+}
+
+- (IBAction)onMirror:(UIButton *)sender {
+    gboolean mirror;
+
+    g_object_get(renderer, "mirror", &mirror, NULL);
+    g_object_set(renderer, "mirror", !mirror, NULL);
+
+    [sender setTitle:[NSString stringWithFormat:@"%s", mirror ? "true" : "false"]
+            forState:UIControlStateNormal];
+}
+
+- (IBAction)onRotate:(UIButton *)sender {
+    guint rotation;
+
+    g_object_get(renderer, "rotation", &rotation, NULL);
+    g_object_set(renderer, "rotation", (rotation + 1) % 4, NULL);
+
+    [sender setTitle:[NSString stringWithFormat:@"%u", rotation]
+            forState:UIControlStateNormal];
 }
 
 - (void)viewDidLoad
