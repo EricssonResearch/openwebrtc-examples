@@ -28,12 +28,9 @@ package com.ericsson.research.owr.examples.nativecall;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
@@ -47,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ericsson.research.owr.Owr;
+import com.ericsson.research.owr.sdk.CameraSource;
 import com.ericsson.research.owr.sdk.InvalidDescriptionException;
 import com.ericsson.research.owr.sdk.RtcCandidate;
 import com.ericsson.research.owr.sdk.RtcCandidates;
@@ -57,14 +55,13 @@ import com.ericsson.research.owr.sdk.RtcSessions;
 import com.ericsson.research.owr.sdk.SessionDescription;
 import com.ericsson.research.owr.sdk.SessionDescriptions;
 import com.ericsson.research.owr.sdk.SimpleStreamSet;
+import com.ericsson.research.owr.sdk.VideoView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Map;
+import java.io.UnsupportedEncodingException;
 
 public class NativeCallExampleActivity extends Activity implements
         SignalingChannel.JoinListener,
@@ -104,6 +101,8 @@ public class NativeCallExampleActivity extends Activity implements
     private SignalingChannel.PeerChannel mPeerChannel;
     private RtcSession mRtcSession;
     private SimpleStreamSet mStreamSet;
+    private VideoView mSelfView;
+    private VideoView mRemoteView;
     private RtcConfig mRtcConfig;
 
     @Override
@@ -122,10 +121,10 @@ public class NativeCallExampleActivity extends Activity implements
     public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         initUi();
-        updateStreamSetViews(true);
+        updateVideoView(true);
     }
 
-    private void updateStreamSetViews(boolean running) {
+    private void updateVideoView(boolean running) {
         if (mStreamSet != null) {
             TextureView selfView = (TextureView) findViewById(R.id.self_view);
             TextureView remoteView = (TextureView) findViewById(R.id.remote_view);
@@ -133,12 +132,13 @@ public class NativeCallExampleActivity extends Activity implements
             remoteView.setVisibility(running ? View.VISIBLE : View.INVISIBLE);
             if (running) {
                 Log.d(TAG, "setting self-view: " + selfView);
-                mStreamSet.setSelfView(selfView);
-                mStreamSet.setRemoteView(remoteView);
+                mSelfView.setView(selfView);
+                mRemoteView.setView(remoteView);
     //            mStreamSet.setDeviceOrientation(mWindowManager.getDefaultDisplay().getRotation());
             } else {
-                mStreamSet.setSelfView((SurfaceView) null);
-                mStreamSet.setRemoteView((TextureView) null);
+                Log.d(TAG, "stopping self-view");
+                mSelfView.stop();
+                mRemoteView.stop();
             }
         }
     }
@@ -181,6 +181,11 @@ public class NativeCallExampleActivity extends Activity implements
 
     public void onSelfViewClicked(final View view) {
         Log.d(TAG, "onSelfViewClicked");
+        if (mStreamSet != null) {
+            if (mSelfView != null) {
+                mSelfView.setRotation((mSelfView.getRotation() + 1) % 4);
+            }
+        }
 //        mStreamSet.toggleCamera();
     }
 
@@ -208,7 +213,9 @@ public class NativeCallExampleActivity extends Activity implements
         boolean wantAudio = mAudioCheckBox.isChecked();
         boolean wantVideo = mVideoCheckBox.isChecked();
         mStreamSet = SimpleStreamSet.defaultConfig(wantAudio, wantVideo);
-        updateStreamSetViews(true);
+        mSelfView = CameraSource.getInstance().createVideoView();
+        mRemoteView = mStreamSet.createRemoteView();
+        updateVideoView(true);
     }
 
     @Override
@@ -229,7 +236,7 @@ public class NativeCallExampleActivity extends Activity implements
         Log.d(TAG, "onPeerDisconnect => " + peerChannel.getPeerId());
         mRtcSession.stop();
         mPeerChannel = null;
-        updateStreamSetViews(false);
+        updateVideoView(false);
         mSessionInput.setEnabled(true);
         mJoinButton.setEnabled(true);
         mCallButton.setEnabled(false);
@@ -326,7 +333,7 @@ public class NativeCallExampleActivity extends Activity implements
     @Override
     public void onDisconnect() {
         Toast.makeText(this, "Disconnected from server", Toast.LENGTH_LONG).show();
-        updateStreamSetViews(false);
+        updateVideoView(false);
         mStreamSet = null;
         mRtcSession.stop();
         mRtcSession = null;
