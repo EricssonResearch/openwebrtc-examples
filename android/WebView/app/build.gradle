@@ -18,6 +18,8 @@ android {
 }
 
 dependencies {
-    compile files('libs/openwebrtc.jar')
-    compile files('libs/openwebrtc_bridge.jar')
+//    Uncomment to use local version
+//    compile files(System.getProperty("user.home") + '/cerbero/dist/android_armv7/lib/jni/openwebrtc.jar')
+//    compile files(System.getProperty("user.home") + '/cerbero/dist/android_armv7/lib/jni/openwebrtc_bridge.jar')
+    compile 'io.openwebrtc:openwebrtc-android-bridge:0.3'
 }
