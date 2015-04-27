@@ -1,3 +1,0 @@
-[submodule "android/NativeCall/openwebrtc-android-sdk"]
-	path = android/NativeCall/openwebrtc-android-sdk
-	url = git@github.com:EricssonResearch/openwebrtc-android-sdk.git

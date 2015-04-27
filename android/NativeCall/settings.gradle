@@ -1,2 +1,4 @@
 include ':app', ':openwebrtc-sdk'
-project(':openwebrtc-sdk').projectDir = new File('openwebrtc-android-sdk/sdk')
+// To use a local sdk build, uncomment the line below and in build.gradle,
+// and set openwebrtcAndroidSdkDir in your gradle.properties
+//project(':openwebrtc-sdk').projectDir = new File(getProperty("openwebrtcAndroidSdkDir").toString() + '/sdk')
