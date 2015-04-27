@@ -47,7 +47,16 @@
                                @"video_fps": @"25"};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 
+    // Make sure the screen does not dim.
+    application.idleTimerDisabled = YES;
+
     return YES;
 }
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    application.idleTimerDisabled = NO;
+}
+
 
 @end
