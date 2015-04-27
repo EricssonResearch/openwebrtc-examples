@@ -18,5 +18,7 @@ android {
 }
 
 dependencies {
-    compile files('libs/openwebrtc.jar')
+//    Uncomment to use local version
+//    compile files(System.getProperty("user.home") + '/cerbero/dist/android_armv7/lib/jni/openwebrtc.jar')
+    compile 'io.openwebrtc:openwebrtc-android:0.3'
 }
