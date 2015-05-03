@@ -2,9 +2,9 @@ platform :ios, '8.0'
 
 target 'NativeDemo' do
     pod 'InAppSettingsKit', '~> 2.4.4'
-    pod 'OpenWebRTC-SDK',  :git => 'https://github.com/evermeer/openwebrtc-ios-sdk.git'
+    pod 'OpenWebRTC-SDK',  :git => 'https://github.com/EricssonResearch/openwebrtc-examples.git'
 end
 
 target 'NativeDemoTests' do
-    pod 'OpenWebRTC-SDK',  :git => 'https://github.com/evermeer/openwebrtc-ios-sdk.git'
+    pod 'OpenWebRTC-SDK',  :git => 'https://github.com/EricssonResearch/openwebrtc-examples.git'
 end
