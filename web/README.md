@@ -17,4 +17,4 @@ The simple WebRTC app is now running at [http://localhost:8080/](http://localhos
 ![Demo app](https://github.com/EricssonResearch/openwebrtc-browser-extensions/blob/master/imgs/demoapp.png)
 
 ## Live testing
-We are keeping an up-to-date version of this app available at [http://demo.openwebrtc.io](http://demo.openwebrtc.io)
+We are keeping an up-to-date version of this app available at [http://demo.openwebrtc.org](http://demo.openwebrtc.org)

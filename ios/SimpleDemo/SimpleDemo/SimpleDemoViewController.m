@@ -51,7 +51,7 @@
     joinButton.enabled = callButton.enabled = hangupButton.enabled = NO;
 
     // TODO: Send selfView and remoteView ref to OpenWebRTC.
-    [self loadRequestWithURL:@"http://demo.openwebrtc.io"];
+    [self loadRequestWithURL:@"http://demo.openwebrtc.org"];
 
     self.browserView.hidden = NO;
 }

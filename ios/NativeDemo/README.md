@@ -1,5 +1,5 @@
 # NativeDemo for iOS
-Fully native (Objective-C and C) app that connects to [http://demo.openwebrtc.io](http://demo.openwebrtc.io). The client on the other side can either use a WebRTC-enabled browser, such as Chrome or Firefox, or another instance of the app installed on second device.
+Fully native (Objective-C and C) app that connects to [http://demo.openwebrtc.org](http://demo.openwebrtc.org). The client on the other side can either use a WebRTC-enabled browser, such as Chrome or Firefox, or another instance of the app installed on second device.
 
 ## Installation
 

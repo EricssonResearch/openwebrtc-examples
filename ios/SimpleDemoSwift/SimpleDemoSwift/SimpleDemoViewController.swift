@@ -46,7 +46,7 @@ class SimpleDemoViewController: OpenWebRTCViewController {
         callButton?.enabled = false
         hangupButton?.enabled = false
         
-        loadRequestWithUrl("http://demo.openwebrtc.io")
+        loadRequestWithUrl("http://demo.openwebrtc.org")
         browserView?.hidden = false
         
     }

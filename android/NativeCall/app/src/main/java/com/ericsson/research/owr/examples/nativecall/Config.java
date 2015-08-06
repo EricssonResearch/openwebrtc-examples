@@ -30,7 +30,7 @@ public class Config {
         Changing this does not take effect until app user data is cleared or the app is uninstalled.
         The server address can be configured inside the application by pressing the icon in the top right.
      */
-    public static final String DEFAULT_SERVER_ADDRESS = "http://demo.openwebrtc.io:38080";
+    public static final String DEFAULT_SERVER_ADDRESS = "http://demo.openwebrtc.org:38080";
 
     public static final String STUN_SERVER = "mmt-stun.verkstad.net";
 }

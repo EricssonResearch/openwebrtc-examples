@@ -150,7 +150,7 @@ window.onload = function () {
     };
 
     document.getElementById("owr-logo").onclick = function() {
-        window.location.assign("http://www.openwebrtc.io");
+        window.location.assign("http://www.openwebrtc.org");
     };
 
     var hash = location.hash.substr(1);
