@@ -232,7 +232,8 @@ function start(isInitiator) {
     // let the "negotiationneeded" event trigger offer generation
     pc.onnegotiationneeded = function () {
         // check signaling state here because Chrome dispatches negotiationeeded during negotiation
-        if (pc.signalingState == "stable")
+        // check isInitiator because Firefox dispatches negotiationneeded during negotiation, in stable state
+        if (pc.signalingState == "stable" && !isMozilla || isInitiator)
             pc.createOffer(localDescCreated, logError);
     };
 
@@ -262,10 +263,6 @@ function start(isInitiator) {
     if (audioCheckBox.checked || videoCheckBox.checked) {
         pc.addStream(localStream);
     }
-
-    // the negotiationneeded event is not supported in Firefox
-    if (isMozilla && isInitiator)
-        pc.onnegotiationneeded();
 }
 
 function localDescCreated(desc) {
