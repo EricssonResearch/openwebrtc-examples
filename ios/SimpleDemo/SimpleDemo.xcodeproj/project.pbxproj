@@ -16,17 +16,17 @@
 		742747841AC9862200D2F958 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 742747831AC9862200D2F958 /* AssetsLibrary.framework */; };
 		742747861AC9862A00D2F958 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 742747851AC9862A00D2F958 /* OpenGLES.framework */; };
 		742747881AC9863A00D2F958 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 742747871AC9863A00D2F958 /* JavaScriptCore.framework */; };
-		7427478A1AC9864600D2F958 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 742747891AC9864600D2F958 /* libc++.dylib */; };
-		7427478C1AC9864B00D2F958 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7427478B1AC9864B00D2F958 /* libresolv.dylib */; };
-		7427478F1AC986F500D2F958 /* OpenWebRTCVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7427478E1AC986F500D2F958 /* OpenWebRTCVideoView.m */; };
 		F8CD805519FD2CEF00B0ED0C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CD805419FD2CEF00B0ED0C /* main.m */; };
 		F8CD805819FD2CEF00B0ED0C /* SimpleDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CD805719FD2CEF00B0ED0C /* SimpleDemoAppDelegate.m */; };
 		F8CD805E19FD2CEF00B0ED0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8CD805C19FD2CEF00B0ED0C /* Main.storyboard */; };
 		F8CD806019FD2CEF00B0ED0C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CD805F19FD2CEF00B0ED0C /* Images.xcassets */; };
 		F8CD806319FD2CEF00B0ED0C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8CD806119FD2CEF00B0ED0C /* LaunchScreen.xib */; };
-		F8CD809A19FD7C6B00B0ED0C /* OpenWebRTCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CD809719FD7C6B00B0ED0C /* OpenWebRTCViewController.m */; };
-		F8CD809B19FD7C6B00B0ED0C /* OpenWebRTCWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CD809919FD7C6B00B0ED0C /* OpenWebRTCWebView.m */; };
 		F8CD809E19FD7DB700B0ED0C /* SimpleDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CD809D19FD7DB700B0ED0C /* SimpleDemoViewController.m */; };
+		F8E9CB471BD4BDE3006ED336 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9CB461BD4BDE3006ED336 /* libresolv.tbd */; };
+		F8E9CB491BD4BDF0006ED336 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E9CB481BD4BDF0006ED336 /* libc++.tbd */; };
+		F8E9CB541BD57447006ED336 /* OpenWebRTCVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E9CB4F1BD57447006ED336 /* OpenWebRTCVideoView.m */; settings = {ASSET_TAGS = (); }; };
+		F8E9CB551BD57447006ED336 /* OpenWebRTCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E9CB511BD57447006ED336 /* OpenWebRTCViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F8E9CB561BD57447006ED336 /* OpenWebRTCWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8E9CB531BD57447006ED336 /* OpenWebRTCWebView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,10 +39,6 @@
 		742747831AC9862200D2F958 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		742747851AC9862A00D2F958 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		742747871AC9863A00D2F958 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		742747891AC9864600D2F958 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
-		7427478B1AC9864B00D2F958 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
-		7427478D1AC986F500D2F958 /* OpenWebRTCVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenWebRTCVideoView.h; sourceTree = "<group>"; };
-		7427478E1AC986F500D2F958 /* OpenWebRTCVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenWebRTCVideoView.m; sourceTree = "<group>"; };
 		F8CD804F19FD2CEF00B0ED0C /* SimpleDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8CD805319FD2CEF00B0ED0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8CD805419FD2CEF00B0ED0C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -51,12 +47,16 @@
 		F8CD805D19FD2CEF00B0ED0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F8CD805F19FD2CEF00B0ED0C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F8CD806219FD2CEF00B0ED0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F8CD809619FD7C6B00B0ED0C /* OpenWebRTCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenWebRTCViewController.h; sourceTree = "<group>"; };
-		F8CD809719FD7C6B00B0ED0C /* OpenWebRTCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenWebRTCViewController.m; sourceTree = "<group>"; };
-		F8CD809819FD7C6B00B0ED0C /* OpenWebRTCWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenWebRTCWebView.h; sourceTree = "<group>"; };
-		F8CD809919FD7C6B00B0ED0C /* OpenWebRTCWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenWebRTCWebView.m; sourceTree = "<group>"; };
 		F8CD809C19FD7DB700B0ED0C /* SimpleDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleDemoViewController.h; sourceTree = "<group>"; };
 		F8CD809D19FD7DB700B0ED0C /* SimpleDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleDemoViewController.m; sourceTree = "<group>"; };
+		F8E9CB461BD4BDE3006ED336 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		F8E9CB481BD4BDF0006ED336 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		F8E9CB4E1BD57447006ED336 /* OpenWebRTCVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenWebRTCVideoView.h; path = "../OwrHelpers/OpenWebRTCVideoView.h"; sourceTree = "<group>"; };
+		F8E9CB4F1BD57447006ED336 /* OpenWebRTCVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenWebRTCVideoView.m; path = "../OwrHelpers/OpenWebRTCVideoView.m"; sourceTree = "<group>"; };
+		F8E9CB501BD57447006ED336 /* OpenWebRTCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenWebRTCViewController.h; path = "../OwrHelpers/OpenWebRTCViewController.h"; sourceTree = "<group>"; };
+		F8E9CB511BD57447006ED336 /* OpenWebRTCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenWebRTCViewController.m; path = "../OwrHelpers/OpenWebRTCViewController.m"; sourceTree = "<group>"; };
+		F8E9CB521BD57447006ED336 /* OpenWebRTCWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenWebRTCWebView.h; path = "../OwrHelpers/OpenWebRTCWebView.h"; sourceTree = "<group>"; };
+		F8E9CB531BD57447006ED336 /* OpenWebRTCWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenWebRTCWebView.m; path = "../OwrHelpers/OpenWebRTCWebView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7427478C1AC9864B00D2F958 /* libresolv.dylib in Frameworks */,
-				7427478A1AC9864600D2F958 /* libc++.dylib in Frameworks */,
+				F8E9CB491BD4BDF0006ED336 /* libc++.tbd in Frameworks */,
+				F8E9CB471BD4BDE3006ED336 /* libresolv.tbd in Frameworks */,
 				742747881AC9863A00D2F958 /* JavaScriptCore.framework in Frameworks */,
 				742747861AC9862A00D2F958 /* OpenGLES.framework in Frameworks */,
 				742747841AC9862200D2F958 /* AssetsLibrary.framework in Frameworks */,
@@ -126,8 +126,8 @@
 		F8CD807819FD30BC00B0ED0C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7427478B1AC9864B00D2F958 /* libresolv.dylib */,
-				742747891AC9864600D2F958 /* libc++.dylib */,
+				F8E9CB481BD4BDF0006ED336 /* libc++.tbd */,
+				F8E9CB461BD4BDE3006ED336 /* libresolv.tbd */,
 				742747871AC9863A00D2F958 /* JavaScriptCore.framework */,
 				742747851AC9862A00D2F958 /* OpenGLES.framework */,
 				742747831AC9862200D2F958 /* AssetsLibrary.framework */,
@@ -144,12 +144,12 @@
 		F8CD809519FD7C6B00B0ED0C /* OwrHelpers */ = {
 			isa = PBXGroup;
 			children = (
-				7427478D1AC986F500D2F958 /* OpenWebRTCVideoView.h */,
-				7427478E1AC986F500D2F958 /* OpenWebRTCVideoView.m */,
-				F8CD809619FD7C6B00B0ED0C /* OpenWebRTCViewController.h */,
-				F8CD809719FD7C6B00B0ED0C /* OpenWebRTCViewController.m */,
-				F8CD809819FD7C6B00B0ED0C /* OpenWebRTCWebView.h */,
-				F8CD809919FD7C6B00B0ED0C /* OpenWebRTCWebView.m */,
+				F8E9CB4E1BD57447006ED336 /* OpenWebRTCVideoView.h */,
+				F8E9CB4F1BD57447006ED336 /* OpenWebRTCVideoView.m */,
+				F8E9CB501BD57447006ED336 /* OpenWebRTCViewController.h */,
+				F8E9CB511BD57447006ED336 /* OpenWebRTCViewController.m */,
+				F8E9CB521BD57447006ED336 /* OpenWebRTCWebView.h */,
+				F8E9CB531BD57447006ED336 /* OpenWebRTCWebView.m */,
 			);
 			name = OwrHelpers;
 			path = "../../../../openwebrtc-examples/ios/OwrHelpers";
@@ -225,12 +225,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8CD809B19FD7C6B00B0ED0C /* OpenWebRTCWebView.m in Sources */,
-				F8CD809A19FD7C6B00B0ED0C /* OpenWebRTCViewController.m in Sources */,
 				F8CD805819FD2CEF00B0ED0C /* SimpleDemoAppDelegate.m in Sources */,
-				7427478F1AC986F500D2F958 /* OpenWebRTCVideoView.m in Sources */,
 				F8CD809E19FD7DB700B0ED0C /* SimpleDemoViewController.m in Sources */,
+				F8E9CB551BD57447006ED336 /* OpenWebRTCViewController.m in Sources */,
 				F8CD805519FD2CEF00B0ED0C /* main.m in Sources */,
+				F8E9CB561BD57447006ED336 /* OpenWebRTCWebView.m in Sources */,
+				F8E9CB541BD57447006ED336 /* OpenWebRTCVideoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +290,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -326,7 +326,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -339,6 +339,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/OpenWebRTC/iPhone.sdk",
@@ -352,6 +353,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
 			name = Debug;
@@ -361,6 +363,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/OpenWebRTC/iPhone.sdk",
@@ -374,6 +377,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
 				VALID_ARCHS = "arm64 armv7s armv7";
 			};
 			name = Release;
