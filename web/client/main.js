@@ -229,14 +229,6 @@ function start(isInitiator) {
         }
     };
 
-    // let the "negotiationneeded" event trigger offer generation
-    pc.onnegotiationneeded = function () {
-        // check signaling state here because Chrome dispatches negotiationeeded during negotiation
-        // check isInitiator because Firefox dispatches negotiationneeded during negotiation, in stable state
-        if (pc.signalingState == "stable" && !isMozilla || isInitiator)
-            pc.createOffer(localDescCreated, logError);
-    };
-
     // start the chat
     if (chatCheckBox.checked) {
         if (isInitiator) {
@@ -263,6 +255,10 @@ function start(isInitiator) {
     if (audioCheckBox.checked || videoCheckBox.checked) {
         pc.addStream(localStream);
     }
+
+    if (isInitiator)
+        pc.createOffer(localDescCreated, logError);
+
 }
 
 function localDescCreated(desc) {
