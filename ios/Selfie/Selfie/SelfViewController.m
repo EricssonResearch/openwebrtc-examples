@@ -130,7 +130,7 @@ static void got_sources(GList *sources, gpointer user_data)
             renderer = owr_video_renderer_new(SELF_VIEW_TAG);
             g_assert(renderer);
 
-            g_object_set(renderer, "width", 1280, "height", 720, "max-framerate", 60.0, NULL);
+            g_object_set(renderer, "width", 1280, "height", 720, "max-framerate", 30.0, NULL);
 
             owr_media_renderer_set_source(OWR_MEDIA_RENDERER(renderer), source);
             have_video = TRUE;
