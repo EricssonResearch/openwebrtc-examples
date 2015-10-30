@@ -1,0 +1,17 @@
+PODS:
+  - OpenWebRTC (0.3.1)
+  - OpenWebRTC-SDK (0.3):
+    - OpenWebRTC
+
+DEPENDENCIES:
+  - OpenWebRTC-SDK (from `../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec`)
+
+EXTERNAL SOURCES:
+  OpenWebRTC-SDK:
+    :path: ../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec
+
+SPEC CHECKSUMS:
+  OpenWebRTC: 85be1caf6dc45b11106eacba93de61e3e52b1cf8
+  OpenWebRTC-SDK: 5efab05f993befb17c23c91b4478337244ca2bd2
+
+COCOAPODS: 0.38.2
