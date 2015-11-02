@@ -41,6 +41,8 @@
     IBOutlet UIBarButtonItem *hangupButton;
 
     OpenWebRTCNativeHandler *nativeHandler;
+    NSMutableArray *cameras;
+    NSUInteger currentCameraIndex;
 }
 
 @property (weak) IBOutlet OpenWebRTCVideoView *selfView;
@@ -63,7 +65,6 @@
     nativeHandler = [[OpenWebRTCNativeHandler alloc] initWithDelegate:self];
 
     // Setup the video windows.
-    //self.selfView.layer.transform = CATransform3DMakeScale(-1, -1, 1);
     self.selfView.hidden = YES;
     [nativeHandler setSelfView:self.selfView];
     [nativeHandler setRemoteView:self.remoteView];
@@ -157,6 +158,23 @@
     [self presentRoomInputView];
 }
 
+- (IBAction)selfViewTapped:(id)sender
+{
+    if ([cameras count] != 2) {
+        NSLog(@"WARNING! Camera switching needs 2 cameras to work");
+        return;
+    }
+
+    currentCameraIndex = !currentCameraIndex;
+    [nativeHandler setVideoCaptureSourceByName:cameras[currentCameraIndex]];
+
+    [UIView transitionWithView:self.selfView
+                      duration:0.6
+                       options:UIViewAnimationOptionTransitionFlipFromTop
+                    animations:nil
+                    completion:nil];
+}
+
 - (void)didReceiveMemoryWarning
 {
     NSLog(@"WARNING! didReceiveMemoryWarning");
@@ -219,15 +237,26 @@
     }
 }
 
-- (void)gotLocalSourcesWithNames:(NSArray *)names
+- (void)gotLocalSources:(NSArray *)sources
 {
-    NSLog(@"gotLocalSourcesWithNames: %@", names);
+    NSLog(@"gotLocalSources: %@", sources);
+
+    cameras = [NSMutableArray arrayWithCapacity:[sources count]];
+    for (NSDictionary *source in sources) {
+        if ([source[@"mediaType"] isEqualToString:@"video"]) {
+            [cameras addObject:source[@"name"]];
+        }
+    }
+    NSLog(@"Found cameras: %@", cameras);
+    currentCameraIndex = 0;
+
+    [nativeHandler videoView:self.selfView setVideoRotation:0];
     self.selfView.hidden = NO;
 }
 
-- (void)gotRemoteSourceWithName:(NSString *)name
+- (void)gotRemoteSource:(NSDictionary *)source
 {
-    NSLog(@"gotRemoteSourceWithName: %@", name);
+    NSLog(@"gotRemoteSource: %@", source);
     callButton.enabled = NO;
     hangupButton.enabled = YES;
 
@@ -255,7 +284,9 @@
             break;
     };
 
-    NSString *message = [NSString stringWithFormat:@"{\"orientation\": %ld}", orientation];
+    [nativeHandler videoView:self.selfView setVideoRotation:orientation - 90];
+
+    NSString *message = [NSString stringWithFormat:@"{\"orientation\": %ld}", (long)orientation];
     if (self.peerID) {
         NSLog(@"[PeerServerHandler] Sending orientation msg: %@", message);
         [self.peerServer sendMessage:message toPeer:self.peerID];
@@ -310,9 +341,8 @@
 
 - (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOrientation:(NSInteger)orientation
 {
-    NSLog(@"Rotating remote view to: %ld", orientation);
-
-    //self.remoteView.transform = CGAffineTransformMakeRotation(M_PI * orientation / 360.0);
+    NSLog(@"Rotating remote view to: %ld", (long)orientation);
+    [nativeHandler videoView:self.remoteView setVideoRotation:orientation];
 }
 
 - (void)peerServer:(PeerServerHandler *)peerServer failedToSendDataWithError:(NSError *)error
