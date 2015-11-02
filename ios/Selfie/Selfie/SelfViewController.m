@@ -28,11 +28,8 @@
 //
 
 #import "SelfViewController.h"
-
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
-
-static SelfViewController *staticSelf;
 
 @interface SelfViewController () <OpenWebRTCNativeHandlerDelegate>
 {
@@ -76,7 +73,6 @@ static SelfViewController *staticSelf;
 
     self.segments = [NSMutableDictionary dictionary];
 
-    staticSelf = self;
     nativeHandler = [[OpenWebRTCNativeHandler alloc] initWithDelegate:self];
 
     OpenWebRTCSettings *settings = [[OpenWebRTCSettings alloc] initWithDefaults];
@@ -94,15 +90,15 @@ static SelfViewController *staticSelf;
     NSLog(@"gotLocalSources: %@", sources);
 
     for (NSDictionary *source in sources) {
-        [staticSelf.segments setObject:source[@"source"] forKey:source[@"name"]];
+        [self.segments setObject:source[@"source"] forKey:source[@"name"]];
     }
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        [staticSelf.cameraSelector removeAllSegments];
-        for (NSString *item in staticSelf.segments) {
-            [staticSelf.cameraSelector insertSegmentWithTitle:item atIndex:staticSelf.cameraSelector.numberOfSegments animated:NO];
+        [self.cameraSelector removeAllSegments];
+        for (NSString *item in self.segments) {
+            [self.cameraSelector insertSegmentWithTitle:item atIndex:self.cameraSelector.numberOfSegments animated:NO];
         }
-        staticSelf.cameraSelector.selectedSegmentIndex = 1;
+        self.cameraSelector.selectedSegmentIndex = 1;
     });
 
     [nativeHandler videoView:self.selfView setVideoRotation:0];

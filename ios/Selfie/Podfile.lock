@@ -4,11 +4,18 @@ PODS:
     - OpenWebRTC
 
 DEPENDENCIES:
-  - OpenWebRTC-SDK (from `../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec`)
+  - OpenWebRTC-SDK (from `https://github.com/EricssonResearch/openwebrtc-ios-sdk.git`,
+    branch `rotation`)
 
 EXTERNAL SOURCES:
   OpenWebRTC-SDK:
-    :path: ../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec
+    :branch: rotation
+    :git: https://github.com/EricssonResearch/openwebrtc-ios-sdk.git
+
+CHECKOUT OPTIONS:
+  OpenWebRTC-SDK:
+    :commit: cd2d2f15decd673fde357b1d372df5740be8aa9f
+    :git: https://github.com/EricssonResearch/openwebrtc-ios-sdk.git
 
 SPEC CHECKSUMS:
   OpenWebRTC: 85be1caf6dc45b11106eacba93de61e3e52b1cf8
