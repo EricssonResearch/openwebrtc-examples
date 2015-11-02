@@ -189,9 +189,7 @@
 
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
                                                  style:UIAlertActionStyleDefault
-                                               handler:^(UIAlertAction * action) {
-
-                                               }];
+                                               handler:nil];
     [alert addAction:ok];
     [self presentViewController:alert animated:YES completion:nil];
 }
