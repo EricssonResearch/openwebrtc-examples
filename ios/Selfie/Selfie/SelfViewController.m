@@ -83,6 +83,35 @@
 
     [nativeHandler setSelfView:self.selfView];
     [nativeHandler startGetCaptureSourcesForAudio:NO video:YES];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateVideoRotation)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+}
+
+- (void)updateVideoRotation
+{
+    NSInteger orientation;
+    switch ([[UIDevice currentDevice] orientation]) {
+        case UIDeviceOrientationLandscapeLeft:
+            orientation = 180;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            orientation = 0;
+            break;
+        case UIDeviceOrientationPortrait:
+            orientation = 90;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            orientation = 270;
+            break;
+        default:
+            orientation = 0;
+            break;
+    };
+
+    [nativeHandler videoView:self.selfView setVideoRotation:orientation - 90];
 }
 
 - (void)gotLocalSources:(NSArray *)sources
