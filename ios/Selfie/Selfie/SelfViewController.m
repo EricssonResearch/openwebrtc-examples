@@ -28,18 +28,13 @@
 //
 
 #import "SelfViewController.h"
-#import "OpenWebRTCVideoView.h"
+#import <OpenWebRTC-SDK/OpenWebRTC.h>
 
-#include <owr/owr.h>
-#include <owr/owr_local.h>
-#include <owr/owr_video_renderer.h>
-#include <owr/owr_window_registry.h>
 
-#define SELF_VIEW_TAG "self-view"
-
-static SelfViewController *staticSelf;
-
-@interface SelfViewController ()
+@interface SelfViewController () <OpenWebRTCNativeHandlerDelegate>
+{
+    OpenWebRTCNativeHandler *nativeHandler;
+}
 
 @property (weak) IBOutlet OpenWebRTCVideoView *selfView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *cameraSelector;
@@ -51,101 +46,112 @@ static SelfViewController *staticSelf;
 
 @implementation SelfViewController
 
-OwrVideoRenderer *renderer;
 
 - (IBAction)cameraSelected:(id)sender
 {
     NSString *key = [[self.segments allKeys] objectAtIndex:self.cameraSelector.selectedSegmentIndex];
-    OwrMediaSource *source = [[self.segments objectForKey:key] pointerValue];
-
-    NSLog(@"Switching to %@ : %p", key, source);
-    owr_media_renderer_set_source(OWR_MEDIA_RENDERER(renderer), source);
+    [nativeHandler setVideoCaptureSourceByName:key];
 }
 
-- (IBAction)onMirror:(UIButton *)sender {
-    gboolean mirror;
-
-    g_object_get(renderer, "mirror", &mirror, NULL);
-    g_object_set(renderer, "mirror", !mirror, NULL);
-
-    [sender setTitle:[NSString stringWithFormat:@"%s", mirror ? "true" : "false"]
-            forState:UIControlStateNormal];
+- (IBAction)onMirror:(UIButton *)sender
+{
+    static BOOL isMirrored = false;
+    [nativeHandler videoView:self.selfView setMirrored:isMirrored = !isMirrored];
 }
 
-- (IBAction)onRotate:(UIButton *)sender {
-    guint rotation;
-
-    g_object_get(renderer, "rotation", &rotation, NULL);
-    g_object_set(renderer, "rotation", (rotation + 1) % 4, NULL);
-
-    [sender setTitle:[NSString stringWithFormat:@"%u", rotation]
-            forState:UIControlStateNormal];
+- (IBAction)onRotate:(UIButton *)sender 
+{
+    static int rotation = 0;
+    [nativeHandler videoView:self.selfView setVideoRotation:rotation += 90];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    owr_init(NULL);
-    NSLog(@"OpenWebRTC initialized");
-    owr_run_in_background();
+    [OpenWebRTC initialize];
 
-    NSLog(@"Registering self view %@", self.selfView);
-    owr_window_registry_register(owr_window_registry_get(), SELF_VIEW_TAG, (__bridge gpointer)(self.selfView));
+    self.segments = [NSMutableDictionary dictionary];
 
-    staticSelf = self;
-    NSLog(@"Getting capture sources...");
-    owr_get_capture_sources(OWR_MEDIA_TYPE_VIDEO, got_sources, NULL);
+    nativeHandler = [[OpenWebRTCNativeHandler alloc] initWithDelegate:self];
+
+    OpenWebRTCSettings *settings = [[OpenWebRTCSettings alloc] initWithDefaults];
+    settings.videoFramerate = 30.0;
+    settings.videoWidth = 1280;
+    settings.videoHeight = 720;
+    nativeHandler.settings = settings;
+
+    [nativeHandler setSelfView:self.selfView];
+    [nativeHandler startGetCaptureSourcesForAudio:NO video:YES];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateVideoRotation)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
 }
 
-static void got_sources(GList *sources, gpointer user_data)
+- (void)updateVideoRotation
 {
-    gboolean have_video = FALSE;
-    g_assert(sources);
+    NSInteger orientation;
+    switch ([[UIDevice currentDevice] orientation]) {
+        case UIDeviceOrientationLandscapeLeft:
+            orientation = 180;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            orientation = 0;
+            break;
+        case UIDeviceOrientationPortrait:
+            orientation = 90;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            orientation = 270;
+            break;
+        default:
+            orientation = 0;
+            break;
+    };
 
-    staticSelf.segments = [NSMutableDictionary dictionary];
+    [nativeHandler videoView:self.selfView setVideoRotation:orientation - 90];
+}
 
-    while (sources) {
-        gchar *name;
-        OwrMediaSource *source = NULL;
-        OwrMediaType media_type;
-        OwrMediaType source_type;
+- (void)gotLocalSources:(NSArray *)sources
+{
+    NSLog(@"gotLocalSources: %@", sources);
 
-        source = sources->data;
-        g_assert(OWR_IS_MEDIA_SOURCE(source));
-
-        g_object_get(source, "name", &name, "type", &source_type, "media-type", &media_type, NULL);
-
-        /* We ref the sources because we want them to stay around. On iOS they will never be
-         * unplugged, I expect, but it's safer this way. */
-        g_object_ref(source);
-
-        [staticSelf.segments setObject:[NSValue valueWithPointer:source] forKey:[NSString stringWithUTF8String:name]];
-
-        g_print("[%s/%s] %s\n", media_type == OWR_MEDIA_TYPE_AUDIO ? "audio" : "video",
-                source_type == OWR_SOURCE_TYPE_CAPTURE ? "capture" : source_type == OWR_SOURCE_TYPE_TEST ? "test" : "unknown",
-                name);
-
-        if (!have_video && media_type == OWR_MEDIA_TYPE_VIDEO && source_type == OWR_SOURCE_TYPE_CAPTURE) {
-            renderer = owr_video_renderer_new(SELF_VIEW_TAG);
-            g_assert(renderer);
-
-            g_object_set(renderer, "width", 1280, "height", 720, "max-framerate", 30.0, NULL);
-
-            owr_media_renderer_set_source(OWR_MEDIA_RENDERER(renderer), source);
-            have_video = TRUE;
-        }
-
-        sources = sources->next;
+    for (NSDictionary *source in sources) {
+        [self.segments setObject:source[@"source"] forKey:source[@"name"]];
     }
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        [staticSelf.cameraSelector removeAllSegments];
-        for (NSString *item in staticSelf.segments) {
-            [staticSelf.cameraSelector insertSegmentWithTitle:item atIndex:staticSelf.cameraSelector.numberOfSegments animated:NO];
+        [self.cameraSelector removeAllSegments];
+        for (NSString *item in self.segments) {
+            [self.cameraSelector insertSegmentWithTitle:item atIndex:self.cameraSelector.numberOfSegments animated:NO];
         }
-        staticSelf.cameraSelector.selectedSegmentIndex = 0;
+        self.cameraSelector.selectedSegmentIndex = 1;
     });
+
+    [nativeHandler videoView:self.selfView setVideoRotation:0];
+}
+
+// The methods below are not needed in this app.
+- (void)answerGenerated:(NSDictionary *)answer
+{
+
+}
+
+- (void)offerGenerated:(NSDictionary *)offer
+{
+
+}
+
+- (void)candidateGenerate:(NSString *)candidate
+{
+    
+}
+
+- (void)gotRemoteSource:(NSDictionary *)source
+{
+
 }
 
 @end
