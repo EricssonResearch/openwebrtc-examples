@@ -1,20 +1,27 @@
 PODS:
   - InAppSettingsKit (2.4.4)
-  - OpenWebRTC (0.3.0)
-  - OpenWebRTC-SDK (0.1.1):
+  - OpenWebRTC (0.3.1)
+  - OpenWebRTC-SDK (0.2.1):
     - OpenWebRTC
 
 DEPENDENCIES:
   - InAppSettingsKit (~> 2.4.4)
-  - OpenWebRTC-SDK (from `../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec`)
+  - OpenWebRTC-SDK (from `https://github.com/EricssonResearch/openwebrtc-ios-sdk.git`,
+    branch `rotation`)
 
 EXTERNAL SOURCES:
   OpenWebRTC-SDK:
-    :path: ../../../openwebrtc-ios-sdk/OpenWebRTC-SDK.podspec
+    :branch: rotation
+    :git: https://github.com/EricssonResearch/openwebrtc-ios-sdk.git
+
+CHECKOUT OPTIONS:
+  OpenWebRTC-SDK:
+    :commit: cd2d2f15decd673fde357b1d372df5740be8aa9f
+    :git: https://github.com/EricssonResearch/openwebrtc-ios-sdk.git
 
 SPEC CHECKSUMS:
   InAppSettingsKit: df2c0b0cafd5c6f375f4d792eef8cbcdf63ae5ed
-  OpenWebRTC: c22617a553cc7f88b182d1eee6499c48f8b4f79f
-  OpenWebRTC-SDK: fd66e49ab80e88ed1e55231ac875a4976dc3ba74
+  OpenWebRTC: 85be1caf6dc45b11106eacba93de61e3e52b1cf8
+  OpenWebRTC-SDK: 00307dcfec69374f537c0cead2cd5bcfb33057d7
 
-COCOAPODS: 0.36.3
+COCOAPODS: 0.38.2
