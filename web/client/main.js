@@ -1,12 +1,3 @@
-var isMozilla = window.mozRTCPeerConnection && !window.webkitRTCPeerConnection;
-if (isMozilla) {
-    window.webkitURL = window.URL;
-    navigator.webkitGetUserMedia = navigator.mozGetUserMedia;
-    window.webkitRTCPeerConnection = window.mozRTCPeerConnection;
-    window.RTCSessionDescription = window.mozRTCSessionDescription;
-    window.RTCIceCandidate = window.mozRTCIceCandidate;
-}
-
 var selfView;
 var remoteView;
 var callButton;
@@ -22,13 +13,6 @@ var chatText;
 var chatButton;
 var chatCheckBox;
 var channel;
-
-if (!window.SDP) {
-    console.error("+-------------------------WARNING-------------------------+");
-    console.error("| sdp.js not found, will not transform signaling messages |");
-    console.error("+---------------------------------------------------------+");
-    window.SDP = { "parse": function () {}, "generate": function () {} };
-}
 
 if (!window.hasOwnProperty("orientation"))
     window.orientation = -90;
@@ -60,8 +44,13 @@ window.onload = function () {
     chatDiv = document.getElementById("chat_div");
     chatCheckBox = document.getElementById("chat_cb");
 
-    // if browser doesn't support DataChannels the chat will be disabled.
-    if (webkitRTCPeerConnection.prototype.createDataChannel === undefined) {
+    // if browser doesn't support DataChannels it will be supported.
+    AdapterJS.webRTCReady(function(){
+        console.log("AdapterJS Ready");
+    });
+
+    // video/audio with or without chat
+    if (RTCPeerConnection === undefined) {
         chatCheckBox.checked = false;
         chatCheckBox.disabled = true;
     }
@@ -74,14 +63,14 @@ window.onload = function () {
     audioCheckBox.checked = localStorage.getItem("audio_cb") == "true";
     videoCheckBox.checked = localStorage.getItem("video_cb") == "true";
 
-    if (webkitRTCPeerConnection.prototype.createDataChannel !== undefined)
+    if (RTCPeerConnection !== undefined)  //tion.prototype.
         chatCheckBox.checked = localStorage.getItem("chat_cb") == "true";
 
     // Check video box if no preferences exist
     if (!localStorage.getItem("video_cb"))
         videoCheckBox.checked = true;
 
-    joinButton.disabled = !navigator.webkitGetUserMedia;
+    joinButton.disabled = !navigator.getUserMedia;
     joinButton.onclick = function (evt) {
         if (!(audioCheckBox.checked || videoCheckBox.checked || chatCheckBox.checked)) {
             alert("Choose at least audio, video or chat.");
@@ -129,10 +118,10 @@ window.onload = function () {
         // video/audio with our without chat
         if (videoCheckBox.checked || audioCheckBox.checked) {
             // get a local stream
-            navigator.webkitGetUserMedia({ "audio": audioCheckBox.checked,
+            getUserMedia({ "audio": audioCheckBox.checked,
                 "video": videoCheckBox.checked}, function (stream) {
                 // .. show it in a self-view
-                selfView.src = URL.createObjectURL(stream);
+                selfView = attachMediaStream(selfView, stream);
                 // .. and keep it to be sent later
                 localStream = stream;
 
@@ -168,14 +157,11 @@ window.onload = function () {
 function handleMessage(evt) {
     var message = JSON.parse(evt.data);
 
-    if (!pc && (message.sessionDescription || message.sdp || message.candidate))
+    if (!pc && (message.sdp || message.candidate))
         start(false);
 
-    if (message.sessionDescription || message.sdp) {
-        var desc = new RTCSessionDescription({
-            "sdp": SDP.generate(message.sessionDescription) || message.sdp,
-            "type": message.type
-        });
+    if (message.sdp) {
+        var desc = new RTCSessionDescription(message.sdp);
         pc.setRemoteDescription(desc, function () {
             // if we received an offer, we need to create an answer
             if (pc.remoteDescription.type == "offer")
@@ -185,22 +171,6 @@ function handleMessage(evt) {
         var transform = "rotate(" + message.orientation + "deg)";
         remoteView.style.transform = remoteView.style.webkitTransform = transform;
     } else {
-        var d = message.candidate.candidateDescription;
-        if (d && !message.candidate.candidate) {
-            message.candidate.candidate = "candidate:" + [
-                d.foundation,
-                d.componentId,
-                d.transport,
-                d.priority,
-                d.address,
-                d.port,
-                "typ",
-                d.type,
-                d.relatedAddress && ("raddr " + d.relatedAddress),
-                d.relatedPort && ("rport " + d.relatedPort),
-                d.tcpType && ("tcptype " + d.tcpType)
-            ].filter(function (x) { return x; }).join(" ");
-        }
         pc.addIceCandidate(new RTCIceCandidate(message.candidate), function () {}, logError);
     }
 }
@@ -208,23 +178,16 @@ function handleMessage(evt) {
 // call start() to initiate
 function start(isInitiator) {
     callButton.disabled = true;
-    pc = new webkitRTCPeerConnection(configuration);
+    pc = new RTCPeerConnection(configuration);
 
     // send any ice candidates to the other peer
     pc.onicecandidate = function (evt) {
         if (evt.candidate) {
-            var candidate = "";
-            var s = SDP.parse("m=application 0 NONE\r\na=" + evt.candidate.candidate + "\r\n");
-            var candidateDescription = s && s.mediaDescriptions[0].ice.candidates[0];
-            if (!candidateDescription)
-                candidate = evt.candidate.candidate;
-            peer.send(JSON.stringify({
-                "candidate": {
-                    "candidate": candidate,
-                    "candidateDescription": candidateDescription,
-                    "sdpMLineIndex": evt.candidate.sdpMLineIndex
-                }
-            }));
+            peer.send(JSON.stringify({ "candidate": {
+                candidate: evt.candidate.candidate,
+                sdpMLineIndex: evt.candidate.sdpMLineIndex,
+                sdpMid: evt.candidate.sdpMid,
+            }}));
             console.log("candidate emitted: " + evt.candidate.candidate);
         }
     };
@@ -244,7 +207,7 @@ function start(isInitiator) {
 
     // once the remote stream arrives, show it in the remote video element
     pc.onaddstream = function (evt) {
-        remoteView.src = URL.createObjectURL(evt.stream);
+        remoteView = attachMediaStream(remoteView, evt.stream);
         if (videoCheckBox.checked)
             remoteView.style.visibility = "visible";
         else if (audioCheckBox.checked && !(chatCheckBox.checked))
@@ -263,21 +226,8 @@ function start(isInitiator) {
 
 function localDescCreated(desc) {
     pc.setLocalDescription(desc, function () {
-        var sdp = "";
-        var sessionDescription = SDP.parse(pc.localDescription.sdp);
-        if (!sessionDescription)
-            sdp = pc.localDescription.sdp;
-        peer.send(JSON.stringify({
-            "sdp": sdp,
-            "sessionDescription": sessionDescription,
-            "type": pc.localDescription.type
-        }));
-        var logMessage = "localDescription set and sent to peer, type: " + pc.localDescription.type;
-        if (sdp)
-            logMessage += ", sdp:\n" + sdp;
-        if (sessionDescription)
-            logMessage += ", sessionDescription:\n" + JSON.stringify(sessionDescription, null, 2);
-        console.log(logMessage);
+        peer.send(JSON.stringify({ "sdp": {type: pc.localDescription.type, sdp: pc.localDescription.sdp} }));
+        console.log("localDescription set and sent to peer, type: " + pc.localDescription.type + ", sdp: " + pc.localDescription.sdp);
     }, logError);
 }
 
@@ -313,7 +263,7 @@ function log(msg) {
 
 // setup chat
 function setupChat() {
-    channel.onopen = function () {
+    //channel.onopen = function () {  //onopen is never called but the channel still opens /Patrik :P
         chatDiv.style.visibility = "visible";
         chatText.style.visibility = "visible";
         chatButton.style.visibility = "visible";
@@ -334,7 +284,7 @@ function setupChat() {
                 chatText.placeholder = "";
             }
         };
-    };
+    //};
 
     // recieve data from remote user
     channel.onmessage = function (evt) {
