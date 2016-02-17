@@ -1,12 +1,3 @@
-var isMozilla = window.mozRTCPeerConnection && !window.webkitRTCPeerConnection;
-if (isMozilla) {
-    window.webkitURL = window.URL;
-    navigator.webkitGetUserMedia = navigator.mozGetUserMedia;
-    window.webkitRTCPeerConnection = window.mozRTCPeerConnection;
-    window.RTCSessionDescription = window.mozRTCSessionDescription;
-    window.RTCIceCandidate = window.mozRTCIceCandidate;
-}
-
 var selfView;
 var remoteView;
 var callButton;
@@ -53,8 +44,13 @@ window.onload = function () {
     chatDiv = document.getElementById("chat_div");
     chatCheckBox = document.getElementById("chat_cb");
 
-    // if browser doesn't support DataChannels the chat will be disabled.
-    if (webkitRTCPeerConnection.prototype.createDataChannel === undefined) {
+    // if browser doesn't support DataChannels it will be supported.
+    AdapterJS.webRTCReady(function(){
+        console.log("AdapterJS Ready");
+    });
+
+    // video/audio with or without chat
+    if (RTCPeerConnection === undefined) {
         chatCheckBox.checked = false;
         chatCheckBox.disabled = true;
     }
@@ -67,14 +63,14 @@ window.onload = function () {
     audioCheckBox.checked = localStorage.getItem("audio_cb") == "true";
     videoCheckBox.checked = localStorage.getItem("video_cb") == "true";
 
-    if (webkitRTCPeerConnection.prototype.createDataChannel !== undefined)
+    if (RTCPeerConnection !== undefined)  //tion.prototype.
         chatCheckBox.checked = localStorage.getItem("chat_cb") == "true";
 
     // Check video box if no preferences exist
     if (!localStorage.getItem("video_cb"))
         videoCheckBox.checked = true;
 
-    joinButton.disabled = !navigator.webkitGetUserMedia;
+    joinButton.disabled = !navigator.getUserMedia;
     joinButton.onclick = function (evt) {
         if (!(audioCheckBox.checked || videoCheckBox.checked || chatCheckBox.checked)) {
             alert("Choose at least audio, video or chat.");
@@ -122,10 +118,10 @@ window.onload = function () {
         // video/audio with our without chat
         if (videoCheckBox.checked || audioCheckBox.checked) {
             // get a local stream
-            navigator.webkitGetUserMedia({ "audio": audioCheckBox.checked,
+            getUserMedia({ "audio": audioCheckBox.checked,
                 "video": videoCheckBox.checked}, function (stream) {
                 // .. show it in a self-view
-                selfView.src = URL.createObjectURL(stream);
+                selfView = attachMediaStream(selfView, stream);
                 // .. and keep it to be sent later
                 localStream = stream;
 
@@ -174,19 +170,24 @@ function handleMessage(evt) {
     } else if (!isNaN(message.orientation) && remoteView) {
         var transform = "rotate(" + message.orientation + "deg)";
         remoteView.style.transform = remoteView.style.webkitTransform = transform;
-    } else
+    } else {
         pc.addIceCandidate(new RTCIceCandidate(message.candidate), function () {}, logError);
+    }
 }
 
 // call start() to initiate
 function start(isInitiator) {
     callButton.disabled = true;
-    pc = new webkitRTCPeerConnection(configuration);
+    pc = new RTCPeerConnection(configuration);
 
     // send any ice candidates to the other peer
     pc.onicecandidate = function (evt) {
         if (evt.candidate) {
-            peer.send(JSON.stringify({ "candidate": evt.candidate }));
+            peer.send(JSON.stringify({ "candidate": {
+                candidate: evt.candidate.candidate,
+                sdpMLineIndex: evt.candidate.sdpMLineIndex,
+                sdpMid: evt.candidate.sdpMid,
+            }}));
             console.log("candidate emitted: " + evt.candidate.candidate);
         }
     };
@@ -206,7 +207,7 @@ function start(isInitiator) {
 
     // once the remote stream arrives, show it in the remote video element
     pc.onaddstream = function (evt) {
-        remoteView.src = URL.createObjectURL(evt.stream);
+        remoteView = attachMediaStream(remoteView, evt.stream);
         if (videoCheckBox.checked)
             remoteView.style.visibility = "visible";
         else if (audioCheckBox.checked && !(chatCheckBox.checked))
@@ -225,7 +226,7 @@ function start(isInitiator) {
 
 function localDescCreated(desc) {
     pc.setLocalDescription(desc, function () {
-        peer.send(JSON.stringify({ "sdp": pc.localDescription }));
+        peer.send(JSON.stringify({ "sdp": {type: pc.localDescription.type, sdp: pc.localDescription.sdp} }));
         console.log("localDescription set and sent to peer, type: " + pc.localDescription.type + ", sdp: " + pc.localDescription.sdp);
     }, logError);
 }
@@ -262,7 +263,7 @@ function log(msg) {
 
 // setup chat
 function setupChat() {
-    channel.onopen = function () {
+    //channel.onopen = function () {  //onopen is never called but the channel still opens /Patrik :P
         chatDiv.style.visibility = "visible";
         chatText.style.visibility = "visible";
         chatButton.style.visibility = "visible";
@@ -283,7 +284,7 @@ function setupChat() {
                 chatText.placeholder = "";
             }
         };
-    };
+    //};
 
     // recieve data from remote user
     channel.onmessage = function (evt) {
