@@ -117,7 +117,7 @@ var server = http.createServer(function (request, response) {
                 console.log("@" + sessionId + " - " + userId + " => " + peerId + " :");
                 // console.log(body);
                 try {
-                    if (SDP) {
+                    if (SDP && false) { // never use sdp.js
                         var message = JSON.parse(body);
                         if (message.sdp && !message.sessionDescription) {
                             message.sessionDescription = SDP.parse(message.sdp.sdp);
