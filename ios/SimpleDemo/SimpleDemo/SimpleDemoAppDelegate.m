@@ -34,6 +34,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // TODO: This should be done in a separate thread, see for example:
+    // https://github.com/EricssonResearch/bowser/blob/master/bowser-ios/Bowser/BowserViewController.m#L137
     [OpenWebRTCViewController initOpenWebRTC];
     return YES;
 }

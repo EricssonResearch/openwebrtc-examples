@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7rz-jU-cyw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7rz-jU-cyw">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,38 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OhA-Bm-ncF" customClass="OpenWebRTCVideoView">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OhA-Bm-ncF" customClass="OpenWebRTCVideoView">
                                 <rect key="frame" x="16" y="81" width="568" height="302"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="99" translatesAutoresizingMaskIntoConstraints="NO" id="e9N-Z4-9Q2">
-                                <rect key="frame" x="130" y="512" width="456" height="31"/>
-                                <color key="tintColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="sliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="u5P-hW-DxW"/>
-                                </connections>
-                            </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcG-7Y-8B7">
-                                <rect key="frame" x="296" y="437" width="124" height="67"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="124" id="QUL-XS-3N5"/>
-                                    <constraint firstAttribute="height" constant="67" id="qoN-U5-jDj"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="60"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room nr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kay-Hn-ce7">
-                                <rect key="frame" x="312" y="408" width="92" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="92" id="o1Y-u6-pnW"/>
-                                    <constraint firstAttribute="height" constant="21" id="xB8-CI-xJ1"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.42479745369999999" green="0.64265046299999995" blue="0.74085648150000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WEG-Ya-uVA" customClass="OpenWebRTCVideoView">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WEG-Ya-uVA" customClass="OpenWebRTCVideoView">
                                 <rect key="frame" x="16" y="398" width="108" height="144"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -59,32 +32,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Kay-Hn-ce7" firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" id="4Qu-PZ-adx"/>
-                            <constraint firstAttribute="centerY" secondItem="VcG-7Y-8B7" secondAttribute="centerY" constant="-170.5" id="6M9-vF-wQk"/>
                             <constraint firstItem="OhA-Bm-ncF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="17" id="8jx-fO-11S"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WEG-Ya-uVA" secondAttribute="trailing" constant="460" id="Cql-MG-rdt"/>
-                            <constraint firstItem="OhA-Bm-ncF" firstAttribute="trailing" secondItem="e9N-Z4-9Q2" secondAttribute="trailing" id="FVc-GG-BE1"/>
-                            <constraint firstItem="Kay-Hn-ce7" firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" id="GZH-oo-e2o"/>
-                            <constraint firstAttribute="centerX" secondItem="VcG-7Y-8B7" secondAttribute="centerX" constant="-58" id="JHC-pB-igY"/>
-                            <constraint firstItem="VcG-7Y-8B7" firstAttribute="top" secondItem="Kay-Hn-ce7" secondAttribute="bottom" constant="8" id="ROW-y9-cjw"/>
                             <constraint firstItem="WEG-Ya-uVA" firstAttribute="top" secondItem="OhA-Bm-ncF" secondAttribute="bottom" constant="15" id="SbL-3G-SbP"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="e9N-Z4-9Q2" secondAttribute="bottom" constant="14" id="TwG-e0-G78"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="WEG-Ya-uVA" secondAttribute="bottom" constant="14" id="YLJ-c4-QIi"/>
-                            <constraint firstAttribute="centerY" secondItem="e9N-Z4-9Q2" secondAttribute="centerY" constant="-227" id="c1w-yB-vlC"/>
-                            <constraint firstItem="e9N-Z4-9Q2" firstAttribute="top" secondItem="VcG-7Y-8B7" secondAttribute="bottom" constant="8" id="g3e-8c-YBB"/>
                             <constraint firstItem="WEG-Ya-uVA" firstAttribute="leading" secondItem="OhA-Bm-ncF" secondAttribute="leading" id="gcG-bH-C5j"/>
-                            <constraint firstItem="VcG-7Y-8B7" firstAttribute="top" secondItem="Kay-Hn-ce7" secondAttribute="bottom" constant="8" id="lKt-Q7-CKJ"/>
-                            <constraint firstItem="e9N-Z4-9Q2" firstAttribute="leading" secondItem="WEG-Ya-uVA" secondAttribute="trailing" constant="8" id="lph-1n-PhE"/>
-                            <constraint firstItem="e9N-Z4-9Q2" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="pzS-3s-nBx"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="4Qu-PZ-adx"/>
-                                <exclude reference="6M9-vF-wQk"/>
-                                <exclude reference="ROW-y9-cjw"/>
-                                <exclude reference="c1w-yB-vlC"/>
-                            </mask>
-                        </variation>
                     </view>
                     <toolbarItems>
                         <barButtonItem title="Join" id="QSc-Lj-Oxp">
@@ -115,8 +68,6 @@
                         <outlet property="hangupButton" destination="c6H-Ie-SZy" id="EHq-fY-jU4"/>
                         <outlet property="joinButton" destination="QSc-Lj-Oxp" id="iHl-jf-3ww"/>
                         <outlet property="remoteView" destination="OhA-Bm-ncF" id="Rfd-KJ-qMu"/>
-                        <outlet property="roomLabel" destination="VcG-7Y-8B7" id="4ml-fC-TNK"/>
-                        <outlet property="roomSlider" destination="e9N-Z4-9Q2" id="EnH-ol-mBj"/>
                         <outlet property="selfView" destination="WEG-Ya-uVA" id="9BF-zV-vBE"/>
                     </connections>
                 </viewController>

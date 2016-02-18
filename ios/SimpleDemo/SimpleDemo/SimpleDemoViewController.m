@@ -54,6 +54,14 @@
     [self loadRequestWithURL:@"http://demo.openwebrtc.org"];
 
     self.browserView.hidden = NO;
+
+    //[self.view addSubview:self.browserView];
+
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    self.browserView.frame = CGRectMake(0,
+                                        self.navigationController.navigationBar.frame.size.height * 2,
+                                        screen.size.width,
+                                        screen.size.height);
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
