@@ -69,7 +69,7 @@
 {
     [super viewDidLoad];
 
-    [OpenWebRTC initialize];
+    [OpenWebRTC initOpenWebRTC];
 
     self.segments = [NSMutableDictionary dictionary];
 
