@@ -171,7 +171,7 @@ function handleMessage(evt) {
     if (!pc && (message.sessionDescription || message.sdp || message.candidate))
         start(false);
 
-    if (message.sessionDescription || message.sdp) {
+    if (message.sessionDescription || message.sdp) {
         var desc = new RTCSessionDescription({
             "sdp": SDP.generate(message.sessionDescription) || message.sdp,
             "type": message.type
