@@ -104,9 +104,9 @@
         if (json[@"sdp"]) {
             NSString *type = json[@"type"];
             if ([@"offer" isEqualToString:type]) {
-                [self.delegate peerServer:self peer:peerUser sentOffer:json[@"sdp"][@"sdp"]];
+                [self.delegate peerServer:self peer:peerUser sentOffer:json[@"sdp"]];
             } else if ([@"answer" isEqualToString:type]) {
-                [self.delegate peerServer:self peer:peerUser sentAnswer:json[@"sdp"][@"sdp"]];
+                [self.delegate peerServer:self peer:peerUser sentAnswer:json[@"sdp"]];
             } else {
                 NSLog(@"[PeerServerHandler] WARNING! Got malformed offer/answer from peer");
             }
