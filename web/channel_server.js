@@ -1,13 +1,23 @@
 var fs = require("fs");
 var http = require("http");
+var https = require("https");
 var path = require("path");
 
 var sessions = {};
 var usersInSessionLimit = 2;
 
 var port = process.env.PORT || 8080;
-if (process.argv.length == 3) {
+var httpsPort = process.env.HTTPS_PORT || 8443;
+var httpsKeyPath = process.env.HTTPS_KEY || '';
+var httpsCertPath = process.env.HTTPS_CERT || '';
+
+if (process.argv.length >= 3) {
     port = process.argv[2];
+}
+if (process.argv.length >= 6) {
+    httpsPort = process.argv[3];
+    httpsKeyPath = process.argv[4];
+    httpsCertPath = process.argv[5];
 }
 
 var serverDir = path.dirname(__filename)
@@ -19,7 +29,7 @@ var contentTypeMap = {
     ".css": "text/css"
 };
 
-var server = http.createServer(function (request, response) {
+function requestListener(request, response) {
     var headers = {
         "Cache-Control": "no-cache, no-store",
         "Pragma": "no-cache",
@@ -144,7 +154,17 @@ var server = http.createServer(function (request, response) {
         });
         readStream.pipe(response);
     });
-});
+};
 
-console.log('The server is listening on port ' + port);
-server.listen(port);
+console.log('The HTTP server is listening on port ' + port);
+http.createServer(requestListener).listen(port);
+
+if (httpsKeyPath && httpsCertPath) {
+    var options = {
+        key: fs.readFileSync(httpsKeyPath),
+        cert: fs.readFileSync(httpsCertPath)
+    };
+
+    console.log('The HTTPS server is listening on port ' + httpsPort);
+    https.createServer(options, requestListener).listen(httpsPort);
+}
