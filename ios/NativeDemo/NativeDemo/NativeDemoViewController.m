@@ -33,7 +33,7 @@
 
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
-#define kServerURL @"http://demo.openwebrtc.org:38080"
+#define kServerURL @"http://demo.openwebrtc.org"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
