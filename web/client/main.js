@@ -172,7 +172,10 @@ function handleMessage(evt) {
         start(false);
 
     if (message.sessionDescription || message.sdp) {
-        var desc = new RTCSessionDescription(message);
+        var desc = new RTCSessionDescription({
+            "sdp": message.sdp || SDP.generate(message.sessionDescription),
+            "type": message.type
+        });
         pc.setRemoteDescription(desc, function () {
             // if we received an offer, we need to create an answer
             if (pc.remoteDescription.type == "offer")
