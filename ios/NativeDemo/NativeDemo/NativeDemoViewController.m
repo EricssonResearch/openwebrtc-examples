@@ -321,13 +321,13 @@
     self.peerID = nil;
 }
 
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSString *)offer
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSDictionary *)offer
 {
     NSLog(@"peer <%@> sentOffer: %@", peerID, offer);
     [nativeHandler handleOfferReceived:offer];
 }
 
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentAnswer:(NSString *)answer
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentAnswer:(NSDictionary *)answer
 {
     NSLog(@"peer <%@> sentAnswer: %@", peerID, answer);
     [nativeHandler handleAnswerReceived:answer];
