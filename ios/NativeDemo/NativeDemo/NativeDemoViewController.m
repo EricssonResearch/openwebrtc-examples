@@ -33,7 +33,7 @@
 
 #import <OpenWebRTC-SDK/OpenWebRTC.h>
 
-#define kServerURL @"http://demo.openwebrtc.org:38080"
+#define kServerURL @"http://demo.openwebrtc.org"
 
 @interface NativeDemoViewController () <PeerServerHandlerDelegate, OpenWebRTCNativeHandlerDelegate>
 {
@@ -200,8 +200,7 @@
 {
     NSLog(@"Answer generated: \n%@", answer);
 
-    NSDictionary *d = @{@"sdp": answer};
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:d
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:answer
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:nil];
     NSString *answerString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -215,8 +214,7 @@
 {
     NSLog(@"Offer generated: \n%@", offer);
 
-    NSDictionary *d = @{@"sdp": offer};
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:d
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:offer
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:nil];
     NSString *offerString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -230,8 +228,12 @@
 {
     NSLog(@"Candidate generated: \n%@", candidate);
     if (self.peerID) {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{@"candidate": @{@"candidate": candidate}}
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:nil];
+        NSString *candidateJson = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSLog(@"Sending candidate to peer: %@", self.peerID);
-        [self.peerServer sendMessage:candidate toPeer:self.peerID];
+        [self.peerServer sendMessage:candidateJson toPeer:self.peerID];
     }
 }
 
@@ -319,13 +321,13 @@
     self.peerID = nil;
 }
 
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSString *)offer
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentOffer:(NSDictionary *)offer
 {
     NSLog(@"peer <%@> sentOffer: %@", peerID, offer);
     [nativeHandler handleOfferReceived:offer];
 }
 
-- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentAnswer:(NSString *)answer
+- (void)peerServer:(PeerServerHandler *)peerServer peer:(NSString *)peerID sentAnswer:(NSDictionary *)answer
 {
     NSLog(@"peer <%@> sentAnswer: %@", peerID, answer);
     [nativeHandler handleAnswerReceived:answer];

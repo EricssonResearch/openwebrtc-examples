@@ -20,7 +20,7 @@
                 Session id <input type="text" id="session_txt" value="" size="10">
                 <input class="btn" type="button" id="join_but" value="Join" disabled>
                 <input class="btn" type="button" id="call_but" value="Call" disabled><br>
-                <input type="checkbox" id="audio_cb">Audio<br>
+                <input type="checkbox" id="audio_cb" checked>Audio<br>
                 <input type="checkbox" id="video_cb" checked>Video<br>
                 <input type="checkbox" id="chat_cb">Chat
                 <div id="audio-only-container">Audio-only call</div>
@@ -29,8 +29,8 @@
                 </div>
             </div>
             <div id="video-container">
-                <video id="self_view" class="shadow" autoplay muted></video>
-                <video id="remote_view" class="shadow" autoplay></video>
+                <video id="self_view" class="shadow owr-overlay-video" autoplay muted></video>
+                <video id="remote_view" class="shadow owr-overlay-video" autoplay></video>
             </div>
             <div id="chat_div"></div>
             <div id="chat-container">

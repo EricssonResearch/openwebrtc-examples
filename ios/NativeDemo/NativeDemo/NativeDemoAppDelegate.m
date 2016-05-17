@@ -35,7 +35,7 @@
 + (void)initialize
 {
     if (self == [NativeDemoAppDelegate class]) {
-        [OpenWebRTC initialize];
+        [OpenWebRTC initOpenWebRTC];
     }
 }
 
