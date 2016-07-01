@@ -101,7 +101,7 @@
             return;
         }
 
-        if (json[@"sdp"]) {
+        if (json[@"sdp"] || json[@"sessionDescription"]) {
             NSString *type = json[@"type"];
             if ([@"offer" isEqualToString:type]) {
                 [self.delegate peerServer:self peer:peerUser sentOffer:json];
