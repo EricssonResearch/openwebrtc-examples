@@ -23,13 +23,6 @@ var chatButton;
 var chatCheckBox;
 var channel;
 
-if (!window.SDP) {
-    console.error("+-------------------------WARNING-------------------------+");
-    console.error("| sdp.js not found, will not transform signaling messages |");
-    console.error("+---------------------------------------------------------+");
-    window.SDP = { "parse": function () {}, "generate": function () {} };
-}
-
 if (!window.hasOwnProperty("orientation"))
     window.orientation = -90;
 
@@ -168,15 +161,14 @@ window.onload = function () {
 function handleMessage(evt) {
     var message = JSON.parse(evt.data);
 
-    if (!pc && (message.sessionDescription || message.sdp || message.candidate))
+    if (!pc && (message.sessionDescription || message.candidate))
         start(false);
 
-    if (message.sessionDescription || message.sdp) {
-        var desc = new RTCSessionDescription({
-            "sdp": message.sdp || SDP.generate(message.sessionDescription),
+    if (message.sessionDescription) {
+        pc.setRemoteDescription(new RTCSessionDescription({
+            "sdp": SDP.generate(message.sessionDescription),
             "type": message.type
-        });
-        pc.setRemoteDescription(desc, function () {
+        }), function () {
             // if we received an offer, we need to create an answer
             if (pc.remoteDescription.type == "offer")
                 pc.createAnswer(localDescCreated, logError);
@@ -186,21 +178,19 @@ function handleMessage(evt) {
         remoteView.style.transform = remoteView.style.webkitTransform = transform;
     } else {
         var d = message.candidate.candidateDescription;
-        if (d && !message.candidate.candidate) {
-            message.candidate.candidate = "candidate:" + [
-                d.foundation,
-                d.componentId,
-                d.transport,
-                d.priority,
-                d.address,
-                d.port,
-                "typ",
-                d.type,
-                d.relatedAddress && ("raddr " + d.relatedAddress),
-                d.relatedPort && ("rport " + d.relatedPort),
-                d.tcpType && ("tcptype " + d.tcpType)
-            ].filter(function (x) { return x; }).join(" ");
-        }
+        message.candidate.candidate = "candidate:" + [
+            d.foundation,
+            d.componentId,
+            d.transport,
+            d.priority,
+            d.address,
+            d.port,
+            "typ",
+            d.type,
+            d.relatedAddress && ("raddr " + d.relatedAddress),
+            d.relatedPort && ("rport " + d.relatedPort),
+            d.tcpType && ("tcptype " + d.tcpType)
+        ].filter(function (x) { return x; }).join(" ");
         pc.addIceCandidate(new RTCIceCandidate(message.candidate), function () {}, logError);
     }
 }
@@ -213,19 +203,15 @@ function start(isInitiator) {
     // send any ice candidates to the other peer
     pc.onicecandidate = function (evt) {
         if (evt.candidate) {
-            var candidate = "";
             var s = SDP.parse("m=application 0 NONE\r\na=" + evt.candidate.candidate + "\r\n");
-            var candidateDescription = s && s.mediaDescriptions[0].ice.candidates[0];
-            if (!candidateDescription)
-                candidate = evt.candidate.candidate;
+            var candidateDescription = s.mediaDescriptions[0].ice.candidates[0];
             peer.send(JSON.stringify({
                 "candidate": {
-                    "candidate": candidate,
                     "candidateDescription": candidateDescription,
                     "sdpMLineIndex": evt.candidate.sdpMLineIndex
                 }
-            }));
-            console.log("candidate emitted: " + evt.candidate.candidate);
+            }, null, 2));
+            console.log("candidate emitted: " + JSON.stringify(candidateDescription, null, 2));
         }
     };
 
@@ -263,20 +249,13 @@ function start(isInitiator) {
 
 function localDescCreated(desc) {
     pc.setLocalDescription(desc, function () {
-        var sdp = "";
         var sessionDescription = SDP.parse(pc.localDescription.sdp);
-        if (!sessionDescription)
-            sdp = pc.localDescription.sdp;
         peer.send(JSON.stringify({
-            "sdp": sdp,
             "sessionDescription": sessionDescription,
             "type": pc.localDescription.type
-        }));
-        var logMessage = "localDescription set and sent to peer, type: " + pc.localDescription.type;
-        if (sdp)
-            logMessage += ", sdp:\n" + sdp;
-        if (sessionDescription)
-            logMessage += ", sessionDescription:\n" + JSON.stringify(sessionDescription, null, 2);
+        }, null, 2));
+        var logMessage = "localDescription set and sent to peer, type: " + pc.localDescription.type
+            + ", sessionDescription:\n" + JSON.stringify(sessionDescription, null, 2);
         console.log(logMessage);
     }, logError);
 }
