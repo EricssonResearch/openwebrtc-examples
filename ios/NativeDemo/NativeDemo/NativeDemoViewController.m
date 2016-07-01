@@ -201,7 +201,7 @@
     NSLog(@"Answer generated: \n%@", answer);
 
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:answer
-                                                       options:NSJSONWritingPrettyPrinted
+                                                       options:0
                                                          error:nil];
     NSString *answerString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
@@ -215,7 +215,7 @@
     NSLog(@"Offer generated: \n%@", offer);
 
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:offer
-                                                       options:NSJSONWritingPrettyPrinted
+                                                       options:0
                                                          error:nil];
     NSString *offerString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
@@ -224,12 +224,12 @@
     }
 }
 
-- (void)candidateGenerate:(NSString *)candidate
+- (void)candidateGenerated:(NSDictionary *)candidate
 {
     NSLog(@"Candidate generated: \n%@", candidate);
     if (self.peerID) {
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{@"candidate": @{@"candidate": candidate}}
-                                                           options:NSJSONWritingPrettyPrinted
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:@{@"candidate": candidate}
+                                                           options:0
                                                              error:nil];
         NSString *candidateJson = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSLog(@"Sending candidate to peer: %@", self.peerID);
