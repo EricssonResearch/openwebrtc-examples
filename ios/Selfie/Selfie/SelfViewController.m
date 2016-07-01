@@ -144,7 +144,7 @@
 
 }
 
-- (void)candidateGenerate:(NSString *)candidate
+- (void)candidateGenerated:(NSDictionary *)candidate
 {
 
 }
