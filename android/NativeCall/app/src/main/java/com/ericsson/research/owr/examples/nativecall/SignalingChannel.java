@@ -43,6 +43,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.StringBuilder;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -130,7 +131,8 @@ public class SignalingChannel {
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             if (line.length() > 1) {
-                String[] eventSplit = line.split(":", 2);
+                final String[] eventSplit = line.split(":", 2);
+                final StringBuilder data = new StringBuilder();
 
                 if (eventSplit.length != 2 || !eventSplit[0].equals("event")) {
                     Log.w(TAG, "SSE: invalid event: " + line + " => " + Arrays.toString(eventSplit));
@@ -142,20 +144,23 @@ public class SignalingChannel {
 
                 final String event = eventSplit[1];
 
-                if ((line = bufferedReader.readLine()) != null) {
-                    final String[] dataSplit = line.split(":", 2);
+                while ((line = bufferedReader.readLine()) != null) {
+                    if (line.length() > 1) {
+                        final String[] dataSplit = line.split(":", 2);
 
-                    if (dataSplit.length != 2 || !dataSplit[0].equals("data")) {
-                        Log.w(TAG, "SSE: invalid data: " + line + " => " + Arrays.toString(dataSplit));
-                    }
-                    final String data = dataSplit[1];
-
-                    mMainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            handleEvent(event, data);
+                        if (dataSplit.length != 2 || !dataSplit[0].equals("data")) {
+                            Log.w(TAG, "SSE: invalid data: " + line + " => " + Arrays.toString(dataSplit));
                         }
-                    });
+                        data.append(dataSplit[1]);
+                    } else {
+                        mMainHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                handleEvent(event, data.toString());
+                            }
+                        });
+                        break;
+                    }
                 }
             }
         }
