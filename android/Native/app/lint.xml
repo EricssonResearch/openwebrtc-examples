@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
-    <issue id="InvalidPackage">
-        <!-- rhino uses swing and awt in some packages -->
-        <ignore regexp=".*org.mozilla.javascript.tools.debugger*" />
-    </issue>
     <!-- onStop is overridden as a workaround for missing cleanup -->
     <issue id="MissingSuperCall" severity="ignore" />
 </lint>
