@@ -6,7 +6,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.ericsson.research.owr.examples.nativecall"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
