@@ -256,11 +256,10 @@ public class NativeCallExampleActivity extends Activity implements
                 Log.w(TAG, "invalid candidate: " + candidate);
             }
         }
-        if (json.has("sdp")) {
-            JSONObject sdp = json.optJSONObject("sdp");
-            Log.v(TAG, "sdp: " + sdp);
+        if (json.has("sdp") || json.has("sessionDescription")) {
+            Log.v(TAG, "sdp: " + json);
             try {
-                SessionDescription sessionDescription = SessionDescriptions.fromJsep(sdp);
+                SessionDescription sessionDescription = SessionDescriptions.fromJsep(json);
                 if (sessionDescription.getType() == SessionDescription.Type.OFFER) {
                     onInboundCall(sessionDescription);
                 } else {
@@ -281,7 +280,6 @@ public class NativeCallExampleActivity extends Activity implements
             try {
                 JSONObject json = new JSONObject();
                 json.putOpt("candidate", RtcCandidates.toJsep(candidate));
-                json.getJSONObject("candidate").put("sdpMid", "video");
                 Log.d(TAG, "sending candidate: " + json);
                 mPeerChannel.send(json);
             } catch (JSONException e) {
@@ -319,14 +317,9 @@ public class NativeCallExampleActivity extends Activity implements
     @Override
     public void onLocalDescription(final SessionDescription localDescription) {
         if (mPeerChannel != null) {
-            try {
-                JSONObject json = new JSONObject();
-                json.putOpt("sdp", SessionDescriptions.toJsep(localDescription));
-                Log.d(TAG, "sending sdp: " + json);
-                mPeerChannel.send(json);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            JSONObject json = SessionDescriptions.toJsep(localDescription);
+            Log.d(TAG, "sending sdp: " + json);
+            mPeerChannel.send(json);
         }
     }
 
