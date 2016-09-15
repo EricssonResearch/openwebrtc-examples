@@ -26,14 +26,13 @@ var channel;
 if (!window.hasOwnProperty("orientation"))
     window.orientation = -90;
 
-// must use 'url' here since Firefox doesn't understand 'urls'
 var configuration = {
   "iceServers": [
   {
-    "url": "stun:mmt-stun.verkstad.net"
+    "urls": "stun:mmt-stun.verkstad.net"
   },
   {
-    "url": "turn:mmt-turn.verkstad.net",
+    "urls": "turn:mmt-turn.verkstad.net",
     "username": "webrtc",
     "credential": "secret"
   }
