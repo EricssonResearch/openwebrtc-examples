@@ -10,6 +10,7 @@ var port = process.env.PORT || 8080;
 var httpsPort = process.env.HTTPS_PORT || 8443;
 var httpsKeyPath = process.env.HTTPS_KEY || '';
 var httpsCertPath = process.env.HTTPS_CERT || '';
+var httpsCACertPath = process.env.HTTPS_CA_CERT || '';
 
 if (process.argv.length >= 3) {
     port = process.argv[2];
@@ -18,6 +19,9 @@ if (process.argv.length >= 6) {
     httpsPort = process.argv[3];
     httpsKeyPath = process.argv[4];
     httpsCertPath = process.argv[5];
+    if (process.argv.length >= 7) {
+        httpsCACertPath = process.argv[6];
+    }
 }
 
 var serverDir = path.dirname(__filename)
@@ -164,6 +168,9 @@ if (httpsKeyPath && httpsCertPath) {
         key: fs.readFileSync(httpsKeyPath),
         cert: fs.readFileSync(httpsCertPath)
     };
+    if (httpsCACertPath) {
+        options.ca = fs.readFileSync(httpsCACertPath)
+    }
 
     console.log('The HTTPS server is listening on port ' + httpsPort);
     https.createServer(options, requestListener).listen(httpsPort);
