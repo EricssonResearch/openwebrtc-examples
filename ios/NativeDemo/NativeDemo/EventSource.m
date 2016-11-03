@@ -29,38 +29,73 @@
 
 #import "EventSource.h"
 
-@interface EventSource () <NSURLConnectionDelegate>
+@interface EventSource () <NSURLSessionDataDelegate>
 
-@property NSURLConnection *connection;
-@property NSString *currentEventName;
-@property NSMutableArray *data;
+@property (strong, nonatomic) NSURLSession *session;
+
+@property (strong, nonatomic) NSURLSessionDataTask *dataTask;
+
+@property (strong, nonatomic) NSString *currentEventName;
+
+@property (strong, nonatomic) NSMutableArray *data;
 
 @end
 
 @implementation EventSource
 
-- (instancetype)initWithURL:(NSURL *)url delegate:(id <EventSourceDelegate>)delegate
-{
+#pragma mark - Class life cycle
+
+- (instancetype)initWithURL:(NSURL *)url delegate:(id <EventSourceDelegate>)delegate {
     self = [super init];
     if (self) {
-        self.delegate = delegate;
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        _delegate = delegate;
+        
+        // Initialize default session
+        _session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                                 delegate:self
+                                            delegateQueue:[NSOperationQueue mainQueue]];
+        
+        _dataTask = [_session dataTaskWithURL:url];
+        
+        // Init session task
+        [_dataTask resume];
     }
+    
     return self;
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
+- (void)dealloc {
+    _currentEventName = nil;
+    
+    [_data removeAllObjects];
+    _data = nil;
+}
+
+#pragma mark - NSURLSessionData delegate
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
+    NSLog(@"[EventSource] response => %@", response.description);
+    
+    // Allow to receive data
+    completionHandler(NSURLSessionResponseAllow);
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray *lines = [string componentsSeparatedByString:@"\n"];
+    NSLog(@"[EventSource] received data: %@", string);
     for (NSString *line in lines) {
         [self appendLine:line];
     }
 }
 
-- (void)appendLine:(NSString *)line
-{
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
+    [self.delegate eventSource:self didFailWithError:error];
+}
+
+#pragma mark - Support methods
+
+- (void)appendLine:(NSString *)line {
     if (!self.currentEventName) {
         if ([line hasPrefix:@"event:"]) {
             self.currentEventName = [line substringFromIndex:6];
@@ -87,14 +122,11 @@
     }
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [self.delegate eventSource:self didFailWithError:error];
-}
-
-- (void)disconnect
-{
-    [self.connection cancel];
+- (void)disconnect {
+    if (self.dataTask) {
+        [self.dataTask cancel];
+        self.dataTask = nil;
+    }
 }
 
 @end
