@@ -25,10 +25,14 @@
 
 package com.ericsson.research.owr.examples.nativecall;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.TextureView;
@@ -111,6 +115,15 @@ public class NativeCallExampleActivity extends Activity implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         initUi();
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA},
+                    1);
+
+        }
         mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);

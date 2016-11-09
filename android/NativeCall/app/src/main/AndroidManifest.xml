@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ericsson.research.owr.examples.nativecall" >
 
+    <permission android:name="android.permission.RECORD_AUDIO" android:protectionLevel="signature" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <permission android:name="android.permission.CAMERA" android:protectionLevel="signature" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
