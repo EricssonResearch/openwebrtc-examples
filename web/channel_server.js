@@ -123,14 +123,15 @@ function requestListener(request, response) {
             request.on("end", function () {
                 console.log("@" + sessionId + " - " + userId + " => " + peerId + " :");
                 // console.log(body);
+
+                // to avoid "no element found" warning in Firefox (bug 521301)
+                headers["Content-Type"] = "text/plain";
+                response.writeHead(204, headers);
+                response.end();
+
                 var evtdata = "data:" + body.replace(/\n/g, "\ndata:") + "\n";
                 peer.esResponse.write("event:user-" + userId + "\n" + evtdata + "\n");
             });
-
-            // to avoid "no element found" warning in Firefox (bug 521301)
-            headers["Content-Type"] = "text/plain";
-            response.writeHead(204, headers);
-            response.end();
         }
 
         return;
